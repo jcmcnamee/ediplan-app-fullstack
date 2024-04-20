@@ -12,9 +12,4 @@ public class Location
     public string Notes { get; set; } = "";
 
     public ICollection<Booking> Bookings { get; } = new List<Booking>();
-
-    public Location(string name)
-    {
-        Name = name;
-    }
 }

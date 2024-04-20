@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using EdiplanDotnetAPI.Application.Contracts.Infrastructure;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
+using EdiplanDotnetAPI.Application.Models.Mail;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
 using System;
@@ -13,9 +15,11 @@ internal class CreateBookingCommandHandler : IRequestHandler<CreateBookingComman
 {
     private readonly IMapper _mapper;
     private readonly IBookingRepository _bookingRepository;
+    private readonly IEmailService _emailService;
 
-    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository)
+    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IEmailService emailService)
     {
+        _emailService = emailService;
         _mapper = mapper;
         _bookingRepository = bookingRepository;
     }
@@ -30,6 +34,23 @@ internal class CreateBookingCommandHandler : IRequestHandler<CreateBookingComman
             throw new Exceptions.ValidationException(validationResult);
 
         booking = await _bookingRepository.AddAsync(booking);
+
+        // Send email notification
+        var email = new Email()
+        {
+            To = "jcmcnamee@hotmail.com",
+            Subject = "A new booking was created",
+            Body = $"A new booking was created: {request}"
+        };
+
+        try
+        {
+            await _emailService.SendEmail(email);
+        }
+        catch (Exception ex)
+        {
+            // Log
+        }
 
         return booking.Id;
     }
