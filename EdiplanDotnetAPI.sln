@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{00696FA1-EA32-4A4D-BD74-B5AFB001729C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A570DBFC-13BD-443D-998E-5A943AAD6D56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiplanDotnetAPI.Domain", "EdiplanDotnetAPI.Domain\EdiplanDotnetAPI.Domain.csproj", "{96439387-8EAD-4453-9D5F-1E1543E00C09}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{B143E29F-6962-4CFD-9572-DD14D404F71D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B102DAAA-95F3-43A0-977C-7B14BED479C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{7237BADB-A98C-46E4-9222-5D29E0480324}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiplanDotnetAPI.Application", "EdiplanDotnetAPI.Application\EdiplanDotnetAPI.Application.csproj", "{97F053B9-71CE-4F9B-A069-155C68462822}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96439387-8EAD-4453-9D5F-1E1543E00C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96439387-8EAD-4453-9D5F-1E1543E00C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96439387-8EAD-4453-9D5F-1E1543E00C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96439387-8EAD-4453-9D5F-1E1543E00C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97F053B9-71CE-4F9B-A069-155C68462822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97F053B9-71CE-4F9B-A069-155C68462822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97F053B9-71CE-4F9B-A069-155C68462822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F053B9-71CE-4F9B-A069-155C68462822}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A570DBFC-13BD-443D-998E-5A943AAD6D56} = {00696FA1-EA32-4A4D-BD74-B5AFB001729C}
+		{96439387-8EAD-4453-9D5F-1E1543E00C09} = {A570DBFC-13BD-443D-998E-5A943AAD6D56}
+		{B143E29F-6962-4CFD-9572-DD14D404F71D} = {00696FA1-EA32-4A4D-BD74-B5AFB001729C}
+		{B102DAAA-95F3-43A0-977C-7B14BED479C5} = {00696FA1-EA32-4A4D-BD74-B5AFB001729C}
+		{7237BADB-A98C-46E4-9222-5D29E0480324} = {00696FA1-EA32-4A4D-BD74-B5AFB001729C}
+		{97F053B9-71CE-4F9B-A069-155C68462822} = {A570DBFC-13BD-443D-998E-5A943AAD6D56}
+	EndGlobalSection
+EndGlobal
