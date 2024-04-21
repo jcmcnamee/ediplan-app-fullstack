@@ -6,8 +6,6 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class Booking : AuditableEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }

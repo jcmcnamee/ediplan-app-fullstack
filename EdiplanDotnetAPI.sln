@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Applicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Persistence", "EdiplanDotnetAPI.Persistence\EdiplanDotnetAPI.Persistence.csproj", "{CCC663A2-8B9A-45C9-ADF8-AEDB6B32F6BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiplanDotnetAPI.Infrastructure", "EdiplanDotnetAPI.Infrastructure\EdiplanDotnetAPI.Infrastructure.csproj", "{8BDCEE76-7133-4950-B447-972DB62423AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Infrastructure", "EdiplanDotnetAPI.Infrastructure\EdiplanDotnetAPI.Infrastructure.csproj", "{8BDCEE76-7133-4950-B447-972DB62423AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiplanDotnetAPI.Api", "EdiplanDotnetAPI.Api\EdiplanDotnetAPI.Api.csproj", "{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{8BDCEE76-7133-4950-B447-972DB62423AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BDCEE76-7133-4950-B447-972DB62423AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BDCEE76-7133-4950-B447-972DB62423AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{97F053B9-71CE-4F9B-A069-155C68462822} = {A570DBFC-13BD-443D-998E-5A943AAD6D56}
 		{CCC663A2-8B9A-45C9-ADF8-AEDB6B32F6BA} = {B102DAAA-95F3-43A0-977C-7B14BED479C5}
 		{8BDCEE76-7133-4950-B447-972DB62423AD} = {B102DAAA-95F3-43A0-977C-7B14BED479C5}
+		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C} = {B143E29F-6962-4CFD-9572-DD14D404F71D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E747281E-D20B-4C4D-9133-1958770925B0}

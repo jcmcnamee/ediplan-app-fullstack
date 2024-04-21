@@ -107,6 +107,7 @@ public class EdiplanDbContext : DbContext
         // Seed Bookings
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
+            Id = Guid.NewGuid(),
             StartDate = DateTime.Now.AddDays(2),
             EndDate = DateTime.Now.AddDays(23),
             ProductionId = prog1,
@@ -116,6 +117,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
+            Id = Guid.NewGuid(),
             StartDate = DateTime.Now.AddMonths(1),
             EndDate = DateTime.Now.AddMonths(1).AddDays(7),
             ProductionId = location2,
@@ -124,6 +126,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
+            Id = Guid.NewGuid(),
             StartDate = DateTime.Now.AddDays(-15),
             EndDate = DateTime.Now.AddDays(-10),
             ProductionId = prog2,
@@ -133,6 +136,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
+            Id = Guid.NewGuid(),
             StartDate = DateTime.Now.AddMonths(-2),
             EndDate = DateTime.Now.AddDays(-5),
             ProductionId = prog3,
@@ -142,6 +146,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
+            Id = Guid.NewGuid(),
             StartDate = DateTime.Now.AddMonths(-3),
             EndDate = DateTime.Now.AddMonths(-2).AddDays(-10),
             ProductionId = prog4,
@@ -151,6 +156,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
+            Id = Guid.NewGuid(),
             StartDate = DateTime.Now.AddMonths(2),
             EndDate = DateTime.Now.AddMonths(2).AddDays(5),
             ProductionId = prog3,
