@@ -6,7 +6,7 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class Booking : AuditableEntity
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
@@ -19,7 +19,7 @@ public class Booking : AuditableEntity
     
     // Navigation properties
     public ICollection<BookingGroup> BookingGroups { get; set; } = new List<BookingGroup>();
-    public ICollection<Asset> Asset { get; set; } = new List<Asset>();
+    public ICollection<Asset> Assets { get; set; } = new List<Asset>();
     public Production? Production { get; set; }
     public Location? Location { get; set; }
 }

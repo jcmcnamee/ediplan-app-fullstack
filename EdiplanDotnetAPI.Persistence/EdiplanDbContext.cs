@@ -17,11 +17,33 @@ public class EdiplanDbContext : DbContext
     public DbSet<BookingGroup> BookingGroups { get; set; }
     public DbSet<Production> Productions { get; set; }
     public DbSet<Location> Locations { get; set; }
+    public DbSet<Asset> Assets { get; set; }
+    public DbSet<Person> Persons { get; set; }
+    public DbSet<Equipment> Equipment { get; set; }
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<AssetGroup> AssetGroups { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Apply configurations (we do not want to litter our entities with attributes)
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EdiplanDbContext).Assembly);
+
+        // Define TPC strategy and use a sequence to ensure continuity of Id field between tables.
+        modelBuilder.HasSequence<int>("AssetIds");
+        modelBuilder.Entity<Asset>()
+            .UseTpcMappingStrategy()
+            .Property(a => a.Id).HasDefaultValueSql("NEXT VALUE FOR [AssetIds]"); // Db dependant language, change for Db type.
+
+        modelBuilder.Entity<Equipment>()
+            .HasBaseType<Asset>();
+
+        modelBuilder.Entity<Person>()
+            .HasBaseType<Asset>();
+
+        modelBuilder.Entity<Room>()
+            .HasBaseType<Asset>();
+  
 
         // Seed booking Groups
         var bg1 = Guid.Parse("b5b7a148-0452-4e0e-8298-7c37fd4caa64");

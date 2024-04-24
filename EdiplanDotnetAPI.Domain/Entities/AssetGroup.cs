@@ -11,11 +11,11 @@ public class AssetGroup
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
+    // Foreign Keys
+    public Guid? ParentGroupId { get; set; }
+
     // Navigation properties
-    public List<Asset> Assets { get; set; } = new List<Asset>();
+    public AssetGroup? ParentGroup { get; set; }
+    public ICollection<Asset> Assets { get; set; } = new List<Asset>();
     
-    public AssetGroup(string name)
-    {
-        Name = name;
-    }
 }
