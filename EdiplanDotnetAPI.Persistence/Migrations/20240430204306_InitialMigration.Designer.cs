@@ -3,16 +3,16 @@ using System;
 using EdiplanDotnetAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace EdiplanDotnetAPI.Persistence.Migrations
 {
     [DbContext(typeof(EdiplanDbContext))]
-    [Migration("20240421151102_InitialMigration")]
+    [Migration("20240430204306_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -21,145 +21,133 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("AssetAssetGroup", b =>
+            modelBuilder.HasSequence<int>("AssetIds");
+
+            modelBuilder.Entity("AssetBooking", b =>
                 {
-                    b.Property<Guid>("AssetGroupsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("AssetsId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("AssetsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("BookingsId")
+                        .HasColumnType("integer");
 
-                    b.HasKey("AssetGroupsId", "AssetsId");
-
-                    b.HasIndex("AssetsId");
-
-                    b.ToTable("AssetAssetGroup");
-                });
-
-            modelBuilder.Entity("BookingBookingGroup", b =>
-                {
-                    b.Property<Guid>("BookingGroupsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BookingsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("BookingGroupsId", "BookingsId");
+                    b.HasKey("AssetsId", "BookingsId");
 
                     b.HasIndex("BookingsId");
 
-                    b.ToTable("BookingBookingGroup");
+                    b.ToTable("AssetBooking");
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Common.Asset", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BookingId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("integer")
+                        .HasDefaultValueSql("nextval('\"AssetIds\"')");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<decimal?>("Rate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<decimal?>("RateUnit")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.Property<decimal?>("Value")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingId");
+                    b.ToTable((string)null);
 
-                    b.ToTable("Asset");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Asset");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTpcMappingStrategy();
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.AssetGroup", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ParentGroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("ParentGroupId1")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AssetGroup");
+                    b.HasIndex("ParentGroupId1");
+
+                    b.ToTable("asset_group", (string)null);
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Booking", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("ProductionId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -167,115 +155,117 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
 
                     b.HasIndex("ProductionId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("booking", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c1d42095-7bf9-4f29-9f35-c47065efe1ff"),
+                            Id = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 14, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9696),
+                            EndDate = new DateTime(2024, 5, 23, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2367),
                             IsConfirmed = false,
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "High-speed internet required for remote editing.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 4, 23, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9623)
+                            StartDate = new DateTime(2024, 5, 2, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2359)
                         },
                         new
                         {
-                            Id = new Guid("ac2e516a-90d9-4a96-9004-1f39863c9a51"),
+                            Id = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 28, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9744),
+                            EndDate = new DateTime(2024, 6, 6, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2394),
                             IsConfirmed = false,
                             Name = "",
                             Notes = "Need access to soundproof dubbing studio.",
-                            ProductionId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
-                            StartDate = new DateTime(2024, 5, 21, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9737)
+                            ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
+                            StartDate = new DateTime(2024, 5, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2389)
                         },
                         new
                         {
-                            Id = new Guid("0c69b80a-c5e5-416b-8a68-cb81dc5d9ba6"),
+                            Id = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 11, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9849),
+                            EndDate = new DateTime(2024, 4, 20, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2411),
                             IsConfirmed = true,
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Final editing phase.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 4, 6, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9846)
+                            StartDate = new DateTime(2024, 4, 15, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2411)
                         },
                         new
                         {
-                            Id = new Guid("5a5458ef-8cf3-4c91-89c7-d7a13d93d2a3"),
+                            Id = 4,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 16, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9883),
+                            EndDate = new DateTime(2024, 4, 25, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2428),
                             IsConfirmed = true,
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Location scouting.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 2, 21, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9880)
+                            StartDate = new DateTime(2024, 2, 29, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2427)
                         },
                         new
                         {
-                            Id = new Guid("e005a01c-114c-4b8e-a654-68635714d9a6"),
+                            Id = 5,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 2, 11, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9916),
+                            EndDate = new DateTime(2024, 2, 19, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2444),
                             IsConfirmed = true,
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Principal photography.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 1, 21, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9913)
+                            StartDate = new DateTime(2024, 1, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2443)
                         },
                         new
                         {
-                            Id = new Guid("b2f4ed23-5099-495e-9310-87338caaae77"),
+                            Id = 6,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 26, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9970),
+                            EndDate = new DateTime(2024, 7, 5, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2463),
                             IsConfirmed = false,
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Pre-production meetings.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 6, 21, 16, 11, 2, 179, DateTimeKind.Local).AddTicks(9967)
+                            StartDate = new DateTime(2024, 6, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2463)
                         });
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.BookingGroup", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookingGroups");
+                    b.ToTable("booking_group", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b5b7a148-0452-4e0e-8298-7c37fd4caa64"),
+                            Id = 1,
                             Name = "Offline"
                         },
                         new
                         {
-                            Id = new Guid("4658345f-4454-4128-a2f8-c673e73fa846"),
+                            Id = 2,
                             Name = "Online"
                         },
                         new
                         {
-                            Id = new Guid("146023a2-4255-4cfd-893a-d04b0839e616"),
+                            Id = 3,
                             Name = "Dub - In House"
                         },
                         new
                         {
-                            Id = new Guid("1cd16d2e-a35b-48ef-ab93-debd26d445f0"),
+                            Id = 4,
                             Name = "Grade"
                         });
                 });
@@ -284,15 +274,15 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Notes")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -329,15 +319,15 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Productions");
+                    b.ToTable("production", (string)null);
 
                     b.HasData(
                         new
@@ -362,53 +352,100 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("asset_group_map", b =>
+                {
+                    b.Property<int>("AssetGroupsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AssetsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AssetGroupsId", "AssetsId");
+
+                    b.HasIndex("AssetsId");
+
+                    b.ToTable("asset_group_map");
+                });
+
+            modelBuilder.Entity("booking_group_map", b =>
+                {
+                    b.Property<int>("BookingGroupsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BookingsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("BookingGroupsId", "BookingsId");
+
+                    b.HasIndex("BookingsId");
+
+                    b.ToTable("booking_group_map");
+                });
+
+            modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Equipment", b =>
+                {
+                    b.HasBaseType("EdiplanDotnetAPI.Domain.Common.Asset");
+
+                    b.Property<string>("AssetNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Make")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("text");
+
+                    b.ToTable("equipment", (string)null);
+                });
+
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Person", b =>
                 {
                     b.HasBaseType("EdiplanDotnetAPI.Domain.Common.Asset");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsStaff")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("ProductionId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasIndex("ProductionId");
 
-                    b.HasDiscriminator().HasValue("Person");
+                    b.ToTable("person", (string)null);
                 });
 
-            modelBuilder.Entity("AssetAssetGroup", b =>
+            modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Room", b =>
                 {
-                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.AssetGroup", null)
-                        .WithMany()
-                        .HasForeignKey("AssetGroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("EdiplanDotnetAPI.Domain.Common.Asset");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UsedFor")
+                        .HasColumnType("text");
+
+                    b.ToTable("room", (string)null);
+                });
+
+            modelBuilder.Entity("AssetBooking", b =>
+                {
                     b.HasOne("EdiplanDotnetAPI.Domain.Common.Asset", null)
                         .WithMany()
                         .HasForeignKey("AssetsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BookingBookingGroup", b =>
-                {
-                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.BookingGroup", null)
-                        .WithMany()
-                        .HasForeignKey("BookingGroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -419,11 +456,13 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EdiplanDotnetAPI.Domain.Common.Asset", b =>
+            modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.AssetGroup", b =>
                 {
-                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.Booking", null)
-                        .WithMany("Asset")
-                        .HasForeignKey("BookingId");
+                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.AssetGroup", "ParentGroup")
+                        .WithMany()
+                        .HasForeignKey("ParentGroupId1");
+
+                    b.Navigation("ParentGroup");
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Booking", b =>
@@ -441,16 +480,41 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.Navigation("Production");
                 });
 
+            modelBuilder.Entity("asset_group_map", b =>
+                {
+                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.AssetGroup", null)
+                        .WithMany()
+                        .HasForeignKey("AssetGroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EdiplanDotnetAPI.Domain.Common.Asset", null)
+                        .WithMany()
+                        .HasForeignKey("AssetsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("booking_group_map", b =>
+                {
+                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.BookingGroup", null)
+                        .WithMany()
+                        .HasForeignKey("BookingGroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EdiplanDotnetAPI.Domain.Entities.Booking", null)
+                        .WithMany()
+                        .HasForeignKey("BookingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Person", b =>
                 {
                     b.HasOne("EdiplanDotnetAPI.Domain.Entities.Production", null)
                         .WithMany("People")
                         .HasForeignKey("ProductionId");
-                });
-
-            modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Booking", b =>
-                {
-                    b.Navigation("Asset");
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Location", b =>

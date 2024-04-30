@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupDetail;
+using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupMembers;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
 using EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
 using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingDetail;

@@ -2,15 +2,10 @@
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
 
-internal class GetBookingGroupListQueryHandler : IRequestHandler<GetBookingGroupListQuery, List<BookingGroupListVm>>
+public class GetBookingGroupListQueryHandler : IRequestHandler<GetBookingGroupListQuery, List<BookingGroupListVm>>
 {
     private readonly IMapper _mapper;
     private readonly IAsyncRepository<BookingGroup> _bookingGroupRepository;

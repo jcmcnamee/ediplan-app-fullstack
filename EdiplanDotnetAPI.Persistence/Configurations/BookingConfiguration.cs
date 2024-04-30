@@ -11,9 +11,7 @@ namespace EdiplanDotnetAPI.Persistence.Configurations;
 public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 {
     public void Configure(EntityTypeBuilder<Booking> builder)
-    {
+    {   
         builder.Property(b => b.Name).IsRequired().HasMaxLength(50);
-        
-
     }
 }

@@ -7,9 +7,9 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class BookingGroup
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = "New Group";
 
     // Navigation properties
-    public ICollection<Booking>? Bookings { get; set; }
+    public List<Booking> Bookings { get; } = new();
 }

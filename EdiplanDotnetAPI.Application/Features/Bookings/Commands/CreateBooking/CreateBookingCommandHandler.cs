@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
-internal class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, Guid>
+internal class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, int>
 {
     private readonly IMapper _mapper;
     private readonly IBookingRepository _bookingRepository;
@@ -23,7 +23,7 @@ internal class CreateBookingCommandHandler : IRequestHandler<CreateBookingComman
         _mapper = mapper;
         _bookingRepository = bookingRepository;
     }
-    public async Task<Guid> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
         var booking = _mapper.Map<Booking>(request);
 

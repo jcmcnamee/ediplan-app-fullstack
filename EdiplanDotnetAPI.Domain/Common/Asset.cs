@@ -12,7 +12,7 @@ public abstract class Asset : AuditableEntity
     public decimal? Value { get; set; }
 
     // Navigation properties
-    public ICollection<AssetGroup> AssetGroups { get; set; } = new List<AssetGroup>();
-    public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+    public List<AssetGroup> AssetGroups { get; } = new();
+    public List<Booking> Bookings { get; } = new();
 
 }

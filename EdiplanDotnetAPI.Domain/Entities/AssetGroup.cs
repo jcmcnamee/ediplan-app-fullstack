@@ -8,7 +8,7 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class AssetGroup
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
     // Foreign Keys
@@ -16,6 +16,6 @@ public class AssetGroup
 
     // Navigation properties
     public AssetGroup? ParentGroup { get; set; }
-    public ICollection<Asset> Assets { get; set; } = new List<Asset>();
+    public List<Asset> Assets { get; set; } = new();
     
 }

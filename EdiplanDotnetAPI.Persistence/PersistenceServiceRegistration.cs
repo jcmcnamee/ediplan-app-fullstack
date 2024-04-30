@@ -11,7 +11,7 @@ public static class PersistenceServiceRegistration
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<EdiplanDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString
+            options.UseNpgsql(configuration.GetConnectionString
                 ("EdiplanDotnetAPIConnectionString")));
 
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));

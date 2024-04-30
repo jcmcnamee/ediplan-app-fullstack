@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
-public class CreateBookingCommand : IRequest<Guid>
+public class CreateBookingCommand : IRequest<int>
 {
     public string Name { get; set; } = "New booking.";
     public DateTime StartDate { get; set; }

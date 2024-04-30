@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
-internal class CreateBookingGroupDto
+﻿namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
+public class CreateBookingGroupDto
 {
-    public Guid CategoryId { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
 }

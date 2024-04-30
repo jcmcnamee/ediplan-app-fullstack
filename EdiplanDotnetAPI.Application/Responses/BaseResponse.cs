@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Responses;
-internal class BaseResponse
+public class BaseResponse
 {
     public BaseResponse()
     {

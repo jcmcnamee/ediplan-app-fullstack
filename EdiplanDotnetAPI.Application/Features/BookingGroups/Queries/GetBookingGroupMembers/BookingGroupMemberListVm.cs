@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupDetail;
-internal class BookingGroupMemberListVm
+﻿namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupMembers;
+public class BookingGroupMemberListVm
 {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public ICollection<BookingGroupMemberDto> Bookings { get; set; }
 }

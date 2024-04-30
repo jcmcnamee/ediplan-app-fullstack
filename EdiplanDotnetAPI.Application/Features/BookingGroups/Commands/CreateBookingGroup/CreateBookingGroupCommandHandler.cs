@@ -2,14 +2,9 @@
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
-internal class CreateBookingGroupCommandHandler : IRequestHandler<CreateBookingGroupCommand, CreateBookingGroupCommandResponse>
+public class CreateBookingGroupCommandHandler : IRequestHandler<CreateBookingGroupCommand, CreateBookingGroupCommandResponse>
 {
     private readonly IMapper _mapper;
     private readonly IAsyncRepository<BookingGroup> _bookingGroupRepository;

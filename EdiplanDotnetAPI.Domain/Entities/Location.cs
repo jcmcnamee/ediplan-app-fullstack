@@ -11,5 +11,5 @@ public class Location
     public string Name { get; set; } = "New location";
     public string Notes { get; set; } = "";
 
-    public ICollection<Booking> Bookings { get; } = new List<Booking>();
+    public List<Booking> Bookings { get; } = new();
 }

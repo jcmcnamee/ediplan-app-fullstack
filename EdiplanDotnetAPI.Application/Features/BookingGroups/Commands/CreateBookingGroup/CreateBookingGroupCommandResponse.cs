@@ -1,7 +1,7 @@
 ﻿using EdiplanDotnetAPI.Application.Responses;
 
 namespace EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
-internal class CreateBookingGroupCommandResponse : BaseResponse
+public class CreateBookingGroupCommandResponse : BaseResponse
 {
     public CreateBookingGroupCommandResponse(): base()
     {

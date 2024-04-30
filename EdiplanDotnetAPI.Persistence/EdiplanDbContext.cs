@@ -28,47 +28,75 @@ public class EdiplanDbContext : DbContext
     {
         // Apply configurations (we do not want to litter our entities with attributes)
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EdiplanDbContext).Assembly);
+        
 
         // Define TPC strategy and use a sequence to ensure continuity of Id field between tables.
         modelBuilder.HasSequence<int>("AssetIds");
         modelBuilder.Entity<Asset>()
             .UseTpcMappingStrategy()
-            .Property(a => a.Id).HasDefaultValueSql("NEXT VALUE FOR [AssetIds]"); // Db dependant language, change for Db type.
+            .Property(a => a.Id)
+            //.HasDefaultValueSql("nextval('AssetIds'::regclass)") ; // Db dependant language, change for Db type.
+            .HasDefaultValueSql("nextval('\"AssetIds\"')") ; // Db dependant language, change for Db type.
 
         modelBuilder.Entity<Equipment>()
-            .HasBaseType<Asset>();
+            .HasBaseType<Asset>()
+            .ToTable("equipment");
 
         modelBuilder.Entity<Person>()
-            .HasBaseType<Asset>();
+            .HasBaseType<Asset>()
+            .ToTable("person");
 
         modelBuilder.Entity<Room>()
-            .HasBaseType<Asset>();
-  
+            .HasBaseType<Asset>()
+            .ToTable("room");
+
+        modelBuilder.Entity<Asset>()
+            .HasMany(a => a.AssetGroups)
+            .WithMany(a => a.Assets)
+            .UsingEntity("asset_group_map");
+
+        modelBuilder.Entity<Booking>()
+            .HasMany(b => b.BookingGroups)
+            .WithMany(b => b.Bookings)
+            .UsingEntity("booking_group_map");
+
+        modelBuilder.Entity<Booking>()
+            .ToTable("booking");
+
+        modelBuilder.Entity<Production>()
+            .ToTable("production");
+
+        modelBuilder.Entity<AssetGroup>()
+            .ToTable("asset_group");
+
+        modelBuilder.Entity<BookingGroup>()
+            .ToTable("booking_group");
+
 
         // Seed booking Groups
-        var bg1 = Guid.Parse("b5b7a148-0452-4e0e-8298-7c37fd4caa64");
-        var bg2 = Guid.Parse("4658345f-4454-4128-a2f8-c673e73fa846");
-        var bg3 = Guid.Parse("146023a2-4255-4cfd-893a-d04b0839e616");
-        var bg4 = Guid.Parse("1cd16d2e-a35b-48ef-ab93-debd26d445f0");
+        //var bg1 = Guid.Parse("b5b7a148-0452-4e0e-8298-7c37fd4caa64");
+        //var bg2 = Guid.Parse("4658345f-4454-4128-a2f8-c673e73fa846");
+        //var bg3 = Guid.Parse("146023a2-4255-4cfd-893a-d04b0839e616");
+        //var bg4 = Guid.Parse("1cd16d2e-a35b-48ef-ab93-debd26d445f0");
 
         modelBuilder.Entity<BookingGroup>().HasData(new BookingGroup
         {
-            Id = bg1,
+            Id = 1,
             Name = "Offline"
         });
         modelBuilder.Entity<BookingGroup>().HasData(new BookingGroup
         {
-            Id = bg2,
+            Id = 2,
             Name = "Online"
         });
         modelBuilder.Entity<BookingGroup>().HasData(new BookingGroup
         {
-            Id = bg3,
+            Id = 3,
             Name = "Dub - In House"
         });
         modelBuilder.Entity<BookingGroup>().HasData(new BookingGroup
         {
-            Id = bg4,
+            Id = 4,
             Name = "Grade"
         });
 
@@ -129,9 +157,9 @@ public class EdiplanDbContext : DbContext
         // Seed Bookings
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = Guid.NewGuid(),
-            StartDate = DateTime.Now.AddDays(2),
-            EndDate = DateTime.Now.AddDays(23),
+            Id = 1,
+            StartDate = DateTime.UtcNow.AddDays(2),
+            EndDate = DateTime.UtcNow.AddDays(23),
             ProductionId = prog1,
             LocationId = location1,
             IsConfirmed = false,
@@ -139,18 +167,18 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = Guid.NewGuid(),
-            StartDate = DateTime.Now.AddMonths(1),
-            EndDate = DateTime.Now.AddMonths(1).AddDays(7),
-            ProductionId = location2,
+            Id = 2,
+            StartDate = DateTime.UtcNow.AddMonths(1),
+            EndDate = DateTime.UtcNow.AddMonths(1).AddDays(7),
+            ProductionId = prog2,
             IsConfirmed = false,
             Notes = "Need access to soundproof dubbing studio."
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = Guid.NewGuid(),
-            StartDate = DateTime.Now.AddDays(-15),
-            EndDate = DateTime.Now.AddDays(-10),
+            Id = 3,
+            StartDate = DateTime.UtcNow.AddDays(-15),
+            EndDate = DateTime.UtcNow.AddDays(-10),
             ProductionId = prog2,
             LocationId = location2,
             IsConfirmed = true,
@@ -158,9 +186,9 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = Guid.NewGuid(),
-            StartDate = DateTime.Now.AddMonths(-2),
-            EndDate = DateTime.Now.AddDays(-5),
+            Id = 4,
+            StartDate = DateTime.UtcNow.AddMonths(-2),
+            EndDate = DateTime.UtcNow.AddDays(-5),
             ProductionId = prog3,
             LocationId = location4,
             IsConfirmed = true,
@@ -168,9 +196,9 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = Guid.NewGuid(),
-            StartDate = DateTime.Now.AddMonths(-3),
-            EndDate = DateTime.Now.AddMonths(-2).AddDays(-10),
+            Id = 5,
+            StartDate = DateTime.UtcNow.AddMonths(-3),
+            EndDate = DateTime.UtcNow.AddMonths(-2).AddDays(-10),
             ProductionId = prog4,
             LocationId = location3,
             IsConfirmed = true,
@@ -178,9 +206,9 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
-            Id = Guid.NewGuid(),
-            StartDate = DateTime.Now.AddMonths(2),
-            EndDate = DateTime.Now.AddMonths(2).AddDays(5),
+            Id = 6,
+            StartDate = DateTime.UtcNow.AddMonths(2),
+            EndDate = DateTime.UtcNow.AddMonths(2).AddDays(5),
             ProductionId = prog3,
             LocationId = location4,
             IsConfirmed = false,
@@ -196,10 +224,10 @@ public class EdiplanDbContext : DbContext
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.CreatedDate = DateTime.Now;
+                    entry.Entity.CreatedDate = DateTime.UtcNow;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.LastModifiedDate = DateTime.Now;
+                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
                     break;
             }
         }

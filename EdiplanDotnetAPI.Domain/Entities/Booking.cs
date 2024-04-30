@@ -16,10 +16,10 @@ public class Booking : AuditableEntity
     // Foreign keys
     public Guid? ProductionId { get; set; }
     public Guid? LocationId { get; set; }
-    
+
     // Navigation properties
-    public ICollection<BookingGroup> BookingGroups { get; set; } = new List<BookingGroup>();
-    public ICollection<Asset> Assets { get; set; } = new List<Asset>();
+    public List<BookingGroup> BookingGroups { get; set; } = new();
+    public List<Asset> Assets { get; set; } = new();
     public Production? Production { get; set; }
     public Location? Location { get; set; }
 }
