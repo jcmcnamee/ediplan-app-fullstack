@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.UpdateBooking;
-internal class UpdateBookingCommand : IRequest
+public class UpdateBookingCommand : IRequest
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = "New booking.";
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

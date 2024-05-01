@@ -8,5 +8,5 @@ namespace EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingDetai
 
 public class GetBookingDetailQuery : IRequest<BookingDetailVm>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }

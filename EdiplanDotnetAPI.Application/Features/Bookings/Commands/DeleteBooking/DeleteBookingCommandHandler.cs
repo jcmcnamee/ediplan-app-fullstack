@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.DeleteBooking;
-internal class DeleteBookingCommandHandler : IRequestHandler<DeleteBookingCommand>
+public class DeleteBookingCommandHandler : IRequestHandler<DeleteBookingCommand>
 {
     private readonly IMapper _mapper;
     private readonly IAsyncRepository<Booking> _bookingRepository;

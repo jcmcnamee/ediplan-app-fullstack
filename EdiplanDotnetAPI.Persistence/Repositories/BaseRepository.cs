@@ -26,7 +26,7 @@ public class BaseRepository<T> : IAsyncRepository<T> where T : class
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<T> GetByIdAsync(Guid id)
+    public async Task<T> GetByIdAsync<TId>(TId id)
     {
         return await _dbContext.Set<T>().FindAsync(id);
     }

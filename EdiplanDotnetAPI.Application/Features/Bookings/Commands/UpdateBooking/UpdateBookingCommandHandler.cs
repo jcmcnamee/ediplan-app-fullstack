@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.UpdateBooking;
-internal class UpdateBookingCommandHandler : IRequestHandler<UpdateBookingCommand>
+public class UpdateBookingCommandHandler : IRequestHandler<UpdateBookingCommand>
 {
     private readonly IMapper _mapper;
     private readonly IAsyncRepository<Booking> _bookingRepository;

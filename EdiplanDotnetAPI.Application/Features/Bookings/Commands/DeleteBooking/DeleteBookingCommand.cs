@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.DeleteBooking;
-internal class DeleteBookingCommand : IRequest
+public class DeleteBookingCommand : IRequest
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }
