@@ -4,11 +4,13 @@ using EdiplanDotnetAPI.Application.Features.Bookings.Commands.UpdateBooking;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using EdiplanDotnetAPI.Application.Features.Bookings.Commands.DeleteBooking;
+using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingsExport;
+using EdiplanDotnetAPI.Api.Utility;
 
 namespace EdiplanDotnetAPI.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/bookings")]
 public class BookingController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -55,6 +57,16 @@ public class BookingController : ControllerBase
         var deleteBookingCommand = new DeleteBookingCommand() { Id = id };
         await _mediator.Send(deleteBookingCommand);
         return NoContent();
+    }
+
+    [HttpGet("export", Name = "ExportBookings")]
+    [FileResultContentType("text/csv")]
+    public async Task<FileResult> ExportBookings()
+    {
+        var fileDto = await _mediator.Send(new GetBookingsExportQuery());
+
+        return File(fileDto.Data, fileDto.ContentType, fileDto.BookingExportFileName);
+
     }
 
 

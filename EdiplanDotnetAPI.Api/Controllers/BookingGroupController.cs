@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EdiplanDotnetAPI.Api.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/bookings/groups")]
 public class BookingGroupController : ControllerBase
 {
     private readonly IMediator _mediator;
