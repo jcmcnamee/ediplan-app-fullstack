@@ -8,12 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Features\Assets\Commands\" />
-    <Folder Include="Features\Assets\Queries\" />
     <Folder Include="Features\Locations\Commands\" />
     <Folder Include="Features\Locations\Queries\" />
     <Folder Include="Features\Productions\Commands\" />
     <Folder Include="Features\Productions\Queries\" />
-    <Folder Include="Profiles\" />
   </ItemGroup>
 
   <ItemGroup>

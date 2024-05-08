@@ -36,7 +36,7 @@ public class EdiplanDbContext : DbContext
             .UseTpcMappingStrategy()
             .Property(a => a.Id)
             //.HasDefaultValueSql("nextval('AssetIds'::regclass)") ; // Db dependant language, change for Db type.
-            .HasDefaultValueSql("nextval('\"AssetIds\"')") ; // Db dependant language, change for Db type.
+            .HasDefaultValueSql("nextval('\"AssetIds\"')");
 
         modelBuilder.Entity<Equipment>()
             .HasBaseType<Asset>()
@@ -213,6 +213,27 @@ public class EdiplanDbContext : DbContext
             LocationId = location4,
             IsConfirmed = false,
             Notes = "Pre-production meetings."
+        });
+
+        // Seed assets
+        modelBuilder.Entity<Equipment>().HasData(new Equipment
+        {
+            Id = 1,
+            Name = "Sony FX6",
+            Value = 1000,
+            AssetNumber = "12442",
+            Make = "Sony",
+            Model = "FX-6",
+            Description = "Faulty lense."
+        });
+        modelBuilder.Entity<Person>().HasData(new Person
+        {
+            Id = 2,
+            Name = "Jeff Goldblum",
+            Role = "Editor",
+            Address = "5 Nincompoop Close",
+            PhoneNumber = "1234567890",
+            Email = "jeff@goldie.com"
         });
     }
 

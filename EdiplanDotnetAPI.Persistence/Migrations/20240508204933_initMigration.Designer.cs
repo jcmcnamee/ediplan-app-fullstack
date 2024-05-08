@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EdiplanDotnetAPI.Persistence.Migrations
 {
     [DbContext(typeof(EdiplanDbContext))]
-    [Migration("20240430204306_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240508204933_initMigration")]
+    partial class initMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,10 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
 
                     b.Property<decimal?>("RateUnit")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<decimal?>("Value")
                         .HasColumnType("numeric");
@@ -162,72 +166,72 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         {
                             Id = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 23, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2367),
+                            EndDate = new DateTime(2024, 5, 31, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8292),
                             IsConfirmed = false,
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "High-speed internet required for remote editing.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 5, 2, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2359)
+                            StartDate = new DateTime(2024, 5, 10, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8284)
                         },
                         new
                         {
                             Id = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 6, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2394),
+                            EndDate = new DateTime(2024, 6, 15, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8315),
                             IsConfirmed = false,
                             Name = "",
                             Notes = "Need access to soundproof dubbing studio.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 5, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2389)
+                            StartDate = new DateTime(2024, 6, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8311)
                         },
                         new
                         {
                             Id = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 20, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2411),
+                            EndDate = new DateTime(2024, 4, 28, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8332),
                             IsConfirmed = true,
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Final editing phase.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 4, 15, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2411)
+                            StartDate = new DateTime(2024, 4, 23, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8331)
                         },
                         new
                         {
                             Id = 4,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 25, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2428),
+                            EndDate = new DateTime(2024, 5, 3, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8348),
                             IsConfirmed = true,
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Location scouting.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 2, 29, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2427)
+                            StartDate = new DateTime(2024, 3, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8348)
                         },
                         new
                         {
                             Id = 5,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 2, 19, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2444),
+                            EndDate = new DateTime(2024, 2, 27, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8364),
                             IsConfirmed = true,
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Principal photography.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 1, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2443)
+                            StartDate = new DateTime(2024, 2, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8364)
                         },
                         new
                         {
                             Id = 6,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 7, 5, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2463),
+                            EndDate = new DateTime(2024, 7, 13, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8381),
                             IsConfirmed = false,
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Pre-production meetings.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 6, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2463)
+                            StartDate = new DateTime(2024, 7, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8381)
                         });
                 });
 
@@ -399,6 +403,20 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.ToTable("equipment", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Sony FX6",
+                            Type = "Equipment",
+                            Value = 1000m,
+                            AssetNumber = "12442",
+                            Description = "Faulty lense.",
+                            Make = "Sony",
+                            Model = "FX-6"
+                        });
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Person", b =>
@@ -426,6 +444,20 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.HasIndex("ProductionId");
 
                     b.ToTable("person", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Jeff Goldblum",
+                            Type = "Person",
+                            Address = "5 Nincompoop Close",
+                            Email = "jeff@goldie.com",
+                            IsStaff = false,
+                            PhoneNumber = "1234567890",
+                            Role = "Editor"
+                        });
                 });
 
             modelBuilder.Entity("EdiplanDotnetAPI.Domain.Entities.Room", b =>

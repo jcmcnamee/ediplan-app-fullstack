@@ -8,6 +8,7 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class Equipment : Asset
 {
+    public override string Type { get; set; } = "Equipment";
     public string? AssetNumber { get; set; }
     public string? Make { get; set; }
     public string? Model { get; set; }

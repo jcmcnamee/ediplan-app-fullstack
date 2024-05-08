@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EdiplanDotnetAPI.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,6 +55,7 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"AssetIds\"')"),
+                    Type = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Rate = table.Column<decimal>(type: "numeric", nullable: true),
                     RateUnit = table.Column<decimal>(type: "numeric", nullable: true),
@@ -103,6 +104,7 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"AssetIds\"')"),
+                    Type = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Rate = table.Column<decimal>(type: "numeric", nullable: true),
                     RateUnit = table.Column<decimal>(type: "numeric", nullable: true),
@@ -175,6 +177,7 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('\"AssetIds\"')"),
+                    Type = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Rate = table.Column<decimal>(type: "numeric", nullable: true),
                     RateUnit = table.Column<decimal>(type: "numeric", nullable: true),
@@ -265,6 +268,16 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "equipment",
+                columns: new[] { "Id", "AssetNumber", "CreatedBy", "CreatedDate", "Description", "LastModifiedBy", "LastModifiedDate", "Make", "Model", "Name", "Rate", "RateUnit", "Type", "Value" },
+                values: new object[] { 1, "12442", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Faulty lense.", null, null, "Sony", "FX-6", "Sony FX6", null, null, "Equipment", 1000m });
+
+            migrationBuilder.InsertData(
+                table: "person",
+                columns: new[] { "Id", "Address", "CreatedBy", "CreatedDate", "Email", "IsStaff", "LastModifiedBy", "LastModifiedDate", "Name", "PhoneNumber", "ProductionId", "Rate", "RateUnit", "Role", "Type", "Value" },
+                values: new object[] { 2, "5 Nincompoop Close", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jeff@goldie.com", false, null, null, "Jeff Goldblum", "1234567890", null, null, null, "Editor", "Person", null });
+
+            migrationBuilder.InsertData(
                 table: "production",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -280,12 +293,12 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "EndDate", "IsConfirmed", "LastModifiedBy", "LastModifiedDate", "LocationId", "Name", "Notes", "ProductionId", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 23, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2367), false, null, null, new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"), "", "High-speed internet required for remote editing.", new Guid("4050a623-5308-4640-8c36-493729f6f884"), new DateTime(2024, 5, 2, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2359) },
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 6, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2394), false, null, null, null, "", "Need access to soundproof dubbing studio.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 5, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2389) },
-                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 20, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2411), true, null, null, new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"), "", "Final editing phase.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 4, 15, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2411) },
-                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 25, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2428), true, null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Location scouting.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 2, 29, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2427) },
-                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 2, 19, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2444), true, null, null, new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"), "", "Principal photography.", new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"), new DateTime(2024, 1, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2443) },
-                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 5, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2463), false, null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Pre-production meetings.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 6, 30, 20, 43, 5, 736, DateTimeKind.Utc).AddTicks(2463) }
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 31, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8292), false, null, null, new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"), "", "High-speed internet required for remote editing.", new Guid("4050a623-5308-4640-8c36-493729f6f884"), new DateTime(2024, 5, 10, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8284) },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 15, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8315), false, null, null, null, "", "Need access to soundproof dubbing studio.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 6, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8311) },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 28, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8332), true, null, null, new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"), "", "Final editing phase.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 4, 23, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8331) },
+                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 3, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8348), true, null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Location scouting.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 3, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8348) },
+                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 2, 27, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8364), true, null, null, new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"), "", "Principal photography.", new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"), new DateTime(2024, 2, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8364) },
+                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 13, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8381), false, null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Pre-production meetings.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 7, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8381) }
                 });
 
             migrationBuilder.CreateIndex(

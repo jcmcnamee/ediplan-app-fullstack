@@ -8,7 +8,7 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class Room : Asset
 {
+    public override string Type { get; set; } = "Room";
     public string? UsedFor { get; set; }
     public string? Description { get; set; }
-
 }

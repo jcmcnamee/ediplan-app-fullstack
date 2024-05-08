@@ -6,7 +6,8 @@ namespace EdiplanDotnetAPI.Domain.Common;
 public abstract class Asset : AuditableEntity
 {
     public int Id { get; set; }
-    public string Name { get; set; } = "New Asset";
+    public abstract string Type { get; set; }
+    public string Name { get; set; } = string.Empty;
     public decimal? Rate { get; set; }
     public decimal? RateUnit { get; set; }
     public decimal? Value { get; set; }
