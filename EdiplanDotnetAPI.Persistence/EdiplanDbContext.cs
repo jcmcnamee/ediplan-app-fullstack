@@ -226,14 +226,96 @@ public class EdiplanDbContext : DbContext
             Model = "FX-6",
             Description = "Faulty lense."
         });
-        modelBuilder.Entity<Person>().HasData(new Person
+        modelBuilder.Entity<Equipment>().HasData(new Equipment
         {
             Id = 2,
-            Name = "Jeff Goldblum",
-            Role = "Editor",
-            Address = "5 Nincompoop Close",
-            PhoneNumber = "1234567890",
-            Email = "jeff@goldie.com"
+            Name = "Edit01",
+            Value = 1000,
+            AssetNumber = "12452",
+            Make = "Hewlett-Packard",
+            Model = "Z4 G4",
+            Description = "Offline machine"
+        });
+        modelBuilder.Entity<Equipment>().HasData(new Equipment
+        {
+            Id = 3,
+            Name = "Edit02",
+            Value = 1000,
+            AssetNumber = "12432",
+            Make = "Hewlett-Packard",
+            Model = "Z4 G4",
+            Description = "Offline machine"
+        });
+        modelBuilder.Entity<Equipment>().HasData(new Equipment
+        {
+            Id = 4,
+            Name = "Edit03",
+            Value = 1000,
+            AssetNumber = "13352",
+            Make = "Hewlett-Packard",
+            Model = "Z4 G4",
+            Description = "Offline machine"
+        });
+        modelBuilder.Entity<Equipment>().HasData(new Equipment
+        {
+            Id = 5,
+            Name = "Edit04",
+            Value = 2000,
+            AssetNumber = "23452",
+            Make = "Hewlett-Packard",
+            Model = "Z8 G4",
+            Description = "Online machine"
+        });
+
+        modelBuilder.Entity<Person>().HasData(new Person
+        {
+            Id = 6,
+            Type = "person",
+            Name = "Jeremy Cutnice",
+            Role = "Offline editor",
+            Address = "23 Maple Street, Sheffield, S1 2AB",
+            PhoneNumber = "07700 123456",
+            Email = "jeremy.cutnice@tvfunmail.com"
+        });
+        modelBuilder.Entity<Person>().HasData(new Person
+        {
+            Id = 7,
+            Type = "person",
+            Name = "Melanie Editswel",
+            Role = "Offline editor",
+            Address = "45 Oak Avenue, Manchester, M2 3CD",
+            PhoneNumber = "07701 234567",
+            Email = "melanie.editswel@postprolol.com"
+        });
+        modelBuilder.Entity<Person>().HasData(new Person
+        {
+            Id = 8,
+            Type = "person",
+            Name = "Daphne Showmaker",
+            Role = "Offline editor",
+            Address = "12 Willow Crescent, Birmingham, B3 4EF",
+            PhoneNumber = "07702 345678",
+            Email = "daphne.showmaker@tvantics.org"
+        });
+        modelBuilder.Entity<Person>().HasData(new Person
+        {
+            Id = 9,
+            Type = "person",
+            Name = "Percival Televisington-Smythe",
+            Role = "Offline editor",
+            Address = "8 Birch Lane, Newcastle, NE4 5FG",
+            PhoneNumber = "07703 456789",
+            Email = "percival.ts@televisingtonsmythe.net"
+        });
+        modelBuilder.Entity<Person>().HasData(new Person
+        {
+            Id = 10,
+            Type = "person",
+            Name = "Dave Programly",
+            Role = "Offline editor",
+            Address = "36 Elm Close, Liverpool, L5 6GH",
+            PhoneNumber = "07704 567890",
+            Email = "dave.programly@tvgeekery.co.uk"
         });
     }
 

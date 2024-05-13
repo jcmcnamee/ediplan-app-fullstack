@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using EdiplanDotnetAPI.Application.Features.Bookings.Commands.DeleteBooking;
 using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingsExport;
 using EdiplanDotnetAPI.Api.Utility;
+using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
+using EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
 
 namespace EdiplanDotnetAPI.Api.Controllers;
 
@@ -38,7 +40,14 @@ public class BookingController : ControllerBase
         return Ok(await _mediator.Send(getBookingDetailQuery));
     }
 
-    [HttpPost(Name = "UpdateBooking")]
+    [HttpPost(Name = "AddBooking")]
+    public async Task<ActionResult<CreateBookingCommandResponse>> Create([FromBody] CreateBookingCommand createBookingCommand)
+    {
+        var response = await _mediator.Send(createBookingCommand);
+        return Ok(response);
+    }
+
+    [HttpPut(Name = "UpdateBooking")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]

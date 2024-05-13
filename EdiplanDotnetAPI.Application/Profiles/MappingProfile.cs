@@ -1,5 +1,6 @@
 using AutoMapper;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
+using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupMembers;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
 using EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
@@ -14,19 +15,22 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Booking Query objects
+        // Command entity mapping
+        CreateMap<Booking, CreateBookingCommand>().ReverseMap();
+        CreateMap<BookingGroup, CreateBookingGroupCommand>().ReverseMap();
+
+        // Entity view model mapping
         CreateMap<Booking, BookingListVm>().ReverseMap();
         CreateMap<Booking, BookingDetailVm>().ReverseMap();
-        CreateMap<Production, ProductionDto>().ReverseMap();
-
-        // Asset Query objects
-        CreateMap<Asset, AssetListVm>().ReverseMap();
-
-        // Booking command objects
-        CreateMap<Booking, CreateBookingCommand>().ReverseMap();
-
-        // Booking Group query objects
         CreateMap<BookingGroup, BookingGroupListVm>();
         CreateMap<BookingGroup, BookingGroupMemberListVm>();
+        CreateMap<Asset, AssetListVm>().ReverseMap();
+
+        // Internal DTOs
+        CreateMap<Production, ProductionDto>().ReverseMap();
+
+        // Response DTOs
+        CreateMap<Booking, CreateBookingDto>().ReverseMap();
+
     }
 }

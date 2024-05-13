@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
+using EdiplanDotnetAPI.Application.Exceptions;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
 
@@ -34,6 +35,12 @@ public class GetBookingDetailQueryHandler : IRequestHandler<GetBookingDetailQuer
     public async Task<BookingDetailVm> Handle(GetBookingDetailQuery request, CancellationToken cancellationToken)
     {
         var booking = await _bookingRepo.GetByIdAsync(request.Id);
+
+        if(booking == null)
+        {
+            throw new NotFoundException(nameof(Booking), request.Id);
+        }
+
         var bookingDetailDto = _mapper.Map<BookingDetailVm>(booking);
 
         if (booking.ProductionId.HasValue)

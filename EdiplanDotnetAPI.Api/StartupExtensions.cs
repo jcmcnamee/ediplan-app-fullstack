@@ -1,4 +1,5 @@
-﻿using EdiplanDotnetAPI.Application;
+﻿using EdiplanDotnetAPI.Api.Middleware;
+using EdiplanDotnetAPI.Application;
 using EdiplanDotnetAPI.Infrastructure;
 using EdiplanDotnetAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,8 @@ public static class StartupExtensions
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCustomExceptionHandler();
 
         app.UseHttpsRedirection();
         app.MapControllers();

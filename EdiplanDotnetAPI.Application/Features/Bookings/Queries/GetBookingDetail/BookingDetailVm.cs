@@ -7,15 +7,12 @@ namespace EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingDetai
 
 public class BookingDetailVm
 {
-    public Guid BookingId { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsConfirmed { get; set; }
     public string Notes { get; set; } = string.Empty;
-
-    public Guid ProductionId { get; set; }
     public ProductionDto? Production { get; set; }
-    public Guid LocationId { get; set; }
     public LocationDto? Location { get; set; }
 }

@@ -19,6 +19,7 @@ public class AssetController : ControllerBase
     public async Task<ActionResult<List<AssetListVm>>> GetAllAssets()
     {
         var result = await _mediator.Send(new GetAssetsListQuery());
+
         return Ok(result);
     }
 }
