@@ -4,6 +4,7 @@ using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBooking
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupMembers;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
 using EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
+using EdiplanDotnetAPI.Application.Features.Bookings.Commands.UpdateBooking;
 using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingDetail;
 using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingsList;
 using EdiplanDotnetAPI.Domain.Common;
@@ -15,8 +16,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Create command entity mapping
+        // Command entity mapping
         CreateMap<Booking, CreateBookingCommand>().ReverseMap();
+        CreateMap<Booking, UpdateBookingCommand>().ReverseMap();
         CreateMap<BookingGroup, CreateBookingGroupCommand>().ReverseMap();
 
         // Entity view model mapping

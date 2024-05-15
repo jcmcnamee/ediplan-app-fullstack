@@ -23,7 +23,7 @@ public class BookingController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllBookings")]
-    [ProducesResponseType(StatusCodes.Status200OK)] // Documentation
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult<List<BookingListVm>>> GetAllBookings()
     {
@@ -33,6 +33,7 @@ public class BookingController : ControllerBase
 
     [HttpGet("{id}", Name = "GetBookingById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult<BookingDetailVm>> GetBookingById(int id)
     {
@@ -40,19 +41,23 @@ public class BookingController : ControllerBase
         return Ok(await _mediator.Send(getBookingDetailQuery));
     }
 
-    [HttpPost(Name = "AddBooking")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
+    [HttpPost(Name = "CreateBooking")]
     public async Task<ActionResult<CreateBookingCommandResponse>> Create([FromBody] CreateBookingCommand createBookingCommand)
     {
         var response = await _mediator.Send(createBookingCommand);
-        return Ok(response);
+        return CreatedAtRoute("GetBookingById", new { Id = response.Booking.Id }, response);
     }
 
-    [HttpPut(Name = "UpdateBooking")]
+    [HttpPut("{id}", Name = "UpdateBooking")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> Update([FromBody] UpdateBookingCommand updateBookingCommand)
+    public async Task<ActionResult> Update(int id, [FromBody] UpdateBookingCommand updateBookingCommand)
     {
+        updateBookingCommand.Id = id;
         await _mediator.Send(updateBookingCommand);
         return NoContent();
     }
@@ -70,6 +75,7 @@ public class BookingController : ControllerBase
 
     [HttpGet("export", Name = "ExportBookings")]
     [FileResultContentType("text/csv")]
+    [ProducesDefaultResponseType]
     public async Task<FileResult> ExportBookings()
     {
         var fileDto = await _mediator.Send(new GetBookingsExportQuery());

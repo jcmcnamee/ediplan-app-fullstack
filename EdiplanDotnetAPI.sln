@@ -27,9 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Api", "Edi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{1CA29524-B460-4379-8724-26BA81CF309F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.IntegrationTests", "Persistence.IntegrationTests\Persistence.IntegrationTests.csproj", "{685F8899-0465-4B19-B8CE-DA727C87E45B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence.IntegrationTests", "Persistence.IntegrationTests\Persistence.IntegrationTests.csproj", "{685F8899-0465-4B19-B8CE-DA727C87E45B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.IntegrationTests", "API.IntegrationTests\API.IntegrationTests.csproj", "{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.IntegrationTests", "API.IntegrationTests\API.IntegrationTests.csproj", "{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiplanDotnetAPI.Identity", "EdiplanDotnetAPI.Identity\EdiplanDotnetAPI.Identity.csproj", "{8E2F5B4E-B01B-4478-87BC-150B6574ADD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2F5B4E-B01B-4478-87BC-150B6574ADD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2F5B4E-B01B-4478-87BC-150B6574ADD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2F5B4E-B01B-4478-87BC-150B6574ADD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2F5B4E-B01B-4478-87BC-150B6574ADD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{1CA29524-B460-4379-8724-26BA81CF309F} = {5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}
 		{685F8899-0465-4B19-B8CE-DA727C87E45B} = {5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}
 		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA} = {5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}
+		{8E2F5B4E-B01B-4478-87BC-150B6574ADD5} = {B102DAAA-95F3-43A0-977C-7B14BED479C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E747281E-D20B-4C4D-9133-1958770925B0}

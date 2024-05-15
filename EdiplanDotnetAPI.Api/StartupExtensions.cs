@@ -10,11 +10,13 @@ namespace EdiplanDotnetAPI.Api;
 
 public static class StartupExtensions
 {
+
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices(builder.Configuration);
         builder.Services.AddPersistenceServices(builder.Configuration);
+        //builder.Services.AddIdentityServices(builder.Configuration);
 
         builder.Services.AddScoped<ILoggedInUserService, LoggedInUserService>();
         builder.Services.AddHttpContextAccessor();
@@ -33,6 +35,7 @@ public static class StartupExtensions
                 .AllowAnyHeader()
                 .AllowCredentials()));
 
+        builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
         return builder.Build();
@@ -40,6 +43,8 @@ public static class StartupExtensions
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        //app.MapIdentityApi<ApplicationUser>();
+
         app.UseCors("open");
 
         if(app.Environment.IsDevelopment())
@@ -71,6 +76,7 @@ public static class StartupExtensions
         catch (Exception ex)
         {
             // Add logging
+            
         }
     }
 }

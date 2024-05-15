@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using EdiplanDotnetAPI.Application.Contracts.Infrastructure;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
+using EdiplanDotnetAPI.Application.Exceptions;
 using EdiplanDotnetAPI.Application.Models.Mail;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Commands.CreateBooking;
 public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, CreateBookingCommandResponse>
@@ -16,10 +13,12 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
     private readonly IMapper _mapper;
     private readonly IBookingRepository _bookingRepository;
     private readonly IEmailService _emailService;
+    private readonly ILogger<CreateBookingCommandHandler> _logger;
 
-    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IEmailService emailService)
+    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IEmailService emailService, ILogger<CreateBookingCommandHandler> logger)
     {
         _emailService = emailService;
+        _logger = logger;
         _mapper = mapper;
         _bookingRepository = bookingRepository;
     }
@@ -45,6 +44,8 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
             {
                 createBookingCommandResponse.ValidationErrors.Add(error.ErrorMessage);
             }
+
+            throw new ValidationException(validationResult);
         }
 
         // If validation successful
@@ -74,6 +75,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
             catch (Exception ex)
             {
                 // Log
+                _logger.LogError($"Mail about booking {booking.Id} failed due to an error with the mail service: {ex.Message}");
             }
 
         }

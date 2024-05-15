@@ -1,22 +1,20 @@
 ﻿using EdiplanDotnetAPI.Application.Contracts.Infrastructure;
 using EdiplanDotnetAPI.Application.Models.Mail;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Infrastructure.Mail;
-internal class EmailService : IEmailService
+public class EmailService : IEmailService
 {
     public EmailSettings _emailSettings { get; }
+    public ILogger<EmailService> _logger { get; }
 
-    public EmailService(IOptions<EmailSettings> emailSettings)
+    public EmailService(IOptions<EmailSettings> emailSettings, ILogger<EmailService> logger)
     {
         _emailSettings = emailSettings.Value;
+        _logger = logger;
     }
     public async Task<bool> SendEmail(Email email)
     {
@@ -35,12 +33,15 @@ internal class EmailService : IEmailService
         var sendGridMessage = MailHelper.CreateSingleEmail(from, to, subject, emailBody, emailBody);
         var response = await client.SendEmailAsync(sendGridMessage);
 
+        _logger.LogInformation($"Email sent to: {to}");
+
         if (response.StatusCode == System.Net.HttpStatusCode.Accepted ||
             response.StatusCode == System.Net.HttpStatusCode.OK)
         {
             return true;
         }
 
+        _logger.LogError("Email sending failed.");
         return false;
 
     }
