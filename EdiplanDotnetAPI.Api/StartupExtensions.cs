@@ -1,5 +1,7 @@
 ﻿using EdiplanDotnetAPI.Api.Middleware;
+using EdiplanDotnetAPI.Api.Services;
 using EdiplanDotnetAPI.Application;
+using EdiplanDotnetAPI.Application.Contracts;
 using EdiplanDotnetAPI.Infrastructure;
 using EdiplanDotnetAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,9 @@ public static class StartupExtensions
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices(builder.Configuration);
         builder.Services.AddPersistenceServices(builder.Configuration);
+
+        builder.Services.AddScoped<ILoggedInUserService, LoggedInUserService>();
+        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddControllers();
 

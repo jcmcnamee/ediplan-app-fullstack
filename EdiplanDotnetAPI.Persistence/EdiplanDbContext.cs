@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using EdiplanDotnetAPI.Application.Contracts;
 using EdiplanDotnetAPI.Domain.Common;
 using EdiplanDotnetAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,18 @@ using Microsoft.Identity.Client;
 namespace EdiplanDotnetAPI.Persistence;
 public class EdiplanDbContext : DbContext
 {
+    private readonly ILoggedInUserService? _loggedInUserService;
+
     public EdiplanDbContext(DbContextOptions<EdiplanDbContext> options)
         : base(options)
     {
+    }
+
+    public EdiplanDbContext(DbContextOptions<EdiplanDbContext> options,
+        ILoggedInUserService loggedInUserService)
+        : base(options)
+    {
+        _loggedInUserService = loggedInUserService;
     }
 
     public DbSet<Booking> Bookings { get; set; }
@@ -328,9 +338,11 @@ public class EdiplanDbContext : DbContext
             {
                 case EntityState.Added:
                     entry.Entity.CreatedDate = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = _loggedInUserService.UserId;
                     break;
                 case EntityState.Modified:
                     entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                    entry.Entity.LastModifiedBy = _loggedInUserService.UserId;
                     break;
             }
         }

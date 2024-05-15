@@ -23,7 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Persistenc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Infrastructure", "EdiplanDotnetAPI.Infrastructure\EdiplanDotnetAPI.Infrastructure.csproj", "{8BDCEE76-7133-4950-B447-972DB62423AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdiplanDotnetAPI.Api", "EdiplanDotnetAPI.Api\EdiplanDotnetAPI.Api.csproj", "{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdiplanDotnetAPI.Api", "EdiplanDotnetAPI.Api\EdiplanDotnetAPI.Api.csproj", "{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{1CA29524-B460-4379-8724-26BA81CF309F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence.IntegrationTests", "Persistence.IntegrationTests\Persistence.IntegrationTests.csproj", "{685F8899-0465-4B19-B8CE-DA727C87E45B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.IntegrationTests", "API.IntegrationTests\API.IntegrationTests.csproj", "{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,18 @@ Global
 		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA29524-B460-4379-8724-26BA81CF309F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA29524-B460-4379-8724-26BA81CF309F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA29524-B460-4379-8724-26BA81CF309F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA29524-B460-4379-8724-26BA81CF309F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{685F8899-0465-4B19-B8CE-DA727C87E45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{685F8899-0465-4B19-B8CE-DA727C87E45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{685F8899-0465-4B19-B8CE-DA727C87E45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{685F8899-0465-4B19-B8CE-DA727C87E45B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +83,9 @@ Global
 		{CCC663A2-8B9A-45C9-ADF8-AEDB6B32F6BA} = {B102DAAA-95F3-43A0-977C-7B14BED479C5}
 		{8BDCEE76-7133-4950-B447-972DB62423AD} = {B102DAAA-95F3-43A0-977C-7B14BED479C5}
 		{CAA2E12C-03FC-4F1F-92BA-84E3CEECD09C} = {B143E29F-6962-4CFD-9572-DD14D404F71D}
+		{1CA29524-B460-4379-8724-26BA81CF309F} = {5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}
+		{685F8899-0465-4B19-B8CE-DA727C87E45B} = {5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}
+		{9D82DDED-F707-4C10-B0D2-D6A3A20C32CA} = {5095D3E3-B1DA-46BC-834E-7B595A2E8DC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E747281E-D20B-4C4D-9133-1958770925B0}

@@ -15,7 +15,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // Command entity mapping
+        // Create command entity mapping
         CreateMap<Booking, CreateBookingCommand>().ReverseMap();
         CreateMap<BookingGroup, CreateBookingGroupCommand>().ReverseMap();
 
@@ -31,6 +31,7 @@ public class MappingProfile : Profile
 
         // Response DTOs
         CreateMap<Booking, CreateBookingDto>().ReverseMap();
+        CreateMap<BookingGroup, CreateBookingGroupDto>().ReverseMap();
 
     }
 }
