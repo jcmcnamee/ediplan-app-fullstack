@@ -1,4 +1,5 @@
 using AutoMapper;
+using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupMembers;
@@ -27,6 +28,9 @@ public class MappingProfile : Profile
         CreateMap<BookingGroup, BookingGroupListVm>();
         CreateMap<BookingGroup, BookingGroupMemberListVm>();
         CreateMap<Asset, AssetListVm>().ReverseMap();
+        CreateMap<Asset, EquipmentDetailVm>().ReverseMap();
+        CreateMap<Asset, PersonDetailVm>().ReverseMap();
+        CreateMap<Asset, RoomDetailVm>().ReverseMap();
 
         // Internal DTOs
         CreateMap<Production, ProductionDto>().ReverseMap();

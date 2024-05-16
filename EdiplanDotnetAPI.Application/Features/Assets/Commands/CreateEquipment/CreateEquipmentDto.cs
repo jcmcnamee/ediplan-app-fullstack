@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EdiplanDotnetAPI.Domain.Common;
+﻿namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
 
-namespace EdiplanDotnetAPI.Domain.Entities;
-
-public class Equipment : Asset
+public class CreateEquipmentDto
 {
-    public override string Type { get; set; } = "Equipment";
+    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public decimal? Rate { get; set; }
     public decimal? RateUnit { get; set; }

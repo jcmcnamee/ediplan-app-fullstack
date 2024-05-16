@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Assets\Commands\" />
+    <Compile Remove="Features\Assets\Commands\CreateEquipment\**" />
+    <EmbeddedResource Remove="Features\Assets\Commands\CreateEquipment\**" />
+    <None Remove="Features\Assets\Commands\CreateEquipment\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Features\Locations\Commands\" />
     <Folder Include="Features\Locations\Queries\" />
     <Folder Include="Features\Productions\Commands\" />
