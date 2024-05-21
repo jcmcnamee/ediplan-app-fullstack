@@ -163,72 +163,72 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         {
                             Id = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 31, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8292),
+                            EndDate = new DateTime(2024, 6, 13, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1199),
                             IsConfirmed = false,
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "High-speed internet required for remote editing.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 5, 10, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8284)
+                            StartDate = new DateTime(2024, 5, 23, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1188)
                         },
                         new
                         {
                             Id = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 15, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8315),
+                            EndDate = new DateTime(2024, 6, 28, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1227),
                             IsConfirmed = false,
                             Name = "",
                             Notes = "Need access to soundproof dubbing studio.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 6, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8311)
+                            StartDate = new DateTime(2024, 6, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1219)
                         },
                         new
                         {
                             Id = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 28, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8332),
+                            EndDate = new DateTime(2024, 5, 11, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1243),
                             IsConfirmed = true,
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Final editing phase.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 4, 23, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8331)
+                            StartDate = new DateTime(2024, 5, 6, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1243)
                         },
                         new
                         {
                             Id = 4,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 3, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8348),
+                            EndDate = new DateTime(2024, 5, 16, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1269),
                             IsConfirmed = true,
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Location scouting.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 3, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8348)
+                            StartDate = new DateTime(2024, 3, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1258)
                         },
                         new
                         {
                             Id = 5,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 2, 27, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8364),
+                            EndDate = new DateTime(2024, 3, 11, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1287),
                             IsConfirmed = true,
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Principal photography.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 2, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8364)
+                            StartDate = new DateTime(2024, 2, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1286)
                         },
                         new
                         {
                             Id = 6,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 7, 13, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8381),
+                            EndDate = new DateTime(2024, 7, 26, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1306),
                             IsConfirmed = false,
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Pre-production meetings.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 7, 8, 20, 49, 33, 519, DateTimeKind.Utc).AddTicks(8381)
+                            StartDate = new DateTime(2024, 7, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1305)
                         });
                 });
 
@@ -404,15 +404,58 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = -1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Sony FX6",
+                            Name = "",
                             Type = "Equipment",
-                            Value = 1000m,
                             AssetNumber = "12442",
                             Description = "Faulty lense.",
                             Make = "Sony",
                             Model = "FX-6"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
+                            Type = "Equipment",
+                            AssetNumber = "12452",
+                            Description = "Offline machine",
+                            Make = "Hewlett-Packard",
+                            Model = "Z4 G4"
+                        },
+                        new
+                        {
+                            Id = -3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
+                            Type = "Equipment",
+                            AssetNumber = "12432",
+                            Description = "Offline machine",
+                            Make = "Hewlett-Packard",
+                            Model = "Z4 G4"
+                        },
+                        new
+                        {
+                            Id = -4,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
+                            Type = "Equipment",
+                            AssetNumber = "13352",
+                            Description = "Offline machine",
+                            Make = "Hewlett-Packard",
+                            Model = "Z4 G4"
+                        },
+                        new
+                        {
+                            Id = -5,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "",
+                            Type = "Equipment",
+                            AssetNumber = "23452",
+                            Description = "Online machine",
+                            Make = "Hewlett-Packard",
+                            Model = "Z8 G4"
                         });
                 });
 
@@ -445,15 +488,63 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 2,
+                            Id = -6,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Jeff Goldblum",
-                            Type = "Person",
-                            Address = "5 Nincompoop Close",
-                            Email = "jeff@goldie.com",
+                            Name = "Jeremy Cutnice",
+                            Type = "person",
+                            Address = "23 Maple Street, Sheffield, S1 2AB",
+                            Email = "jeremy.cutnice@tvfunmail.com",
                             IsStaff = false,
-                            PhoneNumber = "1234567890",
-                            Role = "Editor"
+                            PhoneNumber = "07700 123456",
+                            Role = "Offline editor"
+                        },
+                        new
+                        {
+                            Id = -7,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Melanie Editswel",
+                            Type = "person",
+                            Address = "45 Oak Avenue, Manchester, M2 3CD",
+                            Email = "melanie.editswel@postprolol.com",
+                            IsStaff = false,
+                            PhoneNumber = "07701 234567",
+                            Role = "Offline editor"
+                        },
+                        new
+                        {
+                            Id = -8,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Daphne Showmaker",
+                            Type = "person",
+                            Address = "12 Willow Crescent, Birmingham, B3 4EF",
+                            Email = "daphne.showmaker@tvantics.org",
+                            IsStaff = false,
+                            PhoneNumber = "07702 345678",
+                            Role = "Offline editor"
+                        },
+                        new
+                        {
+                            Id = -9,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Percival Televisington-Smythe",
+                            Type = "person",
+                            Address = "8 Birch Lane, Newcastle, NE4 5FG",
+                            Email = "percival.ts@televisingtonsmythe.net",
+                            IsStaff = false,
+                            PhoneNumber = "07703 456789",
+                            Role = "Offline editor"
+                        },
+                        new
+                        {
+                            Id = -10,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Dave Programly",
+                            Type = "person",
+                            Address = "36 Elm Close, Liverpool, L5 6GH",
+                            Email = "dave.programly@tvgeekery.co.uk",
+                            IsStaff = false,
+                            PhoneNumber = "07704 567890",
+                            Role = "Offline editor"
                         });
                 });
 

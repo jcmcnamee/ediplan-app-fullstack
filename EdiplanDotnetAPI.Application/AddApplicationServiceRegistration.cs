@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EdiplanDotnetAPI.Application.Contracts;
+using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateAsset;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +18,7 @@ namespace EdiplanDotnetAPI.Application
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+            services.AddTransient<IRequestHandler<CreateEquipmentCommand, CreateAssetCommandResponse>, CreateAssetCommandHandler>();
 
             return services;
         }

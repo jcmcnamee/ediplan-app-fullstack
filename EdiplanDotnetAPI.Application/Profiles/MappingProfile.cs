@@ -1,4 +1,5 @@
 using AutoMapper;
+using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateAsset;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
@@ -21,6 +22,7 @@ public class MappingProfile : Profile
         CreateMap<Booking, CreateBookingCommand>().ReverseMap();
         CreateMap<Booking, UpdateBookingCommand>().ReverseMap();
         CreateMap<BookingGroup, CreateBookingGroupCommand>().ReverseMap();
+        CreateMap<Equipment, CreateEquipmentCommand>().ReverseMap();
 
         // Entity view model mapping
         CreateMap<Booking, BookingListVm>().ReverseMap();
@@ -38,6 +40,7 @@ public class MappingProfile : Profile
         // Response DTOs
         CreateMap<Booking, CreateBookingDto>().ReverseMap();
         CreateMap<BookingGroup, CreateBookingGroupDto>().ReverseMap();
+        CreateMap<Equipment, CreateEquipmentDto>().ReverseMap();
 
     }
 }

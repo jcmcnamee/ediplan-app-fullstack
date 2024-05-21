@@ -12,12 +12,15 @@ public static class PersistenceServiceRegistration
     {
         services.AddDbContext<EdiplanDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString
-                ("EdiplanDotnetAPIConnectionString")));
+                ("EdiplanDotnetAPIConnectionString"))
+            .EnableSensitiveDataLogging()
+            .EnableDetailedErrors());
 
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
         services.AddScoped<IBookingGroupRepository, BookingGroupRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
+        services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
         return services;
     }

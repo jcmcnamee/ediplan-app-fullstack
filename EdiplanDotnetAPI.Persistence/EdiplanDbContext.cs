@@ -228,7 +228,7 @@ public class EdiplanDbContext : DbContext
         // Seed assets
         modelBuilder.Entity<Equipment>().HasData(new Equipment
         {
-            Id = 1,
+            Id = -1,
             Name = "Sony FX6",
             Value = 1000,
             AssetNumber = "12442",
@@ -238,7 +238,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Equipment>().HasData(new Equipment
         {
-            Id = 2,
+            Id = -2,
             Name = "Edit01",
             Value = 1000,
             AssetNumber = "12452",
@@ -248,7 +248,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Equipment>().HasData(new Equipment
         {
-            Id = 3,
+            Id = -3,
             Name = "Edit02",
             Value = 1000,
             AssetNumber = "12432",
@@ -258,7 +258,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Equipment>().HasData(new Equipment
         {
-            Id = 4,
+            Id = -4,
             Name = "Edit03",
             Value = 1000,
             AssetNumber = "13352",
@@ -268,7 +268,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Equipment>().HasData(new Equipment
         {
-            Id = 5,
+            Id = -5,
             Name = "Edit04",
             Value = 2000,
             AssetNumber = "23452",
@@ -279,7 +279,7 @@ public class EdiplanDbContext : DbContext
 
         modelBuilder.Entity<Person>().HasData(new Person
         {
-            Id = 6,
+            Id = -6,
             Type = "person",
             Name = "Jeremy Cutnice",
             Role = "Offline editor",
@@ -289,7 +289,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Person>().HasData(new Person
         {
-            Id = 7,
+            Id = -7,
             Type = "person",
             Name = "Melanie Editswel",
             Role = "Offline editor",
@@ -299,7 +299,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Person>().HasData(new Person
         {
-            Id = 8,
+            Id = -8,
             Type = "person",
             Name = "Daphne Showmaker",
             Role = "Offline editor",
@@ -309,7 +309,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Person>().HasData(new Person
         {
-            Id = 9,
+            Id = -9,
             Type = "person",
             Name = "Percival Televisington-Smythe",
             Role = "Offline editor",
@@ -319,7 +319,7 @@ public class EdiplanDbContext : DbContext
         });
         modelBuilder.Entity<Person>().HasData(new Person
         {
-            Id = 10,
+            Id = -10,
             Type = "person",
             Name = "Dave Programly",
             Role = "Offline editor",

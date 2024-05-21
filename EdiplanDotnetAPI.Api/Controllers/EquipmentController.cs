@@ -1,4 +1,4 @@
-﻿using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
+﻿using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateAsset;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +19,9 @@ public class EquipmentController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
     [HttpPost(Name = "CreateEquipment")]
-    public async Task<ActionResult<CreateEquipmentCommandResponse>> Create([FromBody]
-    CreateEquipmentCommand createEquipmentCommand)
+    public async Task<ActionResult<CreateAssetCommandResponse>> Create(CreateEquipmentCommand createEquipmentCommand)
     {
         var response = await _mediator.Send(createEquipmentCommand);
-        return CreatedAtRoute("GetAssetById", new {Id = response.Equipment.Id}, response);
+        return CreatedAtRoute("GetAssetById", new {Id = response.CreateAssetDto.Id}, response);
     }
 }
