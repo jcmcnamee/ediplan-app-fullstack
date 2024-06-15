@@ -172,7 +172,7 @@ public class EdiplanDbContext : DbContext
             EndDate = DateTime.UtcNow.AddDays(23),
             ProductionId = prog1,
             LocationId = location1,
-            IsConfirmed = false,
+            Status = "provisional",
             Notes = "High-speed internet required for remote editing."
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
@@ -181,7 +181,7 @@ public class EdiplanDbContext : DbContext
             StartDate = DateTime.UtcNow.AddMonths(1),
             EndDate = DateTime.UtcNow.AddMonths(1).AddDays(7),
             ProductionId = prog2,
-            IsConfirmed = false,
+            Status = "provisional",
             Notes = "Need access to soundproof dubbing studio."
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
@@ -191,7 +191,7 @@ public class EdiplanDbContext : DbContext
             EndDate = DateTime.UtcNow.AddDays(-10),
             ProductionId = prog2,
             LocationId = location2,
-            IsConfirmed = true,
+            Status = "confirmed",
             Notes = "Final editing phase."
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
@@ -201,7 +201,7 @@ public class EdiplanDbContext : DbContext
             EndDate = DateTime.UtcNow.AddDays(-5),
             ProductionId = prog3,
             LocationId = location4,
-            IsConfirmed = true,
+            Status = "confirmed",
             Notes = "Location scouting."
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
@@ -211,7 +211,7 @@ public class EdiplanDbContext : DbContext
             EndDate = DateTime.UtcNow.AddMonths(-2).AddDays(-10),
             ProductionId = prog4,
             LocationId = location3,
-            IsConfirmed = true,
+            Status = "confirmed",
             Notes = "Principal photography."
         });
         modelBuilder.Entity<Booking>().HasData(new Booking
@@ -221,7 +221,7 @@ public class EdiplanDbContext : DbContext
             EndDate = DateTime.UtcNow.AddMonths(2).AddDays(5),
             ProductionId = prog3,
             LocationId = location4,
-            IsConfirmed = false,
+            Status = "confirmed",
             Notes = "Pre-production meetings."
         });
 

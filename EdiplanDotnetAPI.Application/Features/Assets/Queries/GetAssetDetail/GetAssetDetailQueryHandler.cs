@@ -3,51 +3,49 @@ using EdiplanDotnetAPI.Application.Contracts;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
 using EdiplanDotnetAPI.Application.Exceptions;
 using EdiplanDotnetAPI.Domain.Common;
+using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
-public class GetAssetDetailQueryHandler : IRequestHandler<GetAssetDetailQuery, IAssetDetailVm>
+public class GetAssetDetailQueryHandler : IRequestHandler<GetAssetDetailQuery, AssetDetailVm>
 {
     private readonly IMapper _mapper;
-    private readonly IAsyncRepository<Asset> _assetRepo;
-    private readonly IDictionary<string, Type> _assetTypeMap;
+    private readonly IAssetRepository _assetRepo;
 
-    public GetAssetDetailQueryHandler(IMapper mapper, IAsyncRepository<Asset> assetRepo)
+    public GetAssetDetailQueryHandler(IMapper mapper, IAssetRepository assetRepo)
     {
         _mapper = mapper;
         _assetRepo = assetRepo;
-        _assetTypeMap = new Dictionary<string, Type>
-        {
-            {"Equipment", typeof(EquipmentDetailVm)},
-            {"Person", typeof(PersonDetailVm)},
-            {"Room", typeof(RoomDetailVm) }
-        };
-    
     }
 
-    public async Task<IAssetDetailVm> Handle(GetAssetDetailQuery request, CancellationToken cancellationToken)
+    public async Task<AssetDetailVm> Handle(GetAssetDetailQuery request, CancellationToken cancellationToken)
     {
         var asset = await _assetRepo.GetByIdAsync(request.Id);
+
         if (asset == null)
         {
-            throw new NotFoundException(nameof(asset), request.Id);
+            throw new NotFoundException(nameof(Asset), request.Id);
         }
 
-        // Try and get type, output view model type on success
-        if (!_assetTypeMap.TryGetValue(asset.Type, out var vmType))
+        AssetDetailVm detailVm = new AssetDetailVm();
+
+        switch (asset.GetType().Name)
         {
-            // Needs more suitable exception type...
-            throw new NotFoundException($"Unknown asset type: {asset.Type}", request.Id);
+            case "Equipment":
+                detailVm = _mapper.Map<EquipmentDetailVm>(asset);
+                break;
+            case "Person":
+                detailVm = _mapper.Map<PersonDetailVm>(asset);
+                break;
+            case "Room":
+                detailVm = _mapper.Map<RoomDetailVm>(asset);
+                break;
+            default:
+                // some kind of exception here
+                break;
         }
+        return detailVm;
 
-        var assetDetailDto = (IAssetDetailVm)_mapper.Map(asset, typeof(Asset), vmType);
-
-        return assetDetailDto;
     }
+
 }

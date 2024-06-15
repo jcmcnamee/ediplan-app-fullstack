@@ -1,5 +1,6 @@
 ﻿using EdiplanDotnetAPI.Application.Contracts;
 using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateAsset;
+using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EdiplanDotnetAPI.Persistence.Migrations
 {
     [DbContext(typeof(EdiplanDbContext))]
-    [Migration("20240521120711_initMigration")]
+    [Migration("20240613191723_initMigration")]
     partial class initMigration
     {
         /// <inheritdoc />
@@ -75,9 +75,6 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("Value")
-                        .HasColumnType("numeric");
-
                     b.HasKey("Id");
 
                     b.ToTable((string)null);
@@ -127,9 +124,6 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -153,6 +147,10 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
@@ -166,72 +164,72 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         {
                             Id = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 13, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1199),
-                            IsConfirmed = false,
+                            EndDate = new DateTime(2024, 7, 6, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(858),
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "High-speed internet required for remote editing.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 5, 23, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1188)
+                            StartDate = new DateTime(2024, 6, 15, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(847),
+                            Status = "provisional"
                         },
                         new
                         {
                             Id = 2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 28, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1227),
-                            IsConfirmed = false,
+                            EndDate = new DateTime(2024, 7, 20, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(906),
                             Name = "",
                             Notes = "Need access to soundproof dubbing studio.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 6, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1219)
+                            StartDate = new DateTime(2024, 7, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(898),
+                            Status = "provisional"
                         },
                         new
                         {
                             Id = 3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 11, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1243),
-                            IsConfirmed = true,
+                            EndDate = new DateTime(2024, 6, 3, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(930),
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Final editing phase.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 5, 6, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1243)
+                            StartDate = new DateTime(2024, 5, 29, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(929),
+                            Status = "confirmed"
                         },
                         new
                         {
                             Id = 4,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 16, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1269),
-                            IsConfirmed = true,
+                            EndDate = new DateTime(2024, 6, 8, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(964),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Location scouting.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 3, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1258)
+                            StartDate = new DateTime(2024, 4, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(952),
+                            Status = "confirmed"
                         },
                         new
                         {
                             Id = 5,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 3, 11, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1287),
-                            IsConfirmed = true,
+                            EndDate = new DateTime(2024, 4, 3, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(990),
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Principal photography.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 2, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1286)
+                            StartDate = new DateTime(2024, 3, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(989),
+                            Status = "confirmed"
                         },
                         new
                         {
                             Id = 6,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 7, 26, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1306),
-                            IsConfirmed = false,
+                            EndDate = new DateTime(2024, 8, 18, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(1022),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Pre-production meetings.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 7, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1305)
+                            StartDate = new DateTime(2024, 8, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(1021),
+                            Status = "confirmed"
                         });
                 });
 
@@ -402,6 +400,9 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("text");
 
+                    b.Property<decimal?>("Value")
+                        .HasColumnType("numeric");
+
                     b.ToTable("equipment", (string)null);
 
                     b.HasData(
@@ -409,56 +410,61 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                         {
                             Id = -1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "",
-                            Type = "Equipment",
+                            Name = "Sony FX6",
+                            Type = "equipment",
                             AssetNumber = "12442",
                             Description = "Faulty lense.",
                             Make = "Sony",
-                            Model = "FX-6"
+                            Model = "FX-6",
+                            Value = 1000m
                         },
                         new
                         {
                             Id = -2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "",
-                            Type = "Equipment",
+                            Name = "Edit01",
+                            Type = "equipment",
                             AssetNumber = "12452",
                             Description = "Offline machine",
                             Make = "Hewlett-Packard",
-                            Model = "Z4 G4"
+                            Model = "Z4 G4",
+                            Value = 1000m
                         },
                         new
                         {
                             Id = -3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "",
-                            Type = "Equipment",
+                            Name = "Edit02",
+                            Type = "equipment",
                             AssetNumber = "12432",
                             Description = "Offline machine",
                             Make = "Hewlett-Packard",
-                            Model = "Z4 G4"
+                            Model = "Z4 G4",
+                            Value = 1000m
                         },
                         new
                         {
                             Id = -4,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "",
-                            Type = "Equipment",
+                            Name = "Edit03",
+                            Type = "equipment",
                             AssetNumber = "13352",
                             Description = "Offline machine",
                             Make = "Hewlett-Packard",
-                            Model = "Z4 G4"
+                            Model = "Z4 G4",
+                            Value = 1000m
                         },
                         new
                         {
                             Id = -5,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "",
-                            Type = "Equipment",
+                            Name = "Edit04",
+                            Type = "equipment",
                             AssetNumber = "23452",
                             Description = "Online machine",
                             Make = "Hewlett-Packard",
-                            Model = "Z8 G4"
+                            Model = "Z8 G4",
+                            Value = 2000m
                         });
                 });
 

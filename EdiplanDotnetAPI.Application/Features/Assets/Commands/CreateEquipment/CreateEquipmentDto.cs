@@ -1,8 +1,15 @@
-﻿namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
+﻿using EdiplanDotnetAPI.Application.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class CreateEquipmentDto
+namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
+public class CreateEquipmentDto : ICreateAssetDto
 {
     public int Id { get; set; }
+    public string Type { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public decimal? Rate { get; set; }
     public decimal? RateUnit { get; set; }

@@ -10,8 +10,8 @@ public class CreateEquipmentCommandResponse : BaseResponse
 {
     public CreateEquipmentCommandResponse() : base()
     {
-        
+
     }
 
-    public CreateEquipmentDto Equipment { get; set; } = default!;
+    public CreateEquipmentDto Asset { get; set; } = default!;
 }

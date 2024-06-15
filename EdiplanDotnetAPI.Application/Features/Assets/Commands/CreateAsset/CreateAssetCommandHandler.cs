@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EdiplanDotnetAPI.Application.Contracts;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
+using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
 
@@ -49,7 +50,7 @@ public class CreateAssetCommandHandler : IRequestHandler<ICreateAssetCommand, Cr
 
         }
 
-        return response; 
+        return response;
 
 
     }

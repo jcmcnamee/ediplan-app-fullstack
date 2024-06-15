@@ -5,6 +5,7 @@ using EdiplanDotnetAPI.Application.Contracts;
 using EdiplanDotnetAPI.Infrastructure;
 using EdiplanDotnetAPI.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace EdiplanDotnetAPI.Api;
 
@@ -21,15 +22,22 @@ public static class StartupExtensions
         builder.Services.AddScoped<ILoggedInUserService, LoggedInUserService>();
         builder.Services.AddHttpContextAccessor();
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(options =>
+        {
+            options.ReturnHttpNotAcceptable = true;
+        }).AddNewtonsoftJson(setupAction =>
+        {
+            setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        })
+        .AddXmlDataContractSerializerFormatters();
 
         builder.Services.AddCors(
             options => options.AddPolicy(
                 "open",
                 policy => policy.WithOrigins([builder.Configuration["ApiUrl"] ??
-                "https://localhost:7205",
+                "https://localhost:7080",
                 builder.Configuration["ClientUrl"] ??
-                "https://localhost:7080"])
+                "https://localhost:5173"])
                 .AllowAnyMethod()
                 .SetIsOriginAllowed(pol => true)
                 .AllowAnyHeader()

@@ -10,7 +10,6 @@ public abstract class Asset : AuditableEntity
     public string Name { get; set; } = string.Empty;
     public decimal? Rate { get; set; }
     public decimal? RateUnit { get; set; }
-    public decimal? Value { get; set; }
 
     // Navigation properties
     public List<AssetGroup> AssetGroups { get; } = new();

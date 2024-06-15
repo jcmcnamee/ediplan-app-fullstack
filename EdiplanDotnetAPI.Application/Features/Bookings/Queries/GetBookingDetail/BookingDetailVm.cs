@@ -11,7 +11,7 @@ public class BookingDetailVm
     public string Name { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public bool IsConfirmed { get; set; }
+    public string Status { get; set; }
     public string Notes { get; set; } = string.Empty;
     public ProductionDto? Production { get; set; }
     public LocationDto? Location { get; set; }

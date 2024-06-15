@@ -11,7 +11,7 @@ public class CreateBookingDto
     public string Name { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public bool IsConfirmed { get; set; } = true;
+    public string Status { get; set; } = string.Empty;
     public string? Notes { get; set; }
     public Guid? ProductionId { get; set; }
     public Guid? LocationId { get; set; }

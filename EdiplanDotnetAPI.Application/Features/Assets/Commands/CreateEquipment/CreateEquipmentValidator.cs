@@ -9,12 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateAsset;
+namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
 public class CreateEquipmentValidator : AbstractValidator<CreateEquipmentCommand>
 {
-    private readonly IAsyncRepository<Equipment> _equipmentRepository;
+    private readonly IEquipmentRepository _equipmentRepository;
 
-    public CreateEquipmentValidator(IAsyncRepository<Equipment> equipmentRepository)
+    public CreateEquipmentValidator(IEquipmentRepository equipmentRepository)
     {
         _equipmentRepository = equipmentRepository;
     }

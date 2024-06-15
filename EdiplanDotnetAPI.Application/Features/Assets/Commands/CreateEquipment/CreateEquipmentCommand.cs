@@ -1,11 +1,14 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EdiplanDotnetAPI.Application.Contracts;
 
 namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
-public class CreateEquipmentCommand : IRequest<CreateEquipmentCommandResponse>
+public class CreateEquipmentCommand : ICreateAssetCommand
 {
+    public string Name { get; set; } = string.Empty;
+    public decimal? Rate { get; set; }
+    public decimal? RateUnit { get; set; }
+    public decimal? Value { get; set; }
+    public string? AssetNumber { get; set; }
+    public string? Make { get; set; }
+    public string? Model { get; set; }
+    public string? Description { get; set; }
 }

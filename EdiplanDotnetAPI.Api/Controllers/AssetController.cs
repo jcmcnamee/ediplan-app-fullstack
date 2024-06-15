@@ -2,6 +2,7 @@
 using EdiplanDotnetAPI.Application.Features.Assets.Commands.DeleteAsset;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
+using EdiplanDotnetAPI.Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,7 +47,7 @@ public class AssetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     [HttpGet("{id}", Name = "GetAssetById")]
-    public async Task<ActionResult<IAssetDetailVm>> GetAssetById(int id)
+    public async Task<ActionResult<AssetDetailVm>> GetAssetById(int id)
     {
         var getAssetDetailQuery = new GetAssetDetailQuery()
         {

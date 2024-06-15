@@ -37,7 +37,7 @@ public class EdiplanDbContextTests
         {
             StartDate = DateTime.UtcNow.AddMonths(2),
             EndDate = DateTime.UtcNow.AddMonths(2).AddDays(5),
-            IsConfirmed = false,
+            Status = "provisional",
             Notes = "Pre-production meetings."
         };
 

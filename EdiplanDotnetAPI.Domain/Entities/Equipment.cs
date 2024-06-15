@@ -12,5 +12,6 @@ public class Equipment : Asset
     public string? AssetNumber { get; set; }
     public string? Make { get; set; }
     public string? Model { get; set; }
+    public decimal? Value { get; set; }
     public string? Description { get; set; }
 }

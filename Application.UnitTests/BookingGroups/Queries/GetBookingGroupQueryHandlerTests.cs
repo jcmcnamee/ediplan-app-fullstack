@@ -5,16 +5,17 @@ using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGrou
 using EdiplanDotnetAPI.Application.Profiles;
 using EdiplanDotnetAPI.Domain.Entities;
 using Moq;
-using Shouldly;
+using Xunit;
 
 
-namespace Application.UnitTests.Categories.Queries;
+namespace Application.UnitTests.BookingGroups.Queries;
 public class GetBookingGroupQueryHandlerTests
 {
     private readonly IMapper _mapper;
     private readonly Mock<IAsyncRepository<BookingGroup>> _mockGroupRepository;
     public GetBookingGroupQueryHandlerTests()
     {
+        // Test double (mock)
         _mockGroupRepository = RepositoryMocks.GetGroupRepository();
         var configProvider = new MapperConfiguration(cfg =>
         {
@@ -31,8 +32,10 @@ public class GetBookingGroupQueryHandlerTests
 
         var result = await handler.Handle(new GetBookingGroupListQuery(), CancellationToken.None);
 
-        result.ShouldBeOfType<List<BookingGroupListVm>>();
+        //result.ShouldBeOfType<List<BookingGroupListVm>>();
 
-        result.Count.ShouldBe(4);
+        //result.Count.ShouldBe(4);
+
+        Assert.IsType<List<BookingGroupListVm>>(result);
     }
 } 

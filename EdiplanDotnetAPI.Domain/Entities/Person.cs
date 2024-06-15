@@ -4,7 +4,7 @@ namespace EdiplanDotnetAPI.Domain.Entities;
 
 public class Person : Asset
 {
-    public override string Type { get; set; } = "Person";
+    public override string Type { get; set; } = "person";
     public string? Role { get; set; }
     public string? Address { get; set; }
     public string? PhoneNumber { get; set; }

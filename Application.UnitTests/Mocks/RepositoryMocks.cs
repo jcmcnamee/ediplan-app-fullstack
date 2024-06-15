@@ -43,6 +43,7 @@ public class RepositoryMocks
 
         // Create mock implementation of IAsyncRepository
         var mockGroupRepository = new Mock<IAsyncRepository<BookingGroup>>();
+
         // State that when you call ListAllAsync it should just return all groups
         mockGroupRepository.Setup(repo => repo.ListAllAsync())
             .ReturnsAsync(groups);

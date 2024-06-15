@@ -1,5 +1,5 @@
 using AutoMapper;
-using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateAsset;
+using EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateEquipment;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
 using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
@@ -24,15 +24,19 @@ public class MappingProfile : Profile
         CreateMap<BookingGroup, CreateBookingGroupCommand>().ReverseMap();
         CreateMap<Equipment, CreateEquipmentCommand>().ReverseMap();
 
+        // PATCH maps
+        CreateMap<Booking, UpdateBookingDto>().ReverseMap();
+
         // Entity view model mapping
-        CreateMap<Booking, BookingListVm>().ReverseMap();
+        CreateMap<Booking, BookingListVm>()
+            .ForMember(dest => dest.ProductionName, opt => opt.MapFrom(src => src.Production.Name));
         CreateMap<Booking, BookingDetailVm>().ReverseMap();
         CreateMap<BookingGroup, BookingGroupListVm>();
         CreateMap<BookingGroup, BookingGroupMemberListVm>();
         CreateMap<Asset, AssetListVm>().ReverseMap();
-        CreateMap<Asset, EquipmentDetailVm>().ReverseMap();
-        CreateMap<Asset, PersonDetailVm>().ReverseMap();
-        CreateMap<Asset, RoomDetailVm>().ReverseMap();
+        CreateMap<Equipment, EquipmentDetailVm>().ReverseMap();
+        CreateMap<Person, PersonDetailVm>().ReverseMap();
+        CreateMap<Room, RoomDetailVm>().ReverseMap();
 
         // Internal DTOs
         CreateMap<Production, ProductionDto>().ReverseMap();

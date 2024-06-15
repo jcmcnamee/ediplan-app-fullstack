@@ -59,10 +59,10 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Rate = table.Column<decimal>(type: "numeric", nullable: true),
                     RateUnit = table.Column<decimal>(type: "numeric", nullable: true),
-                    Value = table.Column<decimal>(type: "numeric", nullable: true),
                     AssetNumber = table.Column<string>(type: "text", nullable: true),
                     Make = table.Column<string>(type: "text", nullable: true),
                     Model = table.Column<string>(type: "text", nullable: true),
+                    Value = table.Column<decimal>(type: "numeric", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -108,7 +108,6 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Rate = table.Column<decimal>(type: "numeric", nullable: true),
                     RateUnit = table.Column<decimal>(type: "numeric", nullable: true),
-                    Value = table.Column<decimal>(type: "numeric", nullable: true),
                     UsedFor = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
@@ -148,7 +147,7 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
                     ProductionId = table.Column<Guid>(type: "uuid", nullable: true),
                     LocationId = table.Column<Guid>(type: "uuid", nullable: true),
@@ -181,7 +180,6 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Rate = table.Column<decimal>(type: "numeric", nullable: true),
                     RateUnit = table.Column<decimal>(type: "numeric", nullable: true),
-                    Value = table.Column<decimal>(type: "numeric", nullable: true),
                     Role = table.Column<string>(type: "text", nullable: true),
                     Address = table.Column<string>(type: "text", nullable: true),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
@@ -272,23 +270,23 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
                 columns: new[] { "Id", "AssetNumber", "CreatedBy", "CreatedDate", "Description", "LastModifiedBy", "LastModifiedDate", "Make", "Model", "Name", "Rate", "RateUnit", "Type", "Value" },
                 values: new object[,]
                 {
-                    { -5, "23452", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Online machine", null, null, "Hewlett-Packard", "Z8 G4", "", null, null, "Equipment", null },
-                    { -4, "13352", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Offline machine", null, null, "Hewlett-Packard", "Z4 G4", "", null, null, "Equipment", null },
-                    { -3, "12432", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Offline machine", null, null, "Hewlett-Packard", "Z4 G4", "", null, null, "Equipment", null },
-                    { -2, "12452", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Offline machine", null, null, "Hewlett-Packard", "Z4 G4", "", null, null, "Equipment", null },
-                    { -1, "12442", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Faulty lense.", null, null, "Sony", "FX-6", "", null, null, "Equipment", null }
+                    { -5, "23452", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Online machine", null, null, "Hewlett-Packard", "Z8 G4", "Edit04", null, null, "equipment", 2000m },
+                    { -4, "13352", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Offline machine", null, null, "Hewlett-Packard", "Z4 G4", "Edit03", null, null, "equipment", 1000m },
+                    { -3, "12432", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Offline machine", null, null, "Hewlett-Packard", "Z4 G4", "Edit02", null, null, "equipment", 1000m },
+                    { -2, "12452", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Offline machine", null, null, "Hewlett-Packard", "Z4 G4", "Edit01", null, null, "equipment", 1000m },
+                    { -1, "12442", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Faulty lense.", null, null, "Sony", "FX-6", "Sony FX6", null, null, "equipment", 1000m }
                 });
 
             migrationBuilder.InsertData(
                 table: "person",
-                columns: new[] { "Id", "Address", "CreatedBy", "CreatedDate", "Email", "IsStaff", "LastModifiedBy", "LastModifiedDate", "Name", "PhoneNumber", "ProductionId", "Rate", "RateUnit", "Role", "Type", "Value" },
+                columns: new[] { "Id", "Address", "CreatedBy", "CreatedDate", "Email", "IsStaff", "LastModifiedBy", "LastModifiedDate", "Name", "PhoneNumber", "ProductionId", "Rate", "RateUnit", "Role", "Type" },
                 values: new object[,]
                 {
-                    { -10, "36 Elm Close, Liverpool, L5 6GH", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "dave.programly@tvgeekery.co.uk", false, null, null, "Dave Programly", "07704 567890", null, null, null, "Offline editor", "person", null },
-                    { -9, "8 Birch Lane, Newcastle, NE4 5FG", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "percival.ts@televisingtonsmythe.net", false, null, null, "Percival Televisington-Smythe", "07703 456789", null, null, null, "Offline editor", "person", null },
-                    { -8, "12 Willow Crescent, Birmingham, B3 4EF", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "daphne.showmaker@tvantics.org", false, null, null, "Daphne Showmaker", "07702 345678", null, null, null, "Offline editor", "person", null },
-                    { -7, "45 Oak Avenue, Manchester, M2 3CD", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "melanie.editswel@postprolol.com", false, null, null, "Melanie Editswel", "07701 234567", null, null, null, "Offline editor", "person", null },
-                    { -6, "23 Maple Street, Sheffield, S1 2AB", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jeremy.cutnice@tvfunmail.com", false, null, null, "Jeremy Cutnice", "07700 123456", null, null, null, "Offline editor", "person", null }
+                    { -10, "36 Elm Close, Liverpool, L5 6GH", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "dave.programly@tvgeekery.co.uk", false, null, null, "Dave Programly", "07704 567890", null, null, null, "Offline editor", "person" },
+                    { -9, "8 Birch Lane, Newcastle, NE4 5FG", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "percival.ts@televisingtonsmythe.net", false, null, null, "Percival Televisington-Smythe", "07703 456789", null, null, null, "Offline editor", "person" },
+                    { -8, "12 Willow Crescent, Birmingham, B3 4EF", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "daphne.showmaker@tvantics.org", false, null, null, "Daphne Showmaker", "07702 345678", null, null, null, "Offline editor", "person" },
+                    { -7, "45 Oak Avenue, Manchester, M2 3CD", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "melanie.editswel@postprolol.com", false, null, null, "Melanie Editswel", "07701 234567", null, null, null, "Offline editor", "person" },
+                    { -6, "23 Maple Street, Sheffield, S1 2AB", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jeremy.cutnice@tvfunmail.com", false, null, null, "Jeremy Cutnice", "07700 123456", null, null, null, "Offline editor", "person" }
                 });
 
             migrationBuilder.InsertData(
@@ -304,15 +302,15 @@ namespace EdiplanDotnetAPI.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "booking",
-                columns: new[] { "Id", "CreatedBy", "CreatedDate", "EndDate", "IsConfirmed", "LastModifiedBy", "LastModifiedDate", "LocationId", "Name", "Notes", "ProductionId", "StartDate" },
+                columns: new[] { "Id", "CreatedBy", "CreatedDate", "EndDate", "LastModifiedBy", "LastModifiedDate", "LocationId", "Name", "Notes", "ProductionId", "StartDate", "Status" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 13, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1199), false, null, null, new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"), "", "High-speed internet required for remote editing.", new Guid("4050a623-5308-4640-8c36-493729f6f884"), new DateTime(2024, 5, 23, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1188) },
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 28, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1227), false, null, null, null, "", "Need access to soundproof dubbing studio.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 6, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1219) },
-                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 11, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1243), true, null, null, new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"), "", "Final editing phase.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 5, 6, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1243) },
-                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 16, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1269), true, null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Location scouting.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 3, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1258) },
-                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 11, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1287), true, null, null, new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"), "", "Principal photography.", new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"), new DateTime(2024, 2, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1286) },
-                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 26, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1306), false, null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Pre-production meetings.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 7, 21, 12, 7, 11, 417, DateTimeKind.Utc).AddTicks(1305) }
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 6, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(858), null, null, new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"), "", "High-speed internet required for remote editing.", new Guid("4050a623-5308-4640-8c36-493729f6f884"), new DateTime(2024, 6, 15, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(847), "provisional" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 20, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(906), null, null, null, "", "Need access to soundproof dubbing studio.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 7, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(898), "provisional" },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 3, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(930), null, null, new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"), "", "Final editing phase.", new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"), new DateTime(2024, 5, 29, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(929), "confirmed" },
+                    { 4, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 8, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(964), null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Location scouting.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 4, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(952), "confirmed" },
+                    { 5, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 3, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(990), null, null, new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"), "", "Principal photography.", new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"), new DateTime(2024, 3, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(989), "confirmed" },
+                    { 6, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 18, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(1022), null, null, new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"), "", "Pre-production meetings.", new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"), new DateTime(2024, 8, 13, 19, 17, 22, 757, DateTimeKind.Utc).AddTicks(1021), "confirmed" }
                 });
 
             migrationBuilder.CreateIndex(
