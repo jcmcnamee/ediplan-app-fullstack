@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreatePerson;
-internal class CreatePersonCommand : ICreateAssetCommand
+public class CreatePersonCommand : ICreateAssetCommand
 {
     public string Name { get; set; } = string.Empty;
     public decimal? Rate { get; set; }

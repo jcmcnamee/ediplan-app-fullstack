@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Persistence.Repositories;
-internal class RoomRepository : BaseRepository<Room>, IRoomRepository
+public class RoomRepository : BaseRepository<Room>, IRoomRepository
 {
     private readonly EdiplanDbContext _dbContext;
 

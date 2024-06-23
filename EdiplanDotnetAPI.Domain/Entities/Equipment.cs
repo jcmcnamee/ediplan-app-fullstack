@@ -13,5 +13,6 @@ public class Equipment : Asset
     public string? Make { get; set; }
     public string? Model { get; set; }
     public decimal? Value { get; set; }
+    public bool IsLostOrBroken { get; set; }
     public string? Description { get; set; }
 }

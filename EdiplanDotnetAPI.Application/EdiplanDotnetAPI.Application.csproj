@@ -15,6 +15,7 @@
   <ItemGroup>
     <Compile Remove="Features\Assets\Commands\CreateAsset\BaseAssetResponse.cs" />
     <Compile Remove="Features\Assets\Commands\CreateAsset\CreateAssetCommand.cs" />
+    <Compile Remove="Features\Assets\Commands\CreateEquipment\CreateEquipmentCommandResponse.cs" />
   </ItemGroup>
 
   <ItemGroup>

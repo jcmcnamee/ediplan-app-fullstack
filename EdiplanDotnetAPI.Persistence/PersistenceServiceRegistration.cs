@@ -20,8 +20,10 @@ public static class PersistenceServiceRegistration
 
         services.AddScoped<IBookingGroupRepository, BookingGroupRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
-        services.AddScoped<IEquipmentRepository, EquipmentRepository>();
         services.AddScoped<IAssetRepository, AssetRepository>();
+        services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+        services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IRoomRepository, RoomRepository>();
 
         return services;
     }

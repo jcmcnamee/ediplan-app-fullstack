@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Persistence.Repositories;
-internal class EquipmentRepository : BaseRepository<Equipment>, IEquipmentRepository
+public class EquipmentRepository : BaseRepository<Equipment>, IEquipmentRepository
 {
     private readonly EdiplanDbContext _dbContext;
 

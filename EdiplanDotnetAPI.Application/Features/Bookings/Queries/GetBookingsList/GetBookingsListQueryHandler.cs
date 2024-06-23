@@ -1,13 +1,14 @@
 using AutoMapper;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
 using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingDetail;
+using EdiplanDotnetAPI.Application.Helpers;
 using EdiplanDotnetAPI.Domain.Entities;
 using FluentValidation.Internal;
 using MediatR;
 
 namespace EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingsList;
 
-public class GetBookingsListQueryHandler : IRequestHandler<GetBookingsListQuery, List<BookingListVm>>
+public class GetBookingsListQueryHandler : IRequestHandler<GetBookingsListQuery, PagedList<BookingListVm>>
 {
     private readonly IMapper _mapper;
     private readonly IBookingRepository _bookingRepository;
@@ -17,10 +18,10 @@ public class GetBookingsListQueryHandler : IRequestHandler<GetBookingsListQuery,
         _mapper = mapper;
         _bookingRepository = bookingRepository;
     }
-    public async Task<List<BookingListVm>> Handle(GetBookingsListQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<BookingListVm>> Handle(GetBookingsListQuery request, CancellationToken cancellationToken)
     {
-        // List all async, include navigation properties using true statement
         var allBookings = (await _bookingRepository.ListAllAsync(request));
-        return _mapper.Map<List<BookingListVm>>(allBookings);
+        return _mapper.Map<PagedList<BookingListVm>>(allBookings);
+
     }
 }

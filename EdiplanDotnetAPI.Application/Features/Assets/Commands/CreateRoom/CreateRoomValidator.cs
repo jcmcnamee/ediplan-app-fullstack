@@ -9,13 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EdiplanDotnetAPI.Application.Features.Assets.Commands.CreateRoom;
-internal class CreateRoomValidator : AbstractValidator<CreatePersonCommand>
+internal class CreateRoomValidator : AbstractValidator<CreateRoomCommand>
 {
-    private readonly IAsyncRepository<Person> _personRepository;
+    private readonly IAsyncRepository<Room> _roomRepository;
 
-    public CreateRoomValidator(IAsyncRepository<Person> personRepository)
+    public CreateRoomValidator(IAsyncRepository<Room> roomRepository)
     {
-        _personRepository = personRepository;
+        _roomRepository = roomRepository;
     }
 
     // Custom validation logic

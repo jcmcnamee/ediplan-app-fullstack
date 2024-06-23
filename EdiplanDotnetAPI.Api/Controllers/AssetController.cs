@@ -1,10 +1,10 @@
-﻿using EdiplanDotnetAPI.Application.Contracts;
+﻿using EdiplanDotnetAPI.Api.Utility;
 using EdiplanDotnetAPI.Application.Features.Assets.Commands.DeleteAsset;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
-using EdiplanDotnetAPI.Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace EdiplanDotnetAPI.Api.Controllers;
 
@@ -26,17 +26,75 @@ public class AssetController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    [HttpGet(Name = "GetAllAssets")]
-    public async Task<ActionResult<List<AssetListVm>>> GetAllAssets()
+    [HttpGet(Name = "GetAssets")]
+    public async Task<ActionResult<AssetListVm>> GetAssets([FromQuery] GetAssetsListQuery assetResourceParams)
     {
-        var result = await _mediator.Send(new GetAssetsListQuery());
-
+        var result = await _mediator.Send(assetResourceParams);
         if(result == null || result.Count == 0)
         {
             return NoContent();
         }
 
+        var previousPageLink = result.HasPrevious ? CreateAssetsResourceUri(
+            assetResourceParams, ResourceUriType.PreviousPage) : null;
+
+        var nextPageLink = result.HasNext ? CreateAssetsResourceUri(
+            assetResourceParams, ResourceUriType.NextPage) : null;
+
+        var paginationMetadata = new
+        {
+            totalCount = result.TotalCount,
+            pageSize = result.PageSize,
+            currentPage = result.CurrentPage,
+            totalPages = result.TotalPages,
+            previousPageLink = previousPageLink,
+            nextPageLink = nextPageLink
+        };
+
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(paginationMetadata)); 
+
         return Ok(result);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="assetResourceParams"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private string? CreateAssetsResourceUri(GetAssetsListQuery assetResourceParams, ResourceUriType type)
+    {
+        switch (type)
+        {
+            case ResourceUriType.PreviousPage:
+                return Url.Link("GetAssets", new
+                {
+                    orderBy = assetResourceParams.OrderBy,
+                    page = assetResourceParams.Page - 1,
+                    pageSize = assetResourceParams.PageSize,
+                    type = assetResourceParams.Type,
+                    search = assetResourceParams.Search
+                });
+            case ResourceUriType.NextPage:
+                return Url.Link("GetAssets", new
+                {
+                    orderBy = assetResourceParams.OrderBy,
+                    page = assetResourceParams.Page + 1,
+                    pageSize = assetResourceParams.PageSize,
+                    type = assetResourceParams.Type,
+                    search = assetResourceParams.Search
+                });
+            default:
+                return Url.Link("GetAssets", new
+                {
+                    orderBy = assetResourceParams.OrderBy,
+                    page = assetResourceParams.Page,
+                    pageSize = assetResourceParams.PageSize,
+                    type = assetResourceParams.Type,
+                    search = assetResourceParams.Search
+                });
+
+        }
     }
 
     /// <summary>
