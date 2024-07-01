@@ -1,5 +1,6 @@
 ﻿using EdiplanDotnetAPI.Application.Contracts.Persistence;
 using EdiplanDotnetAPI.Domain.Entities;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ public class EquipmentRepository : BaseRepository<Equipment>, IEquipmentReposito
     public EquipmentRepository(EdiplanDbContext dbContext) : base(dbContext)
     {
         _dbContext = dbContext;
+
     }
 }

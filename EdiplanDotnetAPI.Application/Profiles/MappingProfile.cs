@@ -30,6 +30,17 @@ public class MappingProfile : Profile
         // Create
         CreateMap<Booking, CreateBookingCommand>().ReverseMap();
         CreateMap<Booking, CreateBookingDto>().ReverseMap();
+        //CreateMap<Booking, CreateBookingDto>()
+        //    .ForMember(dest => dest.Assets, opt => opt.MapFrom(
+        //        src => src.Assets.Select(asset => new
+        //        {
+        //            Id = asset.Id,
+        //            Name = asset.Name,
+        //            Type = asset.Type,
+        //            Rate = asset.Rate,
+        //            RateUnit = asset.RateUnit,
+        //            CreatedDate = asset.CreatedDate,
+        //        })));
         // Update
         CreateMap<Booking, UpdateBookingCommand>().ReverseMap();
         // Partial update
@@ -48,6 +59,7 @@ public class MappingProfile : Profile
         CreateMap<BookingGroup, BookingGroupMemberListVm>();
 
         CreateMap<Asset, AssetListVm>().ReverseMap();
+        CreateMap<Asset, AssetDto>().ReverseMap();
 
         CreateMap<Equipment, CreateEquipmentCommand>().ReverseMap();
         CreateMap<Equipment, CreateEquipmentDto>().ReverseMap();

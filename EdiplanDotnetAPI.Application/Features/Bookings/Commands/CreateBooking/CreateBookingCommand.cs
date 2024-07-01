@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using EdiplanDotnetAPI.Domain.Common;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ public class CreateBookingCommand : IRequest<CreateBookingCommandResponse>
     public string? Notes { get; set; }
     public Guid? ProductionId { get; set; }
     public Guid? LocationId { get; set; }
+    public List<int>? AssetIds { get; set; }
     public override string ToString()
     {
         return $"Booking name: {Name}; Start Date: {StartDate}; End Date: {EndDate}; Is Confirmed: {Status}; Notes: {Notes}; Production ID: {ProductionId}; Location ID: {LocationId}";

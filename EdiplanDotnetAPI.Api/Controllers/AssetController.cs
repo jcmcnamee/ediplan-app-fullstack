@@ -2,8 +2,13 @@
 using EdiplanDotnetAPI.Application.Features.Assets.Commands.DeleteAsset;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetDetail;
 using EdiplanDotnetAPI.Application.Features.Assets.Queries.GetAssetsList;
+using EdiplanDotnetAPI.Application.Helpers;
+using EdiplanDotnetAPI.Application.Models;
+using EdiplanDotnetAPI.Application.Services;
+using EdiplanDotnetAPI.Domain.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Text.Json;
 
 namespace EdiplanDotnetAPI.Api.Controllers;
@@ -13,14 +18,24 @@ namespace EdiplanDotnetAPI.Api.Controllers;
 public class AssetController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IPropertyMappingService _propertyMappingService;
+    private readonly IPropertyCheckerService _propertyCheckerService;
+    private readonly ProblemDetailsFactory _problemDetailsFactory;
 
-    public AssetController(IMediator mediator)
+    public AssetController(IMediator mediator, IPropertyMappingService propertyMappingService, IPropertyCheckerService propertyCheckerService, ProblemDetailsFactory problemDetailsFactory)
     {
-        _mediator = mediator;
+        _mediator = mediator ??
+            throw new ArgumentNullException(nameof(mediator));
+        _propertyMappingService = propertyMappingService ??
+            throw new ArgumentNullException(nameof(propertyMappingService));
+        _propertyCheckerService = propertyCheckerService ??
+            throw new ArgumentNullException(nameof(propertyCheckerService));
+        _problemDetailsFactory = problemDetailsFactory ??
+            throw new ArgumentNullException(nameof(problemDetailsFactory));
     }
 
     /// <summary>
-    /// 
+    /// Returns all Assets, common properties only
     /// </summary>
     /// <returns></returns>
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -29,31 +44,70 @@ public class AssetController : ControllerBase
     [HttpGet(Name = "GetAssets")]
     public async Task<ActionResult<AssetListVm>> GetAssets([FromQuery] GetAssetsListQuery assetResourceParams)
     {
+        // Check sortBy field mapping
+        if (!_propertyMappingService.ValidMappingExistsFor<AssetListVm, Asset>(
+            assetResourceParams.SortBy))
+        {
+            return BadRequest();
+        }
+
+        // Check selected shaping fields exist
+        if (!_propertyCheckerService.TypeHasProperties<AssetListVm>(assetResourceParams.Fields))
+        {
+            return BadRequest(
+                _problemDetailsFactory.CreateProblemDetails(
+                    HttpContext,
+                    statusCode: 400,
+                    detail: $"Not all requested data shaping fields exist on " +
+                        $"the resource: {assetResourceParams.Fields}"));
+        }
+
+        // Get results
         var result = await _mediator.Send(assetResourceParams);
-        if(result == null || result.Count == 0)
+        if (result == null || result.Count == 0)
         {
             return NoContent();
         }
 
+        // Get pagination links
         var previousPageLink = result.HasPrevious ? CreateAssetsResourceUri(
             assetResourceParams, ResourceUriType.PreviousPage) : null;
 
         var nextPageLink = result.HasNext ? CreateAssetsResourceUri(
             assetResourceParams, ResourceUriType.NextPage) : null;
 
+        // Create pagination metadata and add to response headers
         var paginationMetadata = new
         {
             totalCount = result.TotalCount,
             pageSize = result.PageSize,
             currentPage = result.CurrentPage,
             totalPages = result.TotalPages,
-            previousPageLink = previousPageLink,
-            nextPageLink = nextPageLink
         };
 
-        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(paginationMetadata)); 
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
-        return Ok(result);
+        // Create links
+        var links = CreateLinksForAssets(assetResourceParams,
+            result.HasNext,
+            result.HasPrevious);
+
+        var shapedData = result.AsEnumerable().ShapeData(assetResourceParams.Fields);
+
+        var shapedDataWithLinks = shapedData.Select(asset =>
+        {
+            var assetsAsDictionary = asset as IDictionary<string, object?>;
+            assetsAsDictionary.Add("links", links);
+            return assetsAsDictionary;
+        });
+
+        var linkedCollectionResource = new
+        {
+            value = shapedDataWithLinks,
+            links = links
+        };
+
+        return Ok(linkedCollectionResource);
     }
 
     /// <summary>
@@ -69,7 +123,7 @@ public class AssetController : ControllerBase
             case ResourceUriType.PreviousPage:
                 return Url.Link("GetAssets", new
                 {
-                    orderBy = assetResourceParams.OrderBy,
+                    sortBy = assetResourceParams.SortBy,
                     page = assetResourceParams.Page - 1,
                     pageSize = assetResourceParams.PageSize,
                     type = assetResourceParams.Type,
@@ -78,7 +132,7 @@ public class AssetController : ControllerBase
             case ResourceUriType.NextPage:
                 return Url.Link("GetAssets", new
                 {
-                    orderBy = assetResourceParams.OrderBy,
+                    sortBy = assetResourceParams.SortBy,
                     page = assetResourceParams.Page + 1,
                     pageSize = assetResourceParams.PageSize,
                     type = assetResourceParams.Type,
@@ -87,7 +141,7 @@ public class AssetController : ControllerBase
             default:
                 return Url.Link("GetAssets", new
                 {
-                    orderBy = assetResourceParams.OrderBy,
+                    sortBy = assetResourceParams.SortBy,
                     page = assetResourceParams.Page,
                     pageSize = assetResourceParams.PageSize,
                     type = assetResourceParams.Type,
@@ -95,6 +149,37 @@ public class AssetController : ControllerBase
                 });
 
         }
+    }
+
+    private IEnumerable<LinkDto> CreateLinksForAssets(GetAssetsListQuery assetResourceParams,
+        bool hasNext, bool hasPrevious)
+    {
+        var links = new List<LinkDto>();
+
+        if (string.IsNullOrWhiteSpace(assetResourceParams.Fields))
+        {
+
+        }
+
+        // Self
+        links.Add(new(CreateAssetsResourceUri(
+            assetResourceParams, ResourceUriType.Current), "self", "GET"));
+
+        // next
+        if (hasNext)
+        {
+            links.Add(new(CreateAssetsResourceUri(
+                assetResourceParams, ResourceUriType.NextPage), "next", "GET"));
+        }
+
+        // previous
+        if (hasPrevious)
+        {
+            links.Add(new(CreateAssetsResourceUri(
+                assetResourceParams, ResourceUriType.PreviousPage), "previous", "GET"));
+        }
+
+        return links;
     }
 
     /// <summary>
@@ -113,6 +198,34 @@ public class AssetController : ControllerBase
         };
 
         return Ok(await _mediator.Send(getAssetDetailQuery));
+    }
+
+    private IEnumerable<LinkDto> CreateLinksForAsset(int id, string? fields)
+    {
+        var links = new List<LinkDto>();
+
+        if (string.IsNullOrWhiteSpace(fields))
+        {
+            links.Add(
+                new (Url.Link("GetAssetById", new { id }),
+                "self",
+                "GET"));
+        }
+        else
+        {
+            links.Add(
+                new (Url.Link("GetAssetById", new { id, fields }),
+                "self",
+                "GET"));
+        }
+
+        // Add other links here
+        links.Add(
+            new(Url.Link("DeleteAsset", new { id }),
+            "delete_self",
+            "DELETE"));
+
+        return links;
     }
 
     /// <summary>

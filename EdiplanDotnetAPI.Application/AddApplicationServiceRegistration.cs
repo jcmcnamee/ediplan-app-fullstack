@@ -31,12 +31,8 @@ namespace EdiplanDotnetAPI.Application
             services.AddTransient<IRequestHandler<CreateRoomCommand, CreateAssetCommandResponse>, CreateAssetCommandHandler>();
 
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
+            services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
-            //services.AddTransient<IRequestHandler<CreateEquipmentCommand, CreateAssetCommandResponse>, CreateAssetCommandHandler>();
-            //services.AddTransient<IRequestHandler<CreateRoomCommand, CreateAssetCommandResponse>, CreateAssetCommandHandler>();
-            //services.AddTransient<IRequestHandler<CreatePersonCommand, CreateAssetCommandResponse>, CreateAssetCommandHandler>();
-
-            //services.AddTransient<ICreateAssetCommandResponse, CreatePersonCommandResponse>();
 
 
             return services;

@@ -43,50 +43,54 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
         return await _dbContext.Bookings.ToListAsync();
     }
 
-    public async Task<PagedList<Booking>> ListAllAsync(GetBookingsListQuery bookingResourceParams)
+    public async Task<PagedList<Booking>> ListAllAsync(GetBookingsListQuery queryParams)
     {
-        if (bookingResourceParams == null)
+        if (queryParams == null)
         {
-            throw new ArgumentException(nameof(bookingResourceParams));
+            throw new ArgumentException(nameof(queryParams));
         }
 
-        //if (string.IsNullOrWhiteSpace(bookingResourceParams.Status) && string.IsNullOrWhiteSpace(bookingResourceParams.Search))
-        //{
-        //    return await _dbContext.Bookings
-        //        .Include(b => b.Production)
-        //        .Include(b => b.Location)
-        //        .ToListAsync();
-        //}
-
+        // Collection as IQueryable as it allows us to create an expression tree
+        // before execution.
         var collection = _dbContext.Bookings
             .Include(b => b.Production)
             .Include(b => b.Location)
             as IQueryable<Booking>;
 
-        // Filter
-        if (!string.IsNullOrWhiteSpace(bookingResourceParams.Status))
+        // Filters
+        if (!string.IsNullOrWhiteSpace(queryParams.Status))
         {
-            collection = collection.Where(b => b.Status == bookingResourceParams.Status);
+            collection = collection.Where(b => b.Status == queryParams.Status);
         }
 
         // Search
+        if (!string.IsNullOrWhiteSpace(queryParams.Search))
+        {
+            var searchQuery = queryParams.Search.Trim();
+
+            collection = collection.Where(b => b.Name == searchQuery
+                || b.Production.Name == searchQuery
+                || b.Status == searchQuery
+                || b.Notes == searchQuery
+                || b.Location.Name == searchQuery);
+        }
 
         // Sort
-        if(!string.IsNullOrWhiteSpace(bookingResourceParams.OrderBy))
+        if (!string.IsNullOrWhiteSpace(queryParams.SortBy))
         {
             var bookingPropertyMappingDictionary = _propertyMappingService
                 .GetPropertyMapping<BookingListVm, Booking>();
 
-            collection = collection.ApplySort(bookingResourceParams.OrderBy,  bookingPropertyMappingDictionary);
+            collection = collection.ApplySort(queryParams.SortBy, bookingPropertyMappingDictionary);
         }
 
         // Page
         int count = collection.Count();
-        var source = await collection.Skip((bookingResourceParams.Page - 1) * bookingResourceParams.PageSize)
-            .Take(bookingResourceParams.PageSize)
+        var source = await collection.Skip((queryParams.Page - 1) * queryParams.PageSize)
+            .Take(queryParams.PageSize)
             .ToListAsync();
 
-        return new PagedList<Booking>(source, count, bookingResourceParams.Page, bookingResourceParams.PageSize);
+        return new PagedList<Booking>(source, count, queryParams.Page, queryParams.PageSize);
 
     }
 }

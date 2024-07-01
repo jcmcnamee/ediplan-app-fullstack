@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EdiplanDotnetAPI.Application.Features.Bookings.Queries.GetBookingDetail;
+using EdiplanDotnetAPI.Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,4 +17,6 @@ public class CreateBookingDto
     public string? Notes { get; set; }
     public Guid? ProductionId { get; set; }
     public Guid? LocationId { get; set; }
+    public List<AssetDto>? Assets { get; set; }
+
 }

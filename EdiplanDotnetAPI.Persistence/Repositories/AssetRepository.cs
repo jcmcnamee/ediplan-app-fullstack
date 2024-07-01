@@ -27,10 +27,22 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
         // Collection to start from
         var collection = _dbContext.Assets as IQueryable<Asset>;
 
+        // Filter
         if(!string.IsNullOrWhiteSpace(assetResourceParams.Type))
         {
             collection = collection.Where(a => a.Type == assetResourceParams.Type);
         }
+
+        if(assetResourceParams.From.HasValue && assetResourceParams.To.HasValue)
+        {
+            collection = collection.Where(a => a.Bookings.Any(b => 
+                (b.StartDate >= assetResourceParams.From && b.StartDate <= assetResourceParams.To) ||
+                (b.EndDate >= assetResourceParams.From && b.EndDate >= assetResourceParams.To) ||
+                (b.StartDate <= assetResourceParams.From && b.EndDate >= assetResourceParams.To)
+                ));
+        }
+
+        // Search
 
         // Sort
 
@@ -43,6 +55,16 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
         return new PagedList<Asset>(source, count, assetResourceParams.Page, assetResourceParams.PageSize);
 
         //return await PagedList<Asset>.CreateAsync(collection, assetResourceParams.Page, assetResourceParams.PageSize);
+    }
+
+    public async Task<List<Asset>> GetAssetsByIdsAsync(IEnumerable<int> assetIds)
+    {
+        return await _dbContext.Assets.Where(a => assetIds.Contains(a.Id)).ToListAsync();
+    }
+
+    public async Task<PagedList<Asset>> GetAssetsByAvailability(DateTime startDate, DateTime endDate)
+    {
+        return await _dbContext.Assets.Where(a = > )
     }
 
 

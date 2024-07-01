@@ -28,6 +28,7 @@ public static class StartupExtensions
         }).AddNewtonsoftJson(setupAction =>
         {
             setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            setupAction.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         })
         .AddXmlDataContractSerializerFormatters();
 
@@ -41,7 +42,9 @@ public static class StartupExtensions
                 .AllowAnyMethod()
                 .SetIsOriginAllowed(pol => true)
                 .AllowAnyHeader()
-                .AllowCredentials()));
+                .AllowCredentials()
+                .WithExposedHeaders("X-Pagination")
+                ));
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

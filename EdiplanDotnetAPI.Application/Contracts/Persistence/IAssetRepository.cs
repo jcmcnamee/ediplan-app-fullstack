@@ -12,5 +12,6 @@ namespace EdiplanDotnetAPI.Application.Contracts.Persistence;
 
 public interface IAssetRepository : IAsyncRepository<Asset>
 {
+    Task<List<Asset>> GetAssetsByIdsAsync(IEnumerable<int> assetIds);
     Task<PagedList<Asset>> ListAllAsync(GetAssetsListQuery assetResourceParams);
 }

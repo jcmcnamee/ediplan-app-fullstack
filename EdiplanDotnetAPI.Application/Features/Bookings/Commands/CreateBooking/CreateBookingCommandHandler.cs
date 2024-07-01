@@ -3,6 +3,7 @@ using EdiplanDotnetAPI.Application.Contracts.Infrastructure;
 using EdiplanDotnetAPI.Application.Contracts.Persistence;
 using EdiplanDotnetAPI.Application.Exceptions;
 using EdiplanDotnetAPI.Application.Models.Mail;
+using EdiplanDotnetAPI.Domain.Common;
 using EdiplanDotnetAPI.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -12,15 +13,22 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
 {
     private readonly IMapper _mapper;
     private readonly IBookingRepository _bookingRepository;
+    private readonly IAssetRepository _assetRepository;
     private readonly IEmailService _emailService;
     private readonly ILogger<CreateBookingCommandHandler> _logger;
 
-    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IEmailService emailService, ILogger<CreateBookingCommandHandler> logger)
+    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IAssetRepository assetRepository, IEmailService emailService, ILogger<CreateBookingCommandHandler> logger)
     {
-        _emailService = emailService;
-        _logger = logger;
-        _mapper = mapper;
-        _bookingRepository = bookingRepository;
+        _emailService = emailService ??
+            throw new ArgumentNullException(nameof(emailService));
+        _logger = logger ??
+            throw new ArgumentNullException(nameof(logger));
+        _mapper = mapper ??
+            throw new ArgumentNullException(nameof(mapper));
+        _bookingRepository = bookingRepository ??
+            throw new ArgumentNullException(nameof(bookingRepository));
+        _assetRepository = assetRepository ??
+            throw new ArgumentNullException(nameof(assetRepository));
     }
 
     public async Task<CreateBookingCommandResponse> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -28,15 +36,12 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
         // Create custom response
         var createBookingCommandResponse = new CreateBookingCommandResponse();
 
-        // old code:
-        // var booking = _mapper.Map<Booking>(request);
-
         // Create validator with injected repository to include custom rules
         var validator = new CreateBookingCommandValidator(_bookingRepository);
         var validationResult = await validator.ValidateAsync(request);
 
         // If validation fails
-        if(validationResult.Errors.Count > 0)
+        if (validationResult.Errors.Any())
         {
             createBookingCommandResponse.Success = false;
             createBookingCommandResponse.ValidationErrors = new List<string>();
@@ -48,38 +53,51 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
             throw new ValidationException(validationResult);
         }
 
-        // If validation successful
-        if(createBookingCommandResponse.Success)
+        // Create new booking
+        var booking = _mapper.Map<Booking>(request);
+
+        // Fetch and add assets
+        if (request.AssetIds != null && request.AssetIds.Any())
         {
-            // Create new entity
-            var booking = _mapper.Map<Booking>(request);
-
-            // Add entity to DB
-            booking = await _bookingRepository.AddAsync(booking);
-
-            // Add DTO to response
-            createBookingCommandResponse.Booking = _mapper.Map<CreateBookingDto>(booking);
-        
-            // Send email notification
-            var email = new Email()
+            var distinctAssetIds = request.AssetIds.Distinct().ToList();
+            var assets = await _assetRepository.GetAssetsByIdsAsync(distinctAssetIds);
+            if (assets.Count != distinctAssetIds.Count)
             {
-                To = "jcmcnamee@hotmail.com",
-                Subject = "A new booking was created",
-                Body = $"A new booking was created: {request}"
-            };
-
-            try
-            {
-                await _emailService.SendEmail(email);
-            }
-            catch (Exception ex)
-            {
-                // Log
-                _logger.LogError($"Mail about booking {booking.Id} failed due to an error with the mail service: {ex.Message}");
+                _logger.LogWarning("One or more assets were not found.");
+                createBookingCommandResponse.Success = false;
+                createBookingCommandResponse.ValidationErrors.Add("One or more assets were not found.");
+                return createBookingCommandResponse;
             }
 
+            booking.Assets = assets;
+        }
+
+
+        // Add entity to DB
+        booking = await _bookingRepository.AddAsync(booking);
+
+        // Add DTO to response
+        createBookingCommandResponse.Booking = _mapper.Map<CreateBookingDto>(booking);
+
+        // Send email notification
+        var email = new Email()
+        {
+            To = "jcmcnamee@hotmail.com",
+            Subject = "A new booking was created",
+            Body = $"A new booking was created: {request}"
+        };
+
+        try
+        {
+            await _emailService.SendEmail(email);
+        }
+        catch (Exception ex)
+        {
+            // Log
+            _logger.LogError($"Mail about booking {booking.Id} failed due to an error with the mail service: {ex.Message}");
         }
 
         return createBookingCommandResponse;
     }
 }
+

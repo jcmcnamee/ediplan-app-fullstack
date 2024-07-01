@@ -12,6 +12,11 @@ using Microsoft.AspNetCore.JsonPatch;
 using EdiplanDotnetAPI.Domain.Entities;
 using EdiplanDotnetAPI.Application.Helpers;
 using System.Text.Json;
+using EdiplanDotnetAPI.Application.Services;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using EdiplanDotnetAPI.Application.Exceptions;
+using EdiplanDotnetAPI.Application.Models;
+using EdiplanDotnetAPI.Api.Services;
 
 namespace EdiplanDotnetAPI.Api.Controllers;
 
@@ -20,16 +25,25 @@ namespace EdiplanDotnetAPI.Api.Controllers;
 public class BookingController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IPropertyMappingService _propertyMappingService;
+    private readonly IPropertyCheckerService _propertyCheckerService;
+    private readonly ProblemDetailsFactory _problemDetailsFactory;
 
-    public BookingController(IMediator mediator)
+    public BookingController(IMediator mediator, IPropertyMappingService propertyMappingService, IPropertyCheckerService propertyCheckerService, ProblemDetailsFactory problemDetailsFactory)
     {
-        _mediator = mediator;
-
+        _mediator = mediator ??
+            throw new ArgumentNullException(nameof(mediator));
+        _propertyMappingService = propertyMappingService ??
+            throw new ArgumentNullException(nameof(propertyMappingService));
+        _propertyCheckerService = propertyCheckerService ??
+            throw new ArgumentNullException(nameof(propertyCheckerService));
+        _problemDetailsFactory = problemDetailsFactory ??
+            throw new ArgumentNullException(nameof(problemDetailsFactory));
     }
 
 
     /// <summary>
-    /// 
+    /// Returns all bookings
     /// </summary>
     /// <param name="bookingResourceParams"></param>
     /// <returns></returns>
@@ -39,6 +53,23 @@ public class BookingController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task<ActionResult<BookingListVm>> GetBookings([FromQuery] GetBookingsListQuery bookingResourceParams)
     {
+        if (!_propertyMappingService.ValidMappingExistsFor<BookingListVm, Booking>(
+            bookingResourceParams.SortBy))
+        {
+            return BadRequest();
+        }
+
+        if (!_propertyCheckerService.TypeHasProperties<BookingListVm>(
+            bookingResourceParams.Fields))
+        {
+            return BadRequest(
+                _problemDetailsFactory.CreateProblemDetails(
+                    HttpContext,
+                    statusCode: 400,
+                    detail: $"Not all requested data shaping fields exist on " +
+                        $"the resource: {bookingResourceParams.Fields}"));
+        }
+
         var result = await _mediator.Send(bookingResourceParams);
         if (result == null)
         {
@@ -64,7 +95,7 @@ public class BookingController : ControllerBase
         Response.Headers.Append("X-Pagination", JsonSerializer.Serialize
             (paginationMetadata));
 
-        return Ok(result.ShapeData(bookingResourceParams.Fields));
+        return Ok(result.AsEnumerable().ShapeData(bookingResourceParams.Fields));
     }
 
     /// <summary>
@@ -80,7 +111,7 @@ public class BookingController : ControllerBase
             case ResourceUriType.PreviousPage:
                 return Url.Link("GetBookings", new
                 {
-                    orderBy = bookingResourceParams.OrderBy,
+                    sortBy = bookingResourceParams.SortBy,
                     page = bookingResourceParams.Page - 1,
                     pageSize = bookingResourceParams.PageSize,
                     status = bookingResourceParams.Status,
@@ -89,7 +120,7 @@ public class BookingController : ControllerBase
             case ResourceUriType.NextPage:
                 return Url.Link("GetBookings", new
                 {
-                    orderBy = bookingResourceParams.OrderBy,
+                    sortBy = bookingResourceParams.SortBy,
                     page = bookingResourceParams.Page + 1,
                     pageSize = bookingResourceParams.PageSize,
                     status = bookingResourceParams.Status,
@@ -98,7 +129,7 @@ public class BookingController : ControllerBase
             default:
                 return Url.Link("GetBookings", new
                 {
-                    orderBy = bookingResourceParams.OrderBy,
+                    sortBy = bookingResourceParams.SortBy,
                     page = bookingResourceParams.Page,
                     pageSize = bookingResourceParams.PageSize,
                     status = bookingResourceParams.Status,
@@ -116,10 +147,50 @@ public class BookingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<BookingDetailVm>> GetBookingById(int id)
+    public async Task<ActionResult<BookingDetailVm>> GetBookingById(int id, string? fields)
     {
+        // Field checks
+        if (!_propertyCheckerService.TypeHasProperties<BookingDetailVm>(fields))
+        {
+            return BadRequest(
+                _problemDetailsFactory.CreateProblemDetails(HttpContext,
+                statusCode: 400, detail: $"Not all requested data shaping fields exist on " +
+                $"the resource: {fields}"));
+        }
+
+        // Make query and send
         var getBookingDetailQuery = new GetBookingDetailQuery() { Id = id };
-        return Ok(await _mediator.Send(getBookingDetailQuery));
+        var booking = await _mediator.Send(getBookingDetailQuery);
+
+
+        if (booking == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(booking.ShapeData(fields));
+    }
+
+    private IEnumerable<LinkDto> CreateLinksForBooking(int id, string? fields)
+    {
+        var links = new List<LinkDto>();
+
+        if (string.IsNullOrWhiteSpace(fields))
+        {
+            links.Add(
+                new(Url.Link("GetBookingById", new { id }),
+                "self",
+                "GET"));
+        }
+        else
+        {
+            links.Add(
+                new(Url.Link("GetBookingById", new { id, fields }),
+                "self",
+                "GET"));
+        }
+
+        return links;
     }
 
     /// <summary>
@@ -134,6 +205,10 @@ public class BookingController : ControllerBase
     public async Task<ActionResult<CreateBookingCommandResponse>> Create([FromBody] CreateBookingCommand createBookingCommand)
     {
         var response = await _mediator.Send(createBookingCommand);
+
+        var links = CreateLinksForBooking(response.Booking.Id, null);
+        response.Links = links;
+
         return CreatedAtRoute("GetBookingById", new { Id = response.Booking.Id }, response);
     }
 

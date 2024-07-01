@@ -4,7 +4,7 @@ using System.Linq.Dynamic.Core;
 namespace EdiplanDotnetAPI.Persistence.Helpers;
 public static class IQueryableExtensions
 {
-    public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string orderBy, Dictionary<string,
+    public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string sortBy, Dictionary<string,
         PropertyMappingValue> mappingDictionary)
     {
         if(source == null)
@@ -13,16 +13,16 @@ public static class IQueryableExtensions
         if(mappingDictionary == null)
             throw new ArgumentNullException(nameof(mappingDictionary));
 
-        if(string.IsNullOrWhiteSpace(orderBy))
+        if(string.IsNullOrWhiteSpace(sortBy))
             return source;
 
-        var orderByString = string.Empty;
+        var sortByString = string.Empty;
 
-        var orderBySplit = orderBy.Split(',');
+        var sortBySplit = sortBy.Split(',');
 
-        foreach (var orderByClause in orderBySplit)
+        foreach (var sortByClause in sortBySplit)
         {
-            var trimmedClause = orderByClause.Trim();
+            var trimmedClause = sortByClause.Trim();
 
             // If clause ends in " desc", we order descending otherwise ascensding.
             var orderDescending = trimmedClause.EndsWith(" desc");
@@ -54,11 +54,11 @@ public static class IQueryableExtensions
             // Loop through the property names
             foreach (var destinationProperty in propertyMappingValue.DestinationProperties)
             {
-                orderByString = orderByString + (string.IsNullOrWhiteSpace(orderByString) ? string.Empty : ", ")
+                sortByString = sortByString + (string.IsNullOrWhiteSpace(sortByString) ? string.Empty : ", ")
                     + destinationProperty
                     + (orderDescending ? " desc" : " asc");
             }
         }
-        return source.OrderBy(orderByString);
+        return source.OrderBy(sortByString);
     }
 }

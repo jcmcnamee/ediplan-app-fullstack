@@ -8,11 +8,17 @@ public class GetAssetsListQuery : IRequest<PagedList<AssetListVm>>
 
     // Filters
     public string? Type { get; set; }
+    public DateTime? From { get; set; }
+    public DateTime? To { get; set; }
 
-    // Search & OrderBy
+    // Search & Sort
     public string? Search {  get; set; }
-    public string OrderBy { get; set; } = "CreatedDate";
+    public string SortBy { get; set; } = "CreatedDate";
 
+    // Shaping
+    public string? Fields { get; set; }
+
+    // Pagination
     public int Page { get; set; } = 1;
 
     private int _pageSize = 5;
