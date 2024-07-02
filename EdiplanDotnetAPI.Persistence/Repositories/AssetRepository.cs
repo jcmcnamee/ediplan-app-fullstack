@@ -62,10 +62,4 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
         return await _dbContext.Assets.Where(a => assetIds.Contains(a.Id)).ToListAsync();
     }
 
-    public async Task<PagedList<Asset>> GetAssetsByAvailability(DateTime startDate, DateTime endDate)
-    {
-        return await _dbContext.Assets.Where(a = > )
-    }
-
-
 }
