@@ -1,5 +1,5 @@
-﻿using EdiplanDotnetAPI.Domain.Entities;
-using EdiplanDotnetAPI.Persistence;
+﻿using Ediplan.Domain.Entities;
+using Ediplan.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using API.IntegrationTests.Base;
-using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
+using Ediplan.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
 using System.Text.Json;
 
 namespace API.IntegrationTests.Controllers;

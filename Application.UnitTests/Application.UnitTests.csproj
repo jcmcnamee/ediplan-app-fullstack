@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdiplanDotnetAPI.Application\EdiplanDotnetAPI.Application.csproj" />
+    <ProjectReference Include="..\Ediplan.Application\Ediplan.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

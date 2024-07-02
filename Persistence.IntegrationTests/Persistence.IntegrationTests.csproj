@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdiplanDotnetAPI.Persistence\EdiplanDotnetAPI.Persistence.csproj" />
+    <ProjectReference Include="..\Ediplan.Persistence\Ediplan.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

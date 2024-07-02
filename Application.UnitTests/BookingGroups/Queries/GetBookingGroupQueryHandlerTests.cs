@@ -1,9 +1,9 @@
 ﻿using Application.UnitTests.Mocks;
 using AutoMapper;
-using EdiplanDotnetAPI.Application.Contracts.Persistence;
-using EdiplanDotnetAPI.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
-using EdiplanDotnetAPI.Application.Profiles;
-using EdiplanDotnetAPI.Domain.Entities;
+using Ediplan.Application.Contracts.Persistence;
+using Ediplan.Application.Features.BookingGroups.Queries.GetBookingGroupsList;
+using Ediplan.Application.Profiles;
+using Ediplan.Domain.Entities;
 using Moq;
 using Xunit;
 

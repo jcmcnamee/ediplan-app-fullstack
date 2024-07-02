@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EdiplanDotnetAPI.Api\EdiplanDotnetAPI.Api.csproj" />
+    <ProjectReference Include="..\Ediplan.Api\Ediplan.Api.csproj" />
   </ItemGroup>
 
 </Project>

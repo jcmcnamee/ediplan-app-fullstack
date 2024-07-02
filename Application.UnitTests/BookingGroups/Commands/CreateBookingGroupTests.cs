@@ -1,10 +1,10 @@
 ﻿using Application.UnitTests.Mocks;
 using AutoMapper;
-using EdiplanDotnetAPI.Application.Contracts.Persistence;
-using EdiplanDotnetAPI.Application.Exceptions;
-using EdiplanDotnetAPI.Application.Features.BookingGroups.Commands.CreateBookingGroup;
-using EdiplanDotnetAPI.Application.Profiles;
-using EdiplanDotnetAPI.Domain.Entities;
+using Ediplan.Application.Contracts.Persistence;
+using Ediplan.Application.Exceptions;
+using Ediplan.Application.Features.BookingGroups.Commands.CreateBookingGroup;
+using Ediplan.Application.Profiles;
+using Ediplan.Domain.Entities;
 using Moq;
 
 namespace Application.UnitTests.BookingGroups.Commands;

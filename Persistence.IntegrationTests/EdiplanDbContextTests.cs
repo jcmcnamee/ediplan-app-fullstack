@@ -1,6 +1,6 @@
-﻿using EdiplanDotnetAPI.Application.Contracts;
-using EdiplanDotnetAPI.Domain.Entities;
-using EdiplanDotnetAPI.Persistence;
+﻿using Ediplan.Application.Contracts;
+using Ediplan.Domain.Entities;
+using Ediplan.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
