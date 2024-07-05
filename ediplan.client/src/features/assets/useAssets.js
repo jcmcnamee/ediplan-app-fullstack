@@ -1,6 +1,6 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchAssets } from '../../services/apiAssets';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { fetchAssets } from '../../services/apiAssets';
 
 // export function useAssets(category) {
 //   const { data, error, isPending } = useQuery({
@@ -17,9 +17,10 @@ import { useState } from 'react';
 //   return { assets, links, paginationHeaderData, error, isPending };
 // }
 
-export function useAssets(initCategory = null, initUrl = null) {
-  const queryClient = useQueryClient();
-  const [queryKey, setQueryKey] = useState(['assets', initCategory, initUrl]);
+export function useAssets(category = null, initUrl = null) {
+  // const queryClient = useQueryClient();
+
+  const [queryKey, setQueryKey] = useState(['assets', category, initUrl]);
 
   const { data, error, isPending, isFetching } = useQuery({
     queryKey: queryKey,
@@ -27,18 +28,18 @@ export function useAssets(initCategory = null, initUrl = null) {
     keepPreviousData: true,
   });
 
-  const assets = data?.data.value || [];
-  const links = data?.data.links || [];
+  const assets = data?.data || [];
+  const links = data?.links || [];
   const paginationHeaderData = data?.headers['x-pagination']
     ? JSON.parse(data.headers['x-pagination'])
     : {};
 
-  const getLink = rel => links.find(link => link.rel === rel);
+  const getLink = (rel) => links.find((link) => link.rel === rel);
 
-  const fetchPage = rel => {
+  const fetchPage = (rel) => {
     const link = getLink(rel);
     if (link) {
-      setQueryKey(['assets', initCategory, link.href]);
+      setQueryKey(['assets', category, link.href]);
     }
   };
 

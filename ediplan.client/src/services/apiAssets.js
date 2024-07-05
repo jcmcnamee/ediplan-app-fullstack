@@ -5,17 +5,36 @@ const BASE_URL = 'https://localhost:7080';
 
 const api = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
+
+// type CustomHeaders = {
+//   'X-Pagination': XPaginationHeader;
+// } & (RawAxiosResponseHeaders | AxiosResponseHeaders);
+
+// interface Response {
+//   data: Asset[];
+//   links: Link[];
+//   headers: CustomHeaders;
+// }
+
+// interface FetchAssetsQueryKey {
+//   queryKey: [string, string?, string?];
+// }
 
 export async function fetchAssets({ queryKey }) {
   const [_, category, url] = queryKey;
+
   try {
-    const res = url 
+    const res = url
       ? await api.get(url)
       : await api.get(category ? `api/assets/${category}` : 'api/assets');
-    
+
+    console.log('Response: ', res);
+
     return {
-      data: res.data,
+      data: res.data.value,
+      links: res.data.links,
       headers: res.headers,
     };
   } catch (err) {
@@ -56,7 +75,7 @@ export async function createEditAsset(data, id, category = '') {
     console.log(
       `assetsApi: Sending PUT request to: api/assets/${id} :`,
       category,
-      newData
+      newData,
     );
     try {
       // const res = await api.put(`api/assets/${category}`, data);
@@ -72,7 +91,7 @@ export async function createEditAsset(data, id, category = '') {
       console.log(
         `assetsApi: Sending PATCH request to: api/assets/${id} :`,
         category,
-        newData
+        newData,
       );
       const res = await api.patch(`api/assets/${id}`, newData);
       return res.data;

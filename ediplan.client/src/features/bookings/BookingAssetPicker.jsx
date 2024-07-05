@@ -16,24 +16,18 @@ import {
 } from 'react-icons/lu';
 import Button from '../../ui/Button';
 
-function BookingAssetPicker({selectedAssets, setSelectedAssets}) {
+function BookingAssetPicker({ selectedAssets, setSelectedAssets }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterPosition, setFilterPosition] = useState(null);
   // const [selectedAssets, setSelectedAssets] = useState({});
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     console.log('isFilterOpen changed:', isFilterOpen);
   }, [isFilterOpen]);
 
-  const {
-    assets,
-    links,
-    paginationHeaderData,
-    error,
-    isPending,
-    fetchPage,
-    getLink,
-  } = useAssets();
+  const { assets, paginationHeaderData, error, isPending, fetchPage, getLink } =
+    useAssets();
 
   const memoizedToolbar = useMemo(
     () => (
@@ -46,7 +40,8 @@ function BookingAssetPicker({selectedAssets, setSelectedAssets}) {
             isOpen={isFilterOpen}
             setIsOpen={setIsFilterOpen}
             position={filterPosition}
-            setPosition={setFilterPosition}>
+            setPosition={setFilterPosition}
+          >
             <FilterMenu.Toggle />
             <FilterMenu.List>
               <Filter
@@ -63,7 +58,7 @@ function BookingAssetPicker({selectedAssets, setSelectedAssets}) {
         </Toolbar.Panel>
       </Toolbar>
     ),
-    [filterPosition, isFilterOpen]
+    [filterPosition, isFilterOpen],
   );
 
   if (error) return <div>{error}</div>;
@@ -73,8 +68,8 @@ function BookingAssetPicker({selectedAssets, setSelectedAssets}) {
 
   if (!data.length) return <Empty resource="bookings" />;
 
-  // const prevLink = getLink('prev');
-  // const nextLink = getLink('next');
+  const prevLink = getLink('prev');
+  const nextLink = getLink('next');
 
   return (
     <div>
@@ -113,7 +108,8 @@ function BookingAssetPicker({selectedAssets, setSelectedAssets}) {
         <Button
           variation="secondary"
           size="small"
-          onClick={() => fetchPage('previous')}>
+          onClick={() => fetchPage('previous')}
+        >
           <LuArrowBigLeft />
         </Button>
         <span>
@@ -123,7 +119,8 @@ function BookingAssetPicker({selectedAssets, setSelectedAssets}) {
         <Button
           variation="secondary"
           size="small"
-          onClick={() => fetchPage('next')}>
+          onClick={() => fetchPage('next')}
+        >
           <LuArrowBigRight />
         </Button>
         <Button variation="secondary" size="small">

@@ -20,7 +20,7 @@ function AssetTable() {
   if (error) return <div>{error}</div>;
   if (isPending) return <Spinner />;
 
-  const data = assets.data;
+  const data = assets;
 
   if (!data.length) return <Empty resource="assets" />;
 
