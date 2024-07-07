@@ -33,9 +33,9 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
             collection = collection.Where(a => a.Type == assetResourceParams.Type);
         }
 
-        if(assetResourceParams.From.HasValue && assetResourceParams.To.HasValue)
+        if (assetResourceParams.From.HasValue && assetResourceParams.To.HasValue)
         {
-            collection = collection.Where(a => a.Bookings.Any(b => 
+            collection = collection.Where(a => a.Bookings.Any(b =>
                 (b.StartDate >= assetResourceParams.From && b.StartDate <= assetResourceParams.To) ||
                 (b.EndDate >= assetResourceParams.From && b.EndDate >= assetResourceParams.To) ||
                 (b.StartDate <= assetResourceParams.From && b.EndDate >= assetResourceParams.To)

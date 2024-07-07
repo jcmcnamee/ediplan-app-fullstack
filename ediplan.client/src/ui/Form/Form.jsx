@@ -4,7 +4,8 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { LuCalendar } from 'react-icons/lu';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useController, useFormContext } from 'react-hook-form';
+import { formatISO } from 'date-fns';
 
 const Form = styled.form`
   display: grid;
@@ -13,7 +14,7 @@ const Form = styled.form`
   /* grid-auto-rows: auto; */
   grid-template-columns: 1fr;
 
-  ${props =>
+  ${(props) =>
     props.type === 'regular' &&
     css`
       padding: 2.4rem 4rem;
@@ -25,13 +26,13 @@ const Form = styled.form`
       box-shadow: var(--shadow-tab-active);
     `}
 
-  ${props =>
+  ${(props) =>
     props.type === 'modal' &&
     css`
       width: 80rem;
     `}
     
-  ${props =>
+  ${(props) =>
     props.columns &&
     css`
       grid-template-columns: 1fr 1fr;
@@ -48,7 +49,7 @@ const StyledFormItem = styled.div`
   align-items: center;
   grid-column: 1;
 
-  ${props =>
+  ${(props) =>
     props.side === 'right' &&
     css`
       grid-column: 2;
@@ -115,11 +116,9 @@ function TextLong({ side, label, id, placeholder }) {
   );
 }
 
-function DateSelect({ side, label, id,  }) {
-  const [startDate, setStartDate] = useState(new Date());
-  const { control, getValues } = useFormContext();
-
-  console.log(getValues(id));
+function DateSelect({ side, label, id, dispatch, action }) {
+  // const [startDate, setStartDate] = useState(new Date());
+  const { control } = useFormContext();
 
   return (
     <StyledFormItem side={side}>
@@ -132,7 +131,10 @@ function DateSelect({ side, label, id,  }) {
             showIcon
             icon={<LuCalendar />}
             calendarClassName="calendar"
-            onChange={date => field.onChange(date)}
+            onChange={(date) => {
+              field.onChange(date);
+              dispatch({ type: action, payload: formatISO(date) });
+            }}
             selected={field.value}
             id={id}
           />

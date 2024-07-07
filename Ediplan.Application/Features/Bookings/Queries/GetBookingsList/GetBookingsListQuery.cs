@@ -20,7 +20,7 @@ public class GetBookingsListQuery : IRequest<PagedList<BookingListVm>>
     // Pagination
     public int Page { get; set; } = 1;
 
-    private int _pageSize = 5;
+    private int _pageSize = 20;
 
     public int PageSize
     {

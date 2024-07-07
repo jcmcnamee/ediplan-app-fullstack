@@ -13,14 +13,14 @@ namespace Ediplan.Application.Features.Bookings.Queries.GetBookingDetail;
 public class GetBookingDetailQueryHandler : IRequestHandler<GetBookingDetailQuery, BookingDetailVm>
 {
     private readonly IMapper _mapper;
-    private readonly IAsyncRepository<Booking> _bookingRepo;
+    private readonly IBookingRepository _bookingRepo;
     private readonly IAsyncRepository<Production> _productionRepo;
     private readonly IAsyncRepository<Location> _locationRepo;
     private readonly IAsyncRepository<Person> _personRepo;
 
     public GetBookingDetailQueryHandler(
         IMapper mapper,
-        IAsyncRepository<Booking> bookingRepo,
+        IBookingRepository bookingRepo,
         IAsyncRepository<Production> productionRepo,
         IAsyncRepository<Location> locationRepo,
         IAsyncRepository<Person> personRepo)
@@ -34,7 +34,7 @@ public class GetBookingDetailQueryHandler : IRequestHandler<GetBookingDetailQuer
 
     public async Task<BookingDetailVm> Handle(GetBookingDetailQuery request, CancellationToken cancellationToken)
     {
-        var booking = await _bookingRepo.GetByIdAsync(request.Id);
+        var booking = await _bookingRepo.GetBookingDetail(request.Id);
 
         if(booking == null)
         {

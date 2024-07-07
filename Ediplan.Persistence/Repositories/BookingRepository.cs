@@ -30,7 +30,7 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
         return Task.FromResult(matches);
     }
 
-    public async Task<IReadOnlyList<Booking>> ListAllAsync(bool includeNavProps)
+    public async Task<IReadOnlyList<Booking>> ListAllAsync(bool includeNavProps) // DEPRECIATED?
     {
         if(includeNavProps)
         {
@@ -92,5 +92,12 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
 
         return new PagedList<Booking>(source, count, queryParams.Page, queryParams.PageSize);
 
+    }
+
+    public async Task<Booking> GetBookingDetail(int id)
+    {
+        var entity = await _dbContext.Bookings.Include(b => b.Assets).FirstOrDefaultAsync(b => b.Id == id);
+        return entity;
+            
     }
 }

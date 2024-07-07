@@ -1,4 +1,5 @@
 ﻿using Ediplan.Application.Helpers;
+using Ediplan.Application.Models;
 using MediatR;
 
 namespace Ediplan.Application.Features.Assets.Queries.GetAssetsList;

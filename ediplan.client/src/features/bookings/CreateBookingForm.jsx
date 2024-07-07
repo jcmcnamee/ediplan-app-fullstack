@@ -6,19 +6,21 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import BookingAssetPicker from './BookingAssetPicker';
+import useAssetFilters from '../assets/useAssetFilters';
 
 function CreateBookingForm() {
   const [showAssets, setShowAssets] = useState(false);
   const [selectedAssets, setSelectedAssets] = useState({});
+  const { state, dispatch } = useAssetFilters();
 
   console.log('Selected assets: ', selectedAssets);
 
   const methods = useForm();
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data) => console.log(data);
 
   const handleToggleAssets = () => {
-    setShowAssets(s => !s);
+    setShowAssets((s) => !s);
     console.log('Toggling: ');
   };
 
@@ -32,8 +34,18 @@ function CreateBookingForm() {
             placeholder="Booking name...."
           />
           <Form.Checkbox label="Provisional: " id="provisional" side="right" />
-          <Form.DateSelect label="Start: " id="startDate" />
-          <Form.DateSelect label="End: " id="endDate" />
+          <Form.DateSelect
+            label="Start: "
+            id="startDate"
+            dispatch={dispatch}
+            action="filterFromDate"
+          />
+          <Form.DateSelect
+            label="End: "
+            id="endDate"
+            dispatch={dispatch}
+            action="filterToDate"
+          />
           <Form.TextLong label="Notes: " id="description" />
         </Form>
       </FormProvider>
@@ -49,7 +61,8 @@ function CreateBookingForm() {
             <Button
               variation="primary"
               size="medium"
-              onClick={methods.handleSubmit(onSubmit)}>
+              onClick={methods.handleSubmit(onSubmit)}
+            >
               Create booking
             </Button>
           )}
@@ -61,11 +74,14 @@ function CreateBookingForm() {
             <BookingAssetPicker
               selectedAssets={selectedAssets}
               setSelectedAssets={setSelectedAssets}
+              state={state}
+              dispatch={dispatch}
             />
             <Button
               variation="primary"
               size="medium"
-              onClick={methods.handleSubmit(onSubmit)}>
+              onClick={methods.handleSubmit(onSubmit)}
+            >
               Create booking
             </Button>
           </div>

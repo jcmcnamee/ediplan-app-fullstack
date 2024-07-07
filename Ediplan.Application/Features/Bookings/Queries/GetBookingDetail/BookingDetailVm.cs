@@ -15,4 +15,5 @@ public class BookingDetailVm
     public string Notes { get; set; } = string.Empty;
     public ProductionDto? Production { get; set; }
     public LocationDto? Location { get; set; }
+    public List<AssetDto>? Assets { get; set; }
 }

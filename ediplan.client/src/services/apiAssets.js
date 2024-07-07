@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 // PUT INTO ENVIRONMENT VARIABLE
 const BASE_URL = 'https://localhost:7080';
@@ -8,56 +9,50 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// type CustomHeaders = {
-//   'X-Pagination': XPaginationHeader;
-// } & (RawAxiosResponseHeaders | AxiosResponseHeaders);
+export async function fetchAssets(queryKey) {
+  console.log('Query key at fetAssets: ', queryKey);
+  // const [_, category, url] = queryKey;s
 
-// interface Response {
-//   data: Asset[];
-//   links: Link[];
-//   headers: CustomHeaders;
-// }
-
-// interface FetchAssetsQueryKey {
-//   queryKey: [string, string?, string?];
-// }
-
-export async function fetchAssets({ queryKey }) {
-  const [_, category, url] = queryKey;
+  const query = qs.stringify(queryKey[2]);
+  console.log(`Query: ${query}`);
 
   try {
-    const res = url
-      ? await api.get(url)
-      : await api.get(category ? `api/assets/${category}` : 'api/assets');
+    const response = await api.get(`api/assets?${query}`);
 
-    console.log('Response: ', res);
+    // const linkQueries = response.data.links.map((link) => {
+    //   link.split('?')[1];
+    // });
+
+    console.log('Response: ', response);
+    console.log('Link queries: ', response.data.links);
 
     return {
-      data: res.data.value,
-      links: res.data.links,
-      headers: res.headers,
+      data: response.data.value,
+      links: response.data.links,
+      headers: response.headers,
     };
   } catch (err) {
     console.error(`Error fetching assets: ${err}`);
     throw err;
   }
-}
 
-// export async function fetchAssets({ queryKey }) {
-//   const category = queryKey[1];
-//   try {
-//     if (category) {
-//       const res = await api.get(`api/assets/${category}`);
-//       return res.data;
-//     } else {
-//       const res = await api.get(`api/assets`);
-//       console.log('Response: ', res);
-//       return res;
-//     }
-//   } catch (err) {
-//     console.error(`Error fetching ${category}: ${err}`);
-//   }
-// }
+  // try {
+  //   const res = url
+  //     ? await api.get(url)
+  //     : await api.get(category ? `api/assets/${category}` : 'api/assets');
+
+  //   console.log('Response: ', res);
+
+  //   return {
+  //     data: res.data.value,
+  //     links: res.data.links,
+  //     headers: res.headers,
+  //   };
+  // } catch (err) {
+  //   console.error(`Error fetching assets: ${err}`);
+  //   throw err;
+  // }
+}
 
 export async function deleteAsset(id) {
   try {

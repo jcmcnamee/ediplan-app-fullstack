@@ -13,4 +13,5 @@ public interface IBookingRepository : IAsyncRepository<Booking>
     Task<IReadOnlyList<Booking>> ListAllAsync(bool includeNavProps);
     Task<PagedList<Booking>> ListAllAsync(GetBookingsListQuery bookingResourceParams);
     Task<bool> IsBookingNameAndDateUnique(string name, DateTime bookingDate);
+    Task<Booking> GetBookingDetail(int id);
 }

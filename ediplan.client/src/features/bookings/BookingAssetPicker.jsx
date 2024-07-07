@@ -15,19 +15,26 @@ import {
   LuArrowBigRightDash,
 } from 'react-icons/lu';
 import Button from '../../ui/Button';
+import useAssetFilters from '../assets/useAssetFilters';
+import { assetKeys } from '../assets/assetQueries';
 
-function BookingAssetPicker({ selectedAssets, setSelectedAssets }) {
+function BookingAssetPicker({ selectedAssets, setSelectedAssets, state, dispatch }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterPosition, setFilterPosition] = useState(null);
   // const [selectedAssets, setSelectedAssets] = useState({});
-  const [filters, setFilters] = useState({});
+  // const { state, dispatch } = useAssetFilters();
 
   useEffect(() => {
     console.log('isFilterOpen changed:', isFilterOpen);
   }, [isFilterOpen]);
 
-  const { assets, paginationHeaderData, error, isPending, fetchPage, getLink } =
-    useAssets();
+  const tableParams = Object.fromEntries(
+    Object.entries(state).filter(([_, value]) => value != null),
+  );
+
+  const { assets, paginationHeaderData, error, isPending } = useAssets(
+    assetKeys.filter(tableParams),
+  );
 
   const memoizedToolbar = useMemo(
     () => (
@@ -68,8 +75,8 @@ function BookingAssetPicker({ selectedAssets, setSelectedAssets }) {
 
   if (!data.length) return <Empty resource="bookings" />;
 
-  const prevLink = getLink('prev');
-  const nextLink = getLink('next');
+  // const prevLink = getLink('prev');
+  // const nextLink = getLink('next');
 
   return (
     <div>
@@ -108,7 +115,7 @@ function BookingAssetPicker({ selectedAssets, setSelectedAssets }) {
         <Button
           variation="secondary"
           size="small"
-          onClick={() => fetchPage('previous')}
+          onClick={() => dispatch({ type: 'prevPage' })}
         >
           <LuArrowBigLeft />
         </Button>
@@ -119,7 +126,7 @@ function BookingAssetPicker({ selectedAssets, setSelectedAssets }) {
         <Button
           variation="secondary"
           size="small"
-          onClick={() => fetchPage('next')}
+          onClick={() => dispatch({ type: 'nextPage' })}
         >
           <LuArrowBigRight />
         </Button>

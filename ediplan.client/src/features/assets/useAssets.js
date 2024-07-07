@@ -17,14 +17,12 @@ import { fetchAssets } from '../../services/apiAssets';
 //   return { assets, links, paginationHeaderData, error, isPending };
 // }
 
-export function useAssets(category = null, initUrl = null) {
-  // const queryClient = useQueryClient();
-
-  const [queryKey, setQueryKey] = useState(['assets', category, initUrl]);
+export function useAssets(filterState) {
+  console.log('State: ', filterState);
 
   const { data, error, isPending, isFetching } = useQuery({
-    queryKey: queryKey,
-    queryFn: fetchAssets,
+    queryKey: filterState,
+    queryFn: () => fetchAssets(filterState),
     keepPreviousData: true,
   });
 
@@ -34,14 +32,14 @@ export function useAssets(category = null, initUrl = null) {
     ? JSON.parse(data.headers['x-pagination'])
     : {};
 
-  const getLink = (rel) => links.find((link) => link.rel === rel);
+  // const getLink = (rel) => links.find((link) => link.rel === rel);
 
-  const fetchPage = (rel) => {
-    const link = getLink(rel);
-    if (link) {
-      setQueryKey(['assets', category, link.href]);
-    }
-  };
+  // const fetchPage = (rel) => {
+  //   const link = getLink(rel);
+  //   if (link) {
+  //     setQueryKey(['assets', category, link.href]);
+  //   }
+  // };
 
   return {
     assets,
@@ -50,7 +48,5 @@ export function useAssets(category = null, initUrl = null) {
     error,
     isPending,
     isFetching,
-    getLink,
-    fetchPage,
   };
 }
