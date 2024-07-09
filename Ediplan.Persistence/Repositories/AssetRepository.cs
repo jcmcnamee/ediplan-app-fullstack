@@ -35,10 +35,10 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
 
         if (assetResourceParams.From.HasValue && assetResourceParams.To.HasValue)
         {
-            collection = collection.Where(a => a.Bookings.Any(b =>
-                (b.StartDate >= assetResourceParams.From && b.StartDate <= assetResourceParams.To) ||
-                (b.EndDate >= assetResourceParams.From && b.EndDate >= assetResourceParams.To) ||
-                (b.StartDate <= assetResourceParams.From && b.EndDate >= assetResourceParams.To)
+            collection = collection.Where(a => !a.Bookings.Any(b =>
+                (assetResourceParams.To >= b.StartDate && assetResourceParams.To <= b.EndDate) ||
+                (assetResourceParams.From >= b.StartDate && assetResourceParams.From <= b.EndDate) ||
+                (assetResourceParams.From <= b.StartDate && assetResourceParams.To >= b.EndDate)
                 ));
         }
 

@@ -7,30 +7,16 @@ import {
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import MiniTableLayout from '../../ui/Table/MiniTableLayout';
-import IndeterminateCheckbox from '../../ui/Form/IndeterminateCheckbox';
+// import IndeterminateCheckbox from '../../ui/Form/IndeterminateCheckbox';
+import { LuChevronRight } from 'react-icons/lu';
 
-function MiniTable({rowSelection, setRowSelection, tableData, pageCount }) {
+function AssetSelectedTable({ tableData }) {
   // const [pagination, setPagination] = useState(null);
 
   const [columns, data] = useMemo(() => {
     const column = createColumnHelper();
 
     const columns = [
-      column.display({
-        id: 'Select',
-        cell: ({ row }) => (
-          <div className="px-1">
-            <IndeterminateCheckbox
-              {...{
-                checked: row.getIsSelected(),
-                disabled: !row.getCanSelect(),
-                indeterminate: row.getIsSomeSelected(),
-                onChange: row.getToggleSelectedHandler(),
-              }}
-            />
-          </div>
-        ),
-      }),
       column.accessor('id', {
         header: 'ID',
       }),
@@ -40,6 +26,24 @@ function MiniTable({rowSelection, setRowSelection, tableData, pageCount }) {
       column.accessor('name', {
         header: 'Name',
       }),
+      // column.display({
+      //   id: 'Select',
+      //   cell: ({ row }) => (
+      //     // <div className="px-1">
+      //     //   <IndeterminateCheckbox
+      //     //     {...{
+      //     //       checked: row.getIsSelected(),
+      //     //       disabled: !row.getCanSelect(),
+      //     //       indeterminate: row.getIsSomeSelected(),
+      //     //       onChange: row.getToggleSelectedHandler(),
+      //     //     }}
+      //     //   />
+      //     // </div>
+      //     <button onClick={row.getToggleSelectedHandler()}>
+      //       <LuChevronRight />
+      //     </button>
+      //   ),
+      // }),
     ];
 
     return [columns, tableData];
@@ -49,13 +53,12 @@ function MiniTable({rowSelection, setRowSelection, tableData, pageCount }) {
     data: data ?? [],
     columns: columns,
     manualPagination: true,
-    pageCount: pageCount,
     state: {
       // pagination,
-      rowSelection,
+      // rowSelection,
     },
     // onPaginationChange: setPagination,
-    onRowSelectionChange: setRowSelection,
+    // onRowSelectionChange: setRowSelection,
     initialState: {
       columnVisibility: {
         created: false,
@@ -65,11 +68,11 @@ function MiniTable({rowSelection, setRowSelection, tableData, pageCount }) {
     getCoreRowModel: getCoreRowModel(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    getRowId: row => row.id,
-    enableRowSelection: true,
+    // getRowId: (row) => row.id,
+    // enableRowSelection: true,
   });
 
   return <MiniTableLayout table={table} />;
 }
 
-export default MiniTable;
+export default AssetSelectedTable;

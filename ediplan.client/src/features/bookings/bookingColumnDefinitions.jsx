@@ -14,16 +14,16 @@ export const bookingColumnDefinitions = [
   }),
   columnHelper.accessor('startDate', {
     header: 'Start',
-    cell: props => {
+    cell: (props) => {
       return (
         <StackedCell
           data1={format(
             parse(
               props.getValue(),
               "yyyy-MM-dd'T'HH:mm:ss.SSSSSSxxx",
-              new Date()
+              new Date(),
             ),
-            'E do MMM yyyy'
+            'E do MMM yyyy',
           )}
           data2="Secondary data"
         />
@@ -32,10 +32,10 @@ export const bookingColumnDefinitions = [
   }),
   columnHelper.accessor('endDate', {
     header: 'End',
-    cell: props => {
+    cell: (props) => {
       return format(
         parse(props.getValue(), "yyyy-MM-dd'T'HH:mm:ss.SSSSSSxxx", new Date()),
-        'E do MMM yyyy'
+        'E do MMM yyyy',
       );
     },
   }),
@@ -50,19 +50,19 @@ export const bookingColumnDefinitions = [
   }),
   columnHelper.accessor('created', {
     header: 'Created',
-    cell: props => {
+    cell: (props) => {
       return format(
         parse(props.getValue(), "yyyy-MM-dd'T'HH:mm:ss.SSSSSSxxx", new Date()),
-        'E do MMM yyyy'
+        'E do MMM yyyy',
       );
     },
   }),
   columnHelper.accessor('modified', {
     header: 'Modified',
-    cell: props => {
+    cell: (props) => {
       return format(
         parse(props.getValue(), "yyyy-MM-dd'T'HH:mm:ss.SSSSSSxxx", new Date()),
-        'E do MMM yyyy'
+        'E do MMM yyyy',
       );
     },
   }),
@@ -71,6 +71,6 @@ export const bookingColumnDefinitions = [
   }),
   columnHelper.display({
     header: 'Menus',
-    cell: props => <BookingTableMenu assetId={props.row.original.id} />,
+    cell: (props) => <BookingTableMenu assetId={props.row.original.id} />,
   }),
 ];

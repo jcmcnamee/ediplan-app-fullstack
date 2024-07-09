@@ -3,7 +3,7 @@ import { useAssets } from '../assets/useAssets';
 import Spinner from '../../ui/Spinner';
 import Empty from '../../ui/Empty';
 import MiniTableLayout from '../../ui/Table/MiniTableLayout';
-import MiniTable from '../assets/MiniTable';
+import MiniTable from '../assets/AssetSelectorTable';
 import Toolbar from '../../ui/Toolbar';
 import FilterMenu from '../../ui/Table/FilterMenu';
 import Filter from '../../ui/Filter';
@@ -17,11 +17,20 @@ import {
 import Button from '../../ui/Button';
 import useAssetFilters from '../assets/useAssetFilters';
 import { assetKeys } from '../assets/assetQueries';
+import AssetPickerTable from '../assets/AssetSelectorTable';
+import AssetSelectedTable from '../assets/AssetSelectedTable';
+import AssetSelectorTable from '../assets/AssetSelectorTable';
 
-function BookingAssetPicker({ selectedAssets, setSelectedAssets, state, dispatch }) {
+function BookingAssetPicker({
+  confirmedAssets,
+  setConfirmedAssets,
+  state,
+  dispatch,
+}) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterPosition, setFilterPosition] = useState(null);
-  // const [selectedAssets, setSelectedAssets] = useState({});
+  const [selectedAssets, setSelectedAssets] = useState([]);
+  // const [assetsToRemove, setAssetsToRemove] = useState([]);
   // const { state, dispatch } = useAssetFilters();
 
   useEffect(() => {
@@ -78,36 +87,22 @@ function BookingAssetPicker({ selectedAssets, setSelectedAssets, state, dispatch
   // const prevLink = getLink('prev');
   // const nextLink = getLink('next');
 
+  const assetsToAdd = data.filter((obj) => selectedAssets[obj.id] === true);
+  console.log('Select assets: ', selectedAssets);
+  console.log('Assets to add: ', assetsToAdd);
+
   return (
     <div>
-      {/* <Toolbar>
-        <Toolbar.Panel side="left">
-          <Input />
-        </Toolbar.Panel>
-        <Toolbar.Panel side="right">
-          <FilterMenu>
-            <FilterMenu.Toggle />
-            <FilterMenu.List>
-              <Filter
-                filterField="addType"
-                options={[
-                  { value: 'all', label: 'All' },
-                  { value: 'equipment', label: 'Equipment' },
-                  { value: 'person', label: 'Person' },
-                  { value: 'room', label: 'Room' },
-                ]}
-              />
-            </FilterMenu.List>
-          </FilterMenu>
-        </Toolbar.Panel>
-      </Toolbar> */}
       {memoizedToolbar}
-      <MiniTable
-        tableData={data}
-        rowSelection={selectedAssets}
-        setRowSelection={setSelectedAssets}
-        pageCount={paginationHeaderData.totalPages}
-      />
+      <span>
+        <AssetSelectorTable
+          tableData={data}
+          rowSelection={selectedAssets}
+          setRowSelection={setSelectedAssets}
+          pageCount={paginationHeaderData.totalPages}
+        />
+        <AssetSelectedTable tableData={assetsToAdd} />
+      </span>
       <div>
         <Button variation="secondary" size="small">
           <LuArrowBigLeftDash />

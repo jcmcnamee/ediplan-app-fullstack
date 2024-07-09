@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { LuCalendar } from 'react-icons/lu';
 import { Controller, useController, useFormContext } from 'react-hook-form';
-import { formatISO } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 
 const Form = styled.form`
   display: grid;
@@ -130,10 +130,16 @@ function DateSelect({ side, label, id, dispatch, action }) {
           <DatePicker
             showIcon
             icon={<LuCalendar />}
+            dateFormat="dd/MM/yyyy"
             calendarClassName="calendar"
             onChange={(date) => {
               field.onChange(date);
-              dispatch({ type: action, payload: formatISO(date) });
+              const isoDate = new Date(date).toISOString();
+              console.log('ISO date: ', isoDate);
+              dispatch({
+                type: action,
+                payload: isoDate,
+              });
             }}
             selected={field.value}
             id={id}

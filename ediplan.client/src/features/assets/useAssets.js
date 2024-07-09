@@ -18,7 +18,6 @@ import { fetchAssets } from '../../services/apiAssets';
 // }
 
 export function useAssets(filterState) {
-  console.log('State: ', filterState);
 
   const { data, error, isPending, isFetching } = useQuery({
     queryKey: filterState,
