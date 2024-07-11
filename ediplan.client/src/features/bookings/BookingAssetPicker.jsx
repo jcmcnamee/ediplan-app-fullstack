@@ -12,7 +12,7 @@ import {
   LuArrowBigLeft,
   LuArrowBigLeftDash,
   LuArrowBigRight,
-  LuArrowBigRightDash,
+  LuArrowBigRightDash
 } from 'react-icons/lu';
 import Button from '../../ui/Button';
 import useAssetFilters from '../assets/useAssetFilters';
@@ -20,88 +20,99 @@ import { assetKeys } from '../assets/assetQueries';
 import AssetPickerTable from '../assets/AssetSelectorTable';
 import AssetSelectedTable from '../assets/AssetSelectedTable';
 import AssetSelectorTable from '../assets/AssetSelectorTable';
+import TableToolbar from './TableToolbar';
 
 function BookingAssetPicker({
-  confirmedAssets,
-  setConfirmedAssets,
+  selectedAssets,
+  setSelectedAssets,
   state,
-  dispatch,
+  dispatch
 }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterPosition, setFilterPosition] = useState(null);
-  const [selectedAssets, setSelectedAssets] = useState([]);
-  // const [assetsToRemove, setAssetsToRemove] = useState([]);
-  // const { state, dispatch } = useAssetFilters();
+  const [selectedRowIds, setSelectedRowIds] = useState({});
+  const [rowIdtoRemove, setRowIdToRemove] = useState([]);
+  // const [selectedAssets, setSelectedAssets] = useState([]);
 
   useEffect(() => {
     console.log('isFilterOpen changed:', isFilterOpen);
   }, [isFilterOpen]);
 
   const tableParams = Object.fromEntries(
-    Object.entries(state).filter(([_, value]) => value != null),
+    Object.entries(state).filter(([_, value]) => value != null)
   );
 
   const { assets, paginationHeaderData, error, isPending } = useAssets(
-    assetKeys.filter(tableParams),
+    assetKeys.filter(tableParams)
   );
 
-  const memoizedToolbar = useMemo(
-    () => (
-      <Toolbar>
-        <Toolbar.Panel side="left">
-          <Input />
-        </Toolbar.Panel>
-        <Toolbar.Panel side="right">
-          <FilterMenu
-            isOpen={isFilterOpen}
-            setIsOpen={setIsFilterOpen}
-            position={filterPosition}
-            setPosition={setFilterPosition}
-          >
-            <FilterMenu.Toggle />
-            <FilterMenu.List>
-              <Filter
-                filterField="Type"
-                options={[
-                  { value: 'all', label: 'All' },
-                  { value: 'equipment', label: 'Equipment' },
-                  { value: 'person', label: 'Person' },
-                  { value: 'room', label: 'Room' },
-                ]}
-              />
-            </FilterMenu.List>
-          </FilterMenu>
-        </Toolbar.Panel>
-      </Toolbar>
-    ),
-    [filterPosition, isFilterOpen],
-  );
+  const handleToggleRowSelection = (rowId, rowData) => {
+    console.log('Row data: ', rowData);
+    // Update table row selection state
+    setSelectedRowIds(prev => {
+      // Create a shallow copy of the previous state
+      const newSelection = { ...prev };
+
+      if (newSelection[rowId]) {
+        // If the row is currently selected, delete the key to deselect
+        delete newSelection[rowId];
+      } else {
+        // Otherwise, add the key to select the row
+        newSelection[rowId] = true;
+      }
+      return newSelection;
+    });
+
+    // Persist selected asset data in state due to server pagination
+    setSelectedAssets(prev => {
+      // Check if the row is already selected
+      const isSelected = prev.some(selectedRow => selectedRow.id === rowId);
+
+      if (isSelected) {
+        // If it is selected, remove it from the array
+        return prev.filter(selectedRow => selectedRow.id !== rowId);
+      } else {
+        console.log('Adding asset: ', rowData);
+        // If it is not selected, add it to the array
+        return [...prev, rowData];
+      }
+    });
+    console.log('Selected assets: ', selectedAssets);
+  };
 
   if (error) return <div>{error}</div>;
   if (isPending) return <Spinner />;
 
-  const data = assets;
-
-  if (!data.length) return <Empty resource="bookings" />;
+  if (!assets.length) return <Empty resource="bookings" />;
 
   // const prevLink = getLink('prev');
   // const nextLink = getLink('next');
 
-  const assetsToAdd = data.filter((obj) => selectedAssets[obj.id] === true);
-  console.log('Select assets: ', selectedAssets);
-  console.log('Assets to add: ', assetsToAdd);
+  const assetsForSelection = assets.filter(asset => !selectedRowIds[asset.id]);
+  // const selectedAssets = assets.filter(obj => selectedRowIds[obj.id] === true);
 
   return (
     <div>
-      {memoizedToolbar}
+      <TableToolbar
+        isFilterOpen={isFilterOpen}
+        setIsFilterOpen={setIsFilterOpen}
+        filterPosition={filterPosition}
+        setFilterPosition={setFilterPosition}
+      />
       <span>
         <AssetSelectorTable
-          tableData={data}
-          rowSelection={selectedAssets}
-          setRowSelection={setSelectedAssets}
+          tableData={assetsForSelection}
+          rowSelection={selectedRowIds}
+          setRowSelection={setSelectedRowIds}
+          toggleRowSelection={handleToggleRowSelection}
           pageCount={paginationHeaderData.totalPages}
         />
-        <AssetSelectedTable tableData={assetsToAdd} />
+        <AssetSelectedTable
+          tableData={selectedAssets}
+          rowSelection={rowIdtoRemove}
+          setRowSelection={setRowIdToRemove}
+          toggleRowSelection={handleToggleRowSelection}
+        />
       </span>
       <div>
         <Button variation="secondary" size="small">

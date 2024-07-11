@@ -10,17 +10,17 @@ import useAssetFilters from '../assets/useAssetFilters';
 
 function CreateBookingForm() {
   const [showAssets, setShowAssets] = useState(false);
-  const [selectedAssets, setSelectedAssets] = useState({});
+  const [selectedAssets, setSelectedAssets] = useState([]);
   const { state, dispatch } = useAssetFilters();
 
   console.log('Selected assets: ', selectedAssets);
 
   const methods = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = data => console.log(data);
 
   const handleToggleAssets = () => {
-    setShowAssets((s) => !s);
+    setShowAssets(s => !s);
     console.log('Toggling: ');
   };
 
@@ -47,6 +47,10 @@ function CreateBookingForm() {
             action="filterToDate"
           />
           <Form.TextLong label="Notes: " id="description" />
+          <Form.HiddenInput
+            id="assetIds"
+            value={selectedAssets.map(asset => `${asset.id},`)}
+          />
         </Form>
       </FormProvider>
       <Toolbar>

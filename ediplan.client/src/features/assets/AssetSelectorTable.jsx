@@ -3,7 +3,7 @@ import {
   getCoreRowModel,
   getFacetedMinMaxValues,
   getFacetedUniqueValues,
-  useReactTable,
+  useReactTable
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import MiniTableLayout from '../../ui/Table/MiniTableLayout';
@@ -15,6 +15,7 @@ function AssetSelectorTable({
   setRowSelection,
   tableData,
   pageCount,
+  toggleRowSelection
 }) {
   // const [pagination, setPagination] = useState(null);
 
@@ -31,24 +32,24 @@ function AssetSelectorTable({
                 checked: row.getIsSelected(),
                 disabled: !row.getCanSelect(),
                 indeterminate: row.getIsSomeSelected(),
-                onChange: row.getToggleSelectedHandler(),
+                onChange: () => toggleRowSelection(row.id, row.original)
               }}
             />
           </div>
           // <button onClick={row.getToggleSelectedHandler()}>
           //   <LuChevronLeft />
           // </button>
-        ),
+        )
       }),
       column.accessor('id', {
-        header: 'ID',
+        header: 'ID'
       }),
       column.accessor('type', {
-        header: 'type',
+        header: 'type'
       }),
       column.accessor('name', {
-        header: 'Name',
-      }),
+        header: 'Name'
+      })
     ];
 
     return [columns, tableData];
@@ -61,21 +62,21 @@ function AssetSelectorTable({
     pageCount: pageCount,
     state: {
       // pagination,
-      rowSelection,
+      rowSelection
     },
     // onPaginationChange: setPagination,
     onRowSelectionChange: setRowSelection,
     initialState: {
       columnVisibility: {
         created: false,
-        modified: false,
-      },
+        modified: false
+      }
     },
     getCoreRowModel: getCoreRowModel(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    getRowId: (row) => row.id,
-    enableRowSelection: true,
+    getRowId: row => row.id,
+    enableRowSelection: true
   });
 
   return <MiniTableLayout table={table} />;

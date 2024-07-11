@@ -14,7 +14,7 @@ const Form = styled.form`
   /* grid-auto-rows: auto; */
   grid-template-columns: 1fr;
 
-  ${(props) =>
+  ${props =>
     props.type === 'regular' &&
     css`
       padding: 2.4rem 4rem;
@@ -26,13 +26,13 @@ const Form = styled.form`
       box-shadow: var(--shadow-tab-active);
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === 'modal' &&
     css`
       width: 80rem;
     `}
     
-  ${(props) =>
+  ${props =>
     props.columns &&
     css`
       grid-template-columns: 1fr 1fr;
@@ -49,7 +49,7 @@ const StyledFormItem = styled.div`
   align-items: center;
   grid-column: 1;
 
-  ${(props) =>
+  ${props =>
     props.side === 'right' &&
     css`
       grid-column: 2;
@@ -70,11 +70,11 @@ const StyledCheckbox = styled.input`
 
 Form.defaultProps = {
   type: 'regular',
-  columns: true,
+  columns: true
 };
 
 StyledFormItem.defaultProps = {
-  side: 'left',
+  side: 'left'
 };
 
 function TextShort({ side, label, id, placeholder }) {
@@ -132,13 +132,13 @@ function DateSelect({ side, label, id, dispatch, action }) {
             icon={<LuCalendar />}
             dateFormat="dd/MM/yyyy"
             calendarClassName="calendar"
-            onChange={(date) => {
+            onChange={date => {
               field.onChange(date);
               const isoDate = new Date(date).toISOString();
               console.log('ISO date: ', isoDate);
               dispatch({
                 type: action,
-                payload: isoDate,
+                payload: isoDate
               });
             }}
             selected={field.value}
@@ -178,9 +178,16 @@ function Checkbox({ side, label, id }) {
   );
 }
 
+function HiddenInput({ id, value }) {
+  const { register } = useFormContext();
+
+  return <input type="hidden" id="id" value={value} {...register(id)} />;
+}
+
 Form.TextShort = TextShort;
 Form.TextLong = TextLong;
 Form.DateSelect = DateSelect;
 Form.Checkbox = Checkbox;
+Form.HiddenInput = HiddenInput;
 
 export default Form;
