@@ -7,14 +7,13 @@ import {
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import MiniTableLayout from '../../ui/Table/MiniTableLayout';
-import IndeterminateCheckbox from '../../ui/Form/IndeterminateCheckbox';
-import { LuChevronLeft } from 'react-icons/lu';
+// import IndeterminateCheckbox from '../../ui/Form/IndeterminateCheckbox';
+import { LuChevronRight } from 'react-icons/lu';
 
-function AssetSelectorTable({
+function AssetSelectedTable({
+  tableData,
   rowSelection,
   setRowSelection,
-  tableData,
-  pageCount,
   toggleRowSelection
 }) {
   // const [pagination, setPagination] = useState(null);
@@ -23,24 +22,6 @@ function AssetSelectorTable({
     const column = createColumnHelper();
 
     const columns = [
-      column.display({
-        id: 'Select',
-        cell: ({ row }) => (
-          <div className="px-1">
-            <IndeterminateCheckbox
-              {...{
-                checked: row.getIsSelected(),
-                disabled: !row.getCanSelect(),
-                indeterminate: row.getIsSomeSelected(),
-                onChange: () => toggleRowSelection(row.id, row.original)
-              }}
-            />
-          </div>
-          // <button onClick={row.getToggleSelectedHandler()}>
-          //   <LuChevronLeft />
-          // </button>
-        )
-      }),
       column.accessor('id', {
         header: 'ID'
       }),
@@ -49,17 +30,34 @@ function AssetSelectorTable({
       }),
       column.accessor('name', {
         header: 'Name'
+      }),
+      column.display({
+        id: 'Select',
+        cell: ({ row }) => (
+          // <div className="px-1">
+          //   <IndeterminateCheckbox
+          //     {...{
+          //       checked: row.getIsSelected(),
+          //       disabled: !row.getCanSelect(),
+          //       indeterminate: row.getIsSomeSelected(),
+          //       onChange: row.getToggleSelectedHandler(),
+          //     }}
+          //   />
+          // </div>
+          <button onClick={() => toggleRowSelection(row.id)}>
+            <LuChevronRight />
+          </button>
+        )
       })
     ];
 
     return [columns, tableData];
-  }, [tableData]);
+  }, [tableData, toggleRowSelection]);
 
   const table = useReactTable({
     data: data ?? [],
     columns: columns,
     manualPagination: true,
-    pageCount: pageCount,
     state: {
       // pagination,
       rowSelection
@@ -76,10 +74,11 @@ function AssetSelectorTable({
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getRowId: row => row.id,
-    enableRowSelection: true
+    enableRowSelection: true,
+    enableMultiRowSelection: false
   });
 
   return <MiniTableLayout table={table} />;
 }
 
-export default AssetSelectorTable;
+export default AssetSelectedTable;

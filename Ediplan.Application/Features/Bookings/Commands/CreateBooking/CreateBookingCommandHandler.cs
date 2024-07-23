@@ -14,10 +14,11 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
     private readonly IMapper _mapper;
     private readonly IBookingRepository _bookingRepository;
     private readonly IAssetRepository _assetRepository;
+    private readonly IBookingGroupRepository _bookingGroupRepository;
     private readonly IEmailService _emailService;
     private readonly ILogger<CreateBookingCommandHandler> _logger;
 
-    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IAssetRepository assetRepository, IEmailService emailService, ILogger<CreateBookingCommandHandler> logger)
+    public CreateBookingCommandHandler(IMapper mapper, IBookingRepository bookingRepository, IAssetRepository assetRepository, IBookingGroupRepository bookingGroupRepository, IEmailService emailService, ILogger<CreateBookingCommandHandler> logger)
     {
         _emailService = emailService ??
             throw new ArgumentNullException(nameof(emailService));
@@ -29,6 +30,8 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
             throw new ArgumentNullException(nameof(bookingRepository));
         _assetRepository = assetRepository ??
             throw new ArgumentNullException(nameof(assetRepository));
+        _bookingGroupRepository = bookingGroupRepository ??
+            throw new ArgumentNullException(nameof(bookingGroupRepository));
     }
 
     public async Task<CreateBookingCommandResponse> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -49,6 +52,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
             {
                 createBookingCommandResponse.ValidationErrors.Add(error.ErrorMessage);
             }
+            _logger.LogWarning("Validation failed for booking creation." + validationResult);
 
             throw new ValidationException(validationResult);
         }
@@ -56,6 +60,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
         // Create new booking
         var booking = _mapper.Map<Booking>(request);
 
+        // TODO: Refactor the following validation tasks to be contained within the validator.
         // Fetch and add assets
         if (request.AssetIds != null && request.AssetIds.Any())
         {
@@ -72,6 +77,21 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
             booking.Assets = assets;
         }
 
+        // Fetch and add booking group
+        if (request.BookingGroupIds != null && request.BookingGroupIds.Any())
+        {
+            var distinctBookingGroupIds = request.BookingGroupIds.Distinct().ToList();
+            var bookingGroups = await _bookingGroupRepository.GetGroupsByIdsAsync(distinctBookingGroupIds);
+            if (bookingGroups.Count != distinctBookingGroupIds.Count)
+            {
+                _logger.LogWarning("One or more booking groups were not found.");
+                createBookingCommandResponse.Success = false;
+                createBookingCommandResponse.ValidationErrors.Add("One or more booking groups were not found.");
+                return createBookingCommandResponse;
+            }
+
+            booking.BookingGroups = bookingGroups;
+        }
 
         // Add entity to DB
         booking = await _bookingRepository.AddAsync(booking);

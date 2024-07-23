@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ediplan.Persistence.Migrations
 {
     [DbContext(typeof(EdiplanDbContext))]
-    [Migration("20240622145347_initialMigration")]
+    [Migration("20240723062402_initialMigration")]
     partial class initialMigration
     {
         /// <inheritdoc />
@@ -164,239 +164,239 @@ namespace Ediplan.Persistence.Migrations
                         {
                             Id = -1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 7, 15, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(193),
+                            EndDate = new DateTime(2024, 8, 15, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(189),
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "High-speed internet required for remote editing.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 6, 24, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(184),
+                            StartDate = new DateTime(2024, 7, 25, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(180),
                             Status = "provisional"
                         },
                         new
                         {
                             Id = -2,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 7, 29, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(216),
+                            EndDate = new DateTime(2024, 8, 30, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(212),
                             Name = "",
                             Notes = "Need access to soundproof dubbing studio.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 7, 22, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(210),
+                            StartDate = new DateTime(2024, 8, 23, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(207),
                             Status = "provisional"
                         },
                         new
                         {
                             Id = -3,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 12, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(230),
+                            EndDate = new DateTime(2024, 7, 13, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(226),
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Final editing phase.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 6, 7, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(229),
+                            StartDate = new DateTime(2024, 7, 8, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(225),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -4,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 17, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(244),
+                            EndDate = new DateTime(2024, 7, 18, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(240),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Location scouting.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 4, 22, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(243),
+                            StartDate = new DateTime(2024, 5, 23, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(239),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -5,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 12, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(259),
+                            EndDate = new DateTime(2024, 5, 13, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(255),
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Principal photography.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 3, 22, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(258),
+                            StartDate = new DateTime(2024, 4, 23, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(254),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -6,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 8, 27, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(277),
+                            EndDate = new DateTime(2024, 9, 28, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(272),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Pre-production meetings.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 8, 22, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(276),
+                            StartDate = new DateTime(2024, 9, 23, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(272),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -7,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 17, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(291),
+                            EndDate = new DateTime(2024, 7, 18, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(287),
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "Color correction phase.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 6, 14, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(290),
+                            StartDate = new DateTime(2024, 7, 15, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(287),
                             Status = "pending"
                         },
                         new
                         {
                             Id = -8,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 4, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(305),
+                            EndDate = new DateTime(2024, 7, 5, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(301),
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Sound mixing completed.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 6, 2, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(304),
+                            StartDate = new DateTime(2024, 7, 3, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(301),
                             Status = "completed"
                         },
                         new
                         {
                             Id = -9,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 11, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(319),
+                            EndDate = new DateTime(2024, 7, 12, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(316),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "Reshoots scheduled.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 6, 10, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(319),
+                            StartDate = new DateTime(2024, 7, 11, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(315),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -10,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 2, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(336),
+                            EndDate = new DateTime(2024, 7, 3, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(331),
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Project on hold.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 5, 31, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(335),
+                            StartDate = new DateTime(2024, 7, 1, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(330),
                             Status = "cancelled"
                         },
                         new
                         {
                             Id = -11,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 30, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(350),
+                            EndDate = new DateTime(2024, 6, 30, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(345),
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "Initial editing phase.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 5, 28, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(349),
+                            StartDate = new DateTime(2024, 6, 28, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(344),
                             Status = "completed"
                         },
                         new
                         {
                             Id = -12,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 25, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(363),
+                            EndDate = new DateTime(2024, 6, 25, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(358),
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Special effects integration.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 5, 23, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(362),
+                            StartDate = new DateTime(2024, 6, 23, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(358),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -13,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 8, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(381),
+                            EndDate = new DateTime(2024, 7, 9, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(371),
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Waiting for client feedback.",
                             ProductionId = new Guid("d7af2c8c-525e-41ad-b379-edad3de1defe"),
-                            StartDate = new DateTime(2024, 6, 7, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(380),
+                            StartDate = new DateTime(2024, 7, 8, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(371),
                             Status = "pending"
                         },
                         new
                         {
                             Id = -14,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 18, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(396),
+                            EndDate = new DateTime(2024, 6, 18, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(390),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "ADR sessions completed.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 5, 13, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(395),
+                            StartDate = new DateTime(2024, 6, 13, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(390),
                             Status = "completed"
                         },
                         new
                         {
                             Id = -15,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 8, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(409),
+                            EndDate = new DateTime(2024, 6, 8, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(404),
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Visual effects review.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 5, 3, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(408),
+                            StartDate = new DateTime(2024, 6, 3, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(403),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -16,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 20, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(423),
+                            EndDate = new DateTime(2024, 7, 21, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(418),
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "Title sequence design.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 6, 17, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(422),
+                            StartDate = new DateTime(2024, 7, 18, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(417),
                             Status = "pending"
                         },
                         new
                         {
                             Id = -17,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 4, 28, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(437),
+                            EndDate = new DateTime(2024, 5, 29, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(431),
                             LocationId = new Guid("71e40a55-2430-4a68-8adc-f78a1ef2c8c2"),
                             Name = "",
                             Notes = "Final quality check.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 4, 23, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(436),
+                            StartDate = new DateTime(2024, 5, 24, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(430),
                             Status = "completed"
                         },
                         new
                         {
                             Id = -18,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 6, 6, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(452),
+                            EndDate = new DateTime(2024, 7, 7, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(445),
                             LocationId = new Guid("5e10152d-dd1b-49a2-bc95-79246ee8ca8a"),
                             Name = "",
                             Notes = "Client requested changes.",
                             ProductionId = new Guid("4050a623-5308-4640-8c36-493729f6f884"),
-                            StartDate = new DateTime(2024, 6, 4, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(451),
+                            StartDate = new DateTime(2024, 7, 5, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(444),
                             Status = "cancelled"
                         },
                         new
                         {
                             Id = -19,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 21, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(466),
+                            EndDate = new DateTime(2024, 6, 21, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(459),
                             LocationId = new Guid("189d7685-bdf0-4a39-9750-7720ec6044c9"),
                             Name = "",
                             Notes = "New scene additions.",
                             ProductionId = new Guid("709bf680-7cc8-406c-bb8d-13ace00d4fe7"),
-                            StartDate = new DateTime(2024, 5, 18, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(465),
+                            StartDate = new DateTime(2024, 6, 18, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(458),
                             Status = "confirmed"
                         },
                         new
                         {
                             Id = -20,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndDate = new DateTime(2024, 5, 13, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(481),
+                            EndDate = new DateTime(2024, 6, 13, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(473),
                             LocationId = new Guid("e19d79c7-58d6-4906-ba7a-3507a2e90f09"),
                             Name = "",
                             Notes = "Complete sound design.",
                             ProductionId = new Guid("3cbedfd3-a8b1-43b2-9ccb-67ec980118a6"),
-                            StartDate = new DateTime(2024, 5, 8, 14, 53, 46, 827, DateTimeKind.Utc).AddTicks(480),
+                            StartDate = new DateTime(2024, 6, 8, 6, 24, 1, 788, DateTimeKind.Utc).AddTicks(472),
                             Status = "completed"
                         });
                 });

@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { LuCalendar } from 'react-icons/lu';
 import { Controller, useController, useFormContext } from 'react-hook-form';
 import { format, formatISO } from 'date-fns';
+import Warning from '../Warning';
 
 const Form = styled.form`
   display: grid;
@@ -44,7 +45,7 @@ const Form = styled.form`
 
 const StyledFormItem = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 3fr 1fr;
   gap: 0.8rem;
   align-items: center;
   grid-column: 1;
@@ -77,25 +78,27 @@ StyledFormItem.defaultProps = {
   side: 'left'
 };
 
-function TextShort({ side, label, id, placeholder }) {
+function TextShort({ side, label, id, placeholder, validation }) {
   // const [text, setText] = useState('');
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors }
+  } = useFormContext();
 
   return (
     <StyledFormItem side={side}>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
-      {/* <Input
-        type="text"
-        id={id}
-        value={text}
-        onChange={e => setText(e.target.value)}
-      /> */}
-      <Input placeholder={placeholder} {...register(id)} />
+      <Input
+        placeholder={placeholder}
+        {...register(id, validation)}
+        style={{ height: '4rem', width: '22rem' }}
+      />
+      {errors[id] && <Warning>{errors[id].message}</Warning>}
     </StyledFormItem>
   );
 }
 
-function TextLong({ side, label, id, placeholder }) {
+function TextLong({ side, label, id, placeholder, validation }) {
   // const [text, setText] = useState('');
   const { register } = useFormContext();
 
@@ -104,21 +107,13 @@ function TextLong({ side, label, id, placeholder }) {
       <StyledLabel htmlFor={id} style={{ alignSelf: 'start' }}>
         {label}
       </StyledLabel>
-      {/* <StyledTextArea
-        rows="4"
-        cols="25"
-        id={id}
-        value={text}
-        onChange={e => setText(e.target.value)}
-      /> */}
-      <StyledTextArea placeholder={placeholder} {...register(id)} />
+      <StyledTextArea placeholder={placeholder} {...register(id, validation)} />
     </StyledFormItem>
   );
 }
 
 function DateSelect({ side, label, id, dispatch, action }) {
-  // const [startDate, setStartDate] = useState(new Date());
-  const { control } = useFormContext();
+  const { control, setValue, setError } = useFormContext();
 
   return (
     <StyledFormItem side={side}>
@@ -135,24 +130,18 @@ function DateSelect({ side, label, id, dispatch, action }) {
             onChange={date => {
               field.onChange(date);
               const isoDate = new Date(date).toISOString();
-              console.log('ISO date: ', isoDate);
               dispatch({
                 type: action,
                 payload: isoDate
               });
+              setValue(id, isoDate);
             }}
             selected={field.value}
             id={id}
           />
         )}
+        rules={{ required: 'Date required' }}
       />
-      {/* <DatePicker
-        showIcon
-        selected={startDate}
-        onChange={date => setStartDate(date)}
-        icon={<LuCalendar />}
-        calendarClassName="calendar"
-      /> */}
     </StyledFormItem>
   );
 }
@@ -168,11 +157,6 @@ function Checkbox({ side, label, id }) {
   return (
     <StyledFormItem side={side}>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
-      {/* <StyledCheckbox
-        type="checkbox"
-        checked={isChecked}
-        onChange={e => setIsChecked(e.value)}
-      /> */}
       <StyledCheckbox type="checkbox" {...register(id)} />
     </StyledFormItem>
   );
@@ -181,7 +165,7 @@ function Checkbox({ side, label, id }) {
 function HiddenInput({ id, value }) {
   const { register } = useFormContext();
 
-  return <input type="hidden" id="id" value={value} {...register(id)} />;
+  return <input type="hidden" value={value} {...register(id)} />;
 }
 
 Form.TextShort = TextShort;

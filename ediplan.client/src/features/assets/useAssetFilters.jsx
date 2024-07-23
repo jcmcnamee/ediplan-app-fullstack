@@ -59,8 +59,6 @@ function useAssetFilters() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log('Asset filter state update: ', state);
-
   return { state, dispatch };
 }
 

@@ -22,7 +22,8 @@ const FilterMenuContext = createContext();
 function FilterMenu({ isOpen, setIsOpen, position, setPosition, children }) {
   return (
     <FilterMenuContext.Provider
-      value={{ isOpen, setIsOpen, position, setPosition }}>
+      value={{ isOpen, setIsOpen, position, setPosition }}
+    >
       {children}
     </FilterMenuContext.Provider>
   );
@@ -43,7 +44,7 @@ function Toggle() {
 
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
-      y: rect.y + rect.height + 8,
+      y: rect.y + rect.height + 8
     });
 
     setIsOpen(s => !s);
@@ -54,7 +55,8 @@ function Toggle() {
       $variation="primary"
       $size="medium"
       $active={isOpen}
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       <LuSlidersHorizontal />
     </Toolbar.Button>
   );
@@ -62,7 +64,6 @@ function Toggle() {
 
 function List({ children }) {
   const { isOpen, position, close } = useContext(FilterMenuContext);
-  console.log(`Position: `, position);
   const ref = useOutsideClick(close);
 
   if (!isOpen) return null;

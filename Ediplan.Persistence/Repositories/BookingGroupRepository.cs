@@ -17,6 +17,7 @@ public class BookingGroupRepository : BaseRepository<BookingGroup>, IBookingGrou
         
     }
 
+    // This method is used to get a list of groups with their members
     public async Task<List<BookingGroup>> GetBookingGroupsWithMembers(bool includePastEvents)
     {
         var allGroups = await _dbContext.BookingGroups.Include(x => 
@@ -30,4 +31,9 @@ public class BookingGroupRepository : BaseRepository<BookingGroup>, IBookingGrou
         return allGroups;
     }
 
+    // This method is used to get a list of groups by their Ids
+    public Task<List<BookingGroup>> GetGroupsByIdsAsync(IEnumerable<int> groupIds)
+    {
+        return _dbContext.BookingGroups.Where(g => groupIds.Contains(g.Id)).ToListAsync();
+    }
 }

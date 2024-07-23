@@ -9,4 +9,5 @@ namespace Ediplan.Application.Contracts.Persistence;
 public interface IBookingGroupRepository : IAsyncRepository<BookingGroup>
 {
     Task<List<BookingGroup>> GetBookingGroupsWithMembers(bool includePastEvents);
+    Task<List<BookingGroup>> GetGroupsByIdsAsync(IEnumerable<int> groupIds);
 }

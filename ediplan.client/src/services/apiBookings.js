@@ -3,7 +3,7 @@ import axios from 'axios';
 const BASE_URL = 'https://localhost:7080';
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL
 });
 
 export async function getBookings({ searchParams }) {
@@ -21,4 +21,12 @@ export async function getBookings({ searchParams }) {
   }
 }
 
-export async function getBooking({ queryKey }) {}
+export async function createBooking(data) {
+  try {
+    console.log('Data: ', data);
+    const res = await api.post('api/bookings', data);
+    return res.data;
+  } catch (err) {
+    console.error(`Error creating booking: ${err}`);
+  }
+}

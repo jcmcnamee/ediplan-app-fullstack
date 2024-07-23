@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const StyledTable = styled.table`
   outline: 1px solid var(--color-grey-200);
-
+  height: min-content;
+  width: 100%;
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
   border-radius: 7px;
@@ -35,7 +36,7 @@ const CommonItem = styled.div`
 `;
 
 const StyledHeaderItem = styled(CommonItem)`
-  padding: 1rem 0.1rem;
+  padding: 0.3rem 0.1rem;
   display: flex;
   justify-content: space-around;
 `;
@@ -67,7 +68,7 @@ function MiniTableLayout({ table }) {
       </thead>
       <StyledTableBody>
         {rowModel.rows.map(row => (
-          <tr key={row.id}>
+          <tr key={row.id} style={{ height: '25px' }}>
             {row.getVisibleCells().map(cell => (
               <td key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}

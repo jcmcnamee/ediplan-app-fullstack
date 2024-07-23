@@ -7,25 +7,22 @@ import {
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import MiniTableLayout from '../../ui/Table/MiniTableLayout';
-// import IndeterminateCheckbox from '../../ui/Form/IndeterminateCheckbox';
-import { LuChevronRight } from 'react-icons/lu';
+import IndeterminateCheckbox from '../../ui/Form/IndeterminateCheckbox';
+import { LuChevronLeft } from 'react-icons/lu';
 
-function AssetSelectedTable({ tableData, rowSelection, setRowSelection, toggleRowSelection }) {
+function AssetSelectorTable({
+  rowSelection,
+  setRowSelection,
+  tableData,
+  pageCount,
+  toggleRowSelection
+}) {
   // const [pagination, setPagination] = useState(null);
 
   const [columns, data] = useMemo(() => {
     const column = createColumnHelper();
 
     const columns = [
-      column.accessor('id', {
-        header: 'ID'
-      }),
-      column.accessor('type', {
-        header: 'type'
-      }),
-      column.accessor('name', {
-        header: 'Name'
-      }),
       column.display({
         id: 'Select',
         cell: ({ row }) => (
@@ -35,14 +32,23 @@ function AssetSelectedTable({ tableData, rowSelection, setRowSelection, toggleRo
           //       checked: row.getIsSelected(),
           //       disabled: !row.getCanSelect(),
           //       indeterminate: row.getIsSomeSelected(),
-          //       onChange: row.getToggleSelectedHandler(),
+          //       onChange: () => toggleRowSelection(row.id, row.original)
           //     }}
           //   />
           // </div>
-          <button onClick={() => toggleRowSelection(row.id)}>
-            <LuChevronRight />
+          <button onClick={() => toggleRowSelection(row.id, row.original)}>
+            <LuChevronLeft />
           </button>
         )
+      }),
+      column.accessor('id', {
+        header: 'ID'
+      }),
+      column.accessor('type', {
+        header: 'type'
+      }),
+      column.accessor('name', {
+        header: 'Name'
       })
     ];
 
@@ -53,6 +59,7 @@ function AssetSelectedTable({ tableData, rowSelection, setRowSelection, toggleRo
     data: data ?? [],
     columns: columns,
     manualPagination: true,
+    pageCount: pageCount,
     state: {
       // pagination,
       rowSelection
@@ -69,11 +76,10 @@ function AssetSelectedTable({ tableData, rowSelection, setRowSelection, toggleRo
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getRowId: row => row.id,
-    enableRowSelection: true,
-    enableMultiRowSelection: false
+    enableRowSelection: true
   });
 
   return <MiniTableLayout table={table} />;
 }
 
-export default AssetSelectedTable;
+export default AssetSelectorTable;

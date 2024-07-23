@@ -1,37 +1,66 @@
-import { LuPackagePlus } from 'react-icons/lu';
 import Button from '../../ui/Button';
 import Form from '../../ui/Form/Form';
-import Toolbar from '../../ui/Toolbar';
+
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useCategories } from '../categories/useCategories';
 
 import BookingAssetPicker from './BookingAssetPicker';
 import useAssetFilters from '../assets/useAssetFilters';
 
+import BookingCategoryPicker from '../categories/CategoryPicker';
+import Spinner from '../../ui/Spinner';
+import { useCreateBooking } from './useCreateBooking';
+
 function CreateBookingForm() {
   const [showAssets, setShowAssets] = useState(false);
+  const [showLockWarning, setShowLockWarning] = useState(false);
   const [selectedAssets, setSelectedAssets] = useState([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+  const { categories, error, isPending } = useCategories();
+  const { isCreating, apiCreateBooking } = useCreateBooking();
+  // Assets are filtered in the Asset Picker depending on date input hence passing these down as props
   const { state, dispatch } = useAssetFilters();
-
-  console.log('Selected assets: ', selectedAssets);
 
   const methods = useForm();
 
-  const onSubmit = data => console.log(data);
-
-  const handleToggleAssets = () => {
-    setShowAssets(s => !s);
-    console.log('Toggling: ');
+  const handleToggleTables = () => {
+    if ((state.from !== null) & (state.to !== null)) {
+      setShowAssets(s => !s);
+      setShowLockWarning(false);
+    } else {
+      setShowLockWarning(true);
+    }
   };
+
+  const onSubmit = data => {
+    data.assetIds = selectedAssets.map(a => a.id);
+    data.categoryIds = selectedCategoryIds;
+    apiCreateBooking(data, { onSuccess: () => methods.reset() });
+  };
+
+  const onError = errors => {
+    console.error('Errors: ', errors);
+  };
+
+  console.log('Category IDs: ', selectedCategoryIds);
+
+  if (error) return <div>{error}</div>;
+  if (isPending) return <Spinner />;
 
   return (
     <>
       <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Form
+          onSubmit={methods.handleSubmit(onSubmit, onError)}
+          id="createBookingForm"
+        >
           <Form.TextShort
             label="Booking name: "
             id="name"
             placeholder="Booking name...."
+            validation={{ required: 'Name is required' }}
+            disabled={isCreating}
           />
           <Form.Checkbox label="Provisional: " id="provisional" side="right" />
           <Form.DateSelect
@@ -39,60 +68,46 @@ function CreateBookingForm() {
             id="startDate"
             dispatch={dispatch}
             action="filterFromDate"
+            disabled={isCreating}
           />
           <Form.DateSelect
             label="End: "
             id="endDate"
             dispatch={dispatch}
             action="filterToDate"
+            disabled={isCreating}
           />
-          <Form.TextLong label="Notes: " id="description" />
-          <Form.HiddenInput
-            id="assetIds"
-            value={selectedAssets.map(asset => `${asset.id},`)}
+          <Form.TextLong
+            label="Notes: "
+            id="description"
+            disabled={isCreating}
+          />
+          <BookingCategoryPicker
+            categories={categories}
+            allowCreateCategory={true}
+            selectedCategoryIds={selectedCategoryIds}
+            setSelectedCategoryIds={setSelectedCategoryIds}
           />
         </Form>
       </FormProvider>
-      <Toolbar>
-        <Toolbar.Panel side="left">
-          <Toolbar.Button $variation="primary" onClick={handleToggleAssets}>
-            <LuPackagePlus />
-          </Toolbar.Button>
-          <span>Please select dates...</span>
-        </Toolbar.Panel>
-        <Toolbar.Panel side="right">
-          {!showAssets ?? (
-            <Button
-              variation="primary"
-              size="medium"
-              onClick={methods.handleSubmit(onSubmit)}
-            >
-              Create booking
-            </Button>
-          )}
-        </Toolbar.Panel>
-      </Toolbar>
-      <div>
-        {showAssets ? (
-          <div>
-            <BookingAssetPicker
-              selectedAssets={selectedAssets}
-              setSelectedAssets={setSelectedAssets}
-              state={state}
-              dispatch={dispatch}
-            />
-            <Button
-              variation="primary"
-              size="medium"
-              onClick={methods.handleSubmit(onSubmit)}
-            >
-              Create booking
-            </Button>
-          </div>
-        ) : (
-          'No assets....'
-        )}
-      </div>
+      <BookingAssetPicker
+        selectedAssets={selectedAssets}
+        setSelectedAssets={setSelectedAssets}
+        formState={state}
+        dispatch={dispatch}
+        toggleTables={handleToggleTables}
+        showTables={showAssets}
+        showLockWarning={showLockWarning}
+      />
+      <Button
+        variation="primary"
+        size="medium"
+        type="submit"
+        form="createBookingForm"
+        disabled={isCreating}
+      >
+        Create booking
+      </Button>
     </>
   );
 }

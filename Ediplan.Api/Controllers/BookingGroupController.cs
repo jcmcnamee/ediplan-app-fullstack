@@ -18,7 +18,7 @@ public class BookingGroupController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("all", Name = "GetAllBookingGroups")]
+    [HttpGet(Name = "GetAllBookingGroups")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<List<BookingGroupListVm>>> GetAllBookingGroups()
     {
