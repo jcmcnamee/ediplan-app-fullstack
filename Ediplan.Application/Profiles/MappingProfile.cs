@@ -57,6 +57,7 @@ public class MappingProfile : Profile
         CreateMap<BookingGroup, CreateBookingGroupDto>().ReverseMap();
         CreateMap<BookingGroup, BookingGroupListVm>();
         CreateMap<BookingGroup, BookingGroupMemberListVm>();
+        CreateMap<BookingGroup, BookingGroupDto>().ReverseMap();
 
         CreateMap<Asset, AssetListVm>().ReverseMap();
         CreateMap<Asset, AssetDto>().ReverseMap();

@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import Spinner from '../../ui/Spinner';
 import CategoryPickerItem from './CategoryPickerItem';
-import { useCategories } from './useCategories';
 
 const StyledItemContainer = styled.div`
   display: flex;
@@ -29,17 +27,17 @@ const StyledPickerTitle = styled.div`
   grid-row: 1 / 2;
 `;
 
-function CategoryPicker({
-  categories,
-  allowCreateCategory,
-  selectedCategoryIds,
-  setSelectedCategoryIds
+function MultiItemPicker({
+  items,
+  allowCreateItems,
+  selectedItemIds,
+  setSelectedItemIds
 }) {
-  const toggleCategory = id => {
-    if (selectedCategoryIds.includes(id)) {
-      setSelectedCategoryIds(selectedCategoryIds.filter(c => c !== id));
+  const toggleItem = id => {
+    if (selectedItemIds.includes(id)) {
+      setSelectedItemIds(selectedItemIds.filter(c => c !== id));
     } else {
-      setSelectedCategoryIds([...selectedCategoryIds, id]);
+      setSelectedItemIds([...selectedItemIds, id]);
     }
   };
 
@@ -48,12 +46,12 @@ function CategoryPicker({
       <StyledPickerTitle>Categories:</StyledPickerTitle>
 
       <StyledItemContainer>
-        {categories.data.map(c => (
+        {items.data.map(i => (
           <CategoryPickerItem
-            key={c.id}
-            category={c.name}
-            handleClick={() => toggleCategory(c.id)}
-            isSelected={selectedCategoryIds.includes(c.id)}
+            key={i.id}
+            category={i.name}
+            handleClick={() => toggleItem(i.id)}
+            isSelected={selectedItemIds.includes(i.id)}
           />
         ))}
       </StyledItemContainer>
@@ -61,4 +59,4 @@ function CategoryPicker({
   );
 }
 
-export default CategoryPicker;
+export default MultiItemPicker;

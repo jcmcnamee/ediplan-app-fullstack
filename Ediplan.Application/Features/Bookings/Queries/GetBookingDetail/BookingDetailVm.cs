@@ -16,4 +16,5 @@ public class BookingDetailVm
     public ProductionDto? Production { get; set; }
     public LocationDto? Location { get; set; }
     public List<AssetDto>? Assets { get; set; }
+    public List<BookingGroupDto>? BookingGroups { get; set; }
 }

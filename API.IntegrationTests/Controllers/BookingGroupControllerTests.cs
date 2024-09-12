@@ -17,7 +17,7 @@ public class BookingGroupControllerTests : IClassFixture<CustomWebApplicationFac
     {
         var client = _factory.GetAnonymousClient();
 
-        var response = await client.GetAsync("/api/bookings/groups/all");
+        var response = await client.GetAsync("/api/bookings/groups");
 
         response.EnsureSuccessStatusCode();
 

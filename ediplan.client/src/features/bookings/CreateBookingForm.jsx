@@ -8,9 +8,10 @@ import { useCategories } from '../categories/useCategories';
 import BookingAssetPicker from './BookingAssetPicker';
 import useAssetFilters from '../assets/useAssetFilters';
 
-import BookingCategoryPicker from '../categories/CategoryPicker';
+import BookingCategoryPicker from '../categories/MultiItemPicker';
 import Spinner from '../../ui/Spinner';
 import { useCreateBooking } from './useCreateBooking';
+import MultiItemPicker from '../categories/MultiItemPicker';
 
 function CreateBookingForm() {
   const [showAssets, setShowAssets] = useState(false);
@@ -35,7 +36,7 @@ function CreateBookingForm() {
 
   const onSubmit = data => {
     data.assetIds = selectedAssets.map(a => a.id);
-    data.categoryIds = selectedCategoryIds;
+    data.bookingGroupIds = selectedCategoryIds;
     apiCreateBooking(data, { onSuccess: () => methods.reset() });
   };
 
@@ -77,16 +78,12 @@ function CreateBookingForm() {
             action="filterToDate"
             disabled={isCreating}
           />
-          <Form.TextLong
-            label="Notes: "
-            id="description"
-            disabled={isCreating}
-          />
-          <BookingCategoryPicker
-            categories={categories}
-            allowCreateCategory={true}
-            selectedCategoryIds={selectedCategoryIds}
-            setSelectedCategoryIds={setSelectedCategoryIds}
+          <Form.TextLong label="Notes: " id="notes" disabled={isCreating} />
+          <MultiItemPicker
+            items={categories}
+            allowCreateItems={true}
+            selectedItemIds={selectedCategoryIds}
+            setSelectedItemIds={setSelectedCategoryIds}
           />
         </Form>
       </FormProvider>

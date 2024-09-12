@@ -22,4 +22,16 @@ public class Booking : AuditableEntity
     public List<Asset> Assets { get; set; } = new();
     public Production? Production { get; set; }
     public Location? Location { get; set; }
+
+    public override string ToString()
+    {
+        var bookingGroupsString = BookingGroups != null ? string.Join(", ", BookingGroups.Select(bg => bg.Id)) : "None";
+        var assetsString = Assets != null ? string.Join(", ", Assets.Select(a => a.Id)) : "None";
+        var productionString = Production != null ? Production.Id.ToString() : "None";
+        var locationString = Location != null ? Location.Id.ToString() : "None";
+
+        return $"Booking Id: {Id}; Name: {Name}; Start Date: {StartDate}; End Date: {EndDate}; Status: {Status}; Notes: {Notes}; " +
+               $"Production ID: {productionString}; Location ID: {locationString}; " +
+               $"BookingGroup Ids: {bookingGroupsString}; Asset Ids: {assetsString}";
+    }
 }

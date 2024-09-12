@@ -36,6 +36,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
 
     public async Task<CreateBookingCommandResponse> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Handling request: " + request.ToString());
         // Create custom response
         var createBookingCommandResponse = new CreateBookingCommandResponse();
 
@@ -82,6 +83,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
         {
             var distinctBookingGroupIds = request.BookingGroupIds.Distinct().ToList();
             var bookingGroups = await _bookingGroupRepository.GetGroupsByIdsAsync(distinctBookingGroupIds);
+            _logger.LogInformation("Booking groups: " + bookingGroups.ToString());
             if (bookingGroups.Count != distinctBookingGroupIds.Count)
             {
                 _logger.LogWarning("One or more booking groups were not found.");

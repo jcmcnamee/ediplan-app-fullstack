@@ -28,7 +28,6 @@ public class CreateEquipmentCommandResponse : ICreateAssetCommandResponse
         var validationResult = await validator.ValidateAsync((CreateEquipmentCommand)command);
 
         // Insert validation logic
-
         if (response.Success)
         {
             var equipment = mapper.Map<Equipment>(command);

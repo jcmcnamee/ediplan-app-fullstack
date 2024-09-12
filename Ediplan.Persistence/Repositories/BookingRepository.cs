@@ -7,6 +7,7 @@ using Ediplan.Domain.Common;
 using Ediplan.Domain.Entities;
 using Ediplan.Persistence.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Ediplan.Persistence.Repositories;
 
@@ -15,12 +16,14 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
     private readonly EdiplanDbContext _dbContext;
     private readonly IPropertyMappingService _propertyMappingService;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
-    public BookingRepository(EdiplanDbContext dbContext, IPropertyMappingService propertyMappingService, IMapper mapper) : base(dbContext)
+    public BookingRepository(EdiplanDbContext dbContext, IPropertyMappingService propertyMappingService, IMapper mapper, ILogger<BookingRepository> logger) : base(dbContext)
     {
             _dbContext = dbContext;
             _propertyMappingService = propertyMappingService;
             _mapper = mapper;
+            _logger = logger;
     }
     public Task<bool> IsBookingNameAndDateUnique(string name, DateTime bookingDate)
     {
@@ -96,8 +99,18 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
 
     public async Task<Booking> GetBookingDetail(int id)
     {
-        var entity = await _dbContext.Bookings.Include(b => b.Assets).FirstOrDefaultAsync(b => b.Id == id);
+        var entity = await _dbContext.Bookings
+            .Include(b => b.Assets)
+            .Include(b => b.BookingGroups)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(b => b.Id == id);
+
+        if (entity == null)
+        {
+            // log
+        }
+
+        _logger.LogInformation($"Returning entity: " + entity.ToString());
         return entity;
-            
     }
 }

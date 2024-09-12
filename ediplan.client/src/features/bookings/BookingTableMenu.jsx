@@ -1,11 +1,12 @@
-import { LuCopy, LuPencil, LuTrash2 } from "react-icons/lu";
-import Menus from "../../ui/Menus";
-import Modal from "../../ui/Modal";
+import { LuCopy, LuPencil, LuTrash2 } from 'react-icons/lu';
+import Menus from '../../ui/Menus';
+import Modal from '../../ui/Modal';
 
 function BookingTableMenu({ bookingId }) {
+  console.log('Booking ID: ', bookingId);
   function handleDuplicate() {
     // createAsset({ ...asset });
-    console.log("Make duplicate!");
+    console.log('Make duplicate!');
   }
 
   return (

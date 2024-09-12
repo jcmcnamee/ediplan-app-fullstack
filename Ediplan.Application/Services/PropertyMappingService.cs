@@ -43,17 +43,17 @@ public class PropertyMappingService : IPropertyMappingService
 
 
     // Gets single property mapping
-    public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestionation>()
+    public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()
     {
 
-        var matchMapping = _propertyMappings.OfType<PropertyMapping<TSource, TDestionation>>();
+        var matchMapping = _propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
 
         if (matchMapping.Count() == 1)
         {
             return matchMapping.First().MappingDictionary;
         }
 
-        throw new Exception($"Cannot find exact property mapping instance for <{typeof(TSource)}, {typeof(TDestionation)}>.");
+        throw new Exception($"Cannot find exact property mapping instance for <{typeof(TSource)}, {typeof(TDestination)}>.");
     }
 
     public bool ValidMappingExistsFor<TSource, TDestionation>(string fields)

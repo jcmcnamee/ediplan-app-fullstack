@@ -1,8 +1,8 @@
-import { createContext, useContext, useState } from 'react';
-import styled from 'styled-components';
-import { LuSlidersHorizontal } from 'react-icons/lu';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { createContext, useContext } from 'react';
 import { createPortal } from 'react-dom';
+import { LuSlidersHorizontal } from 'react-icons/lu';
+import styled from 'styled-components';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 import Toolbar from '../Toolbar';
 

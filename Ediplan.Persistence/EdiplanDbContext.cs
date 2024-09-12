@@ -4,6 +4,7 @@ using Ediplan.Domain.Common;
 using Ediplan.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using Ediplan.Persistence.Helpers;
 
 
 namespace Ediplan.Persistence;
@@ -40,13 +41,9 @@ public class EdiplanDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EdiplanDbContext).Assembly);
 
 
-        // Define TPC strategy and use a sequence to ensure continuity of Id field between tables.
+
         modelBuilder.HasSequence<int>("AssetIds");
-        modelBuilder.Entity<Asset>()
-            .UseTpcMappingStrategy()
-            .Property(a => a.Id)
-            //.HasDefaultValueSql("nextval('AssetIds'::regclass)") ; // Db dependant language, change for Db type.
-            .HasDefaultValueSql("nextval('\"AssetIds\"')");
+
 
         modelBuilder.Entity<Equipment>()
             .HasBaseType<Asset>()
@@ -60,19 +57,6 @@ public class EdiplanDbContext : DbContext
             .HasBaseType<Asset>()
             .ToTable("room");
 
-        modelBuilder.Entity<Asset>()
-            .HasMany(a => a.AssetGroups)
-            .WithMany(a => a.Assets)
-            .UsingEntity("asset_group_map");
-
-        modelBuilder.Entity<Booking>()
-            .HasMany(b => b.BookingGroups)
-            .WithMany(b => b.Bookings)
-            .UsingEntity("booking_group_map");
-
-        modelBuilder.Entity<Booking>()
-            .ToTable("booking");
-
         modelBuilder.Entity<Production>()
             .ToTable("production");
 
@@ -81,7 +65,6 @@ public class EdiplanDbContext : DbContext
 
         modelBuilder.Entity<BookingGroup>()
             .ToTable("booking_group");
-
 
         // Seed booking Groups
         //var bg1 = Guid.Parse("b5b7a148-0452-4e0e-8298-7c37fd4caa64");

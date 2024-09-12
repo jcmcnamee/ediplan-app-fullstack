@@ -30,7 +30,7 @@ public static class StartupExtensions
             setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             setupAction.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             setupAction.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
-            setupAction.SerializerSettings.DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTimeOffset;
+            setupAction.SerializerSettings.DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTime;
         })
         .AddXmlDataContractSerializerFormatters();
 

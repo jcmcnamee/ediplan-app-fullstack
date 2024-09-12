@@ -4,6 +4,16 @@ using System.Linq.Dynamic.Core;
 namespace Ediplan.Persistence.Helpers;
 public static class IQueryableExtensions
 {
+    /// <summary>
+    /// Applies sorting to the IQueryable based on the provided sortBy string and mapping dictionary.
+    /// </summary>
+    /// <typeparam name="T">The type of the IQueryable.</typeparam>
+    /// <param name="source">The IQueryable to apply sorting to.</param>
+    /// <param name="sortBy">The string specifying the sorting criteria.</param>
+    /// <param name="mappingDictionary">The dictionary mapping property names to their corresponding sorting values.</param>
+    /// <returns>The IQueryable with sorting applied.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when source or mappingDictionary is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when a key mapping for a property is missing.</exception>  
     public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string sortBy, Dictionary<string,
         PropertyMappingValue> mappingDictionary)
     {
