@@ -1,4 +1,7 @@
 ﻿using Ediplan.Application.Exceptions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
 using System.Text.Json;
 
@@ -7,10 +10,12 @@ public class ExceptionHandlerMiddleware
 {
     // The next middleware in the pipeline
     private readonly RequestDelegate _next;
+    private readonly ProblemDetailsFactory _problemDetailsFactory;
 
-    public ExceptionHandlerMiddleware(RequestDelegate next)
+    public ExceptionHandlerMiddleware(RequestDelegate next, ProblemDetailsFactory problemDetailsFactory)
     {
         _next = next;
+        _problemDetailsFactory = problemDetailsFactory;
     }
 
     // This method catches any exceptions
@@ -37,8 +42,12 @@ public class ExceptionHandlerMiddleware
         switch (exception)
         {
             case ValidationException validationException:
-                httpStatusCode = HttpStatusCode.BadRequest;
-                result = JsonSerializer.Serialize(validationException.ValidationErrors);
+                httpStatusCode = HttpStatusCode.UnprocessableContent;
+                result = BuildValidationProblemDetails(
+                    context,
+                    httpStatusCode,
+                    validationException
+                    );
                 break;
             case BadRequestException badRequestException:
                 httpStatusCode = HttpStatusCode.BadRequest;
@@ -60,6 +69,24 @@ public class ExceptionHandlerMiddleware
         }
 
         return context.Response.WriteAsync(result);
+    }
+
+    private string BuildValidationProblemDetails(HttpContext context, HttpStatusCode httpStatusCode, ValidationException validationException)
+    {
+        string result;
+        var modelState = new ModelStateDictionary();
+        foreach (var error in validationException.ValidationErrors)
+        {
+            modelState.AddModelError(string.Empty, error);
+        }
+
+        result = JsonSerializer.Serialize(_problemDetailsFactory.CreateValidationProblemDetails(
+            context,
+            modelState,
+            statusCode: (int)httpStatusCode)
+            );
+
+        return result;
     }
 }
 

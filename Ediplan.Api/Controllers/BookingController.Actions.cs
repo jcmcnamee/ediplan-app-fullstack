@@ -1,35 +1,32 @@
-﻿using Ediplan.Application.Features.Bookings.Queries.GetBookingDetail;
-using Ediplan.Application.Features.Bookings.Queries.GetBookingsList;
-using Ediplan.Application.Features.Bookings.Commands.UpdateBooking;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Ediplan.Application.Features.Bookings.Commands.DeleteBooking;
-using Ediplan.Application.Features.Bookings.Queries.GetBookingsExport;
-using Ediplan.Api.Utility;
+﻿using Ediplan.Api.Utility;
 using Ediplan.Application.Features.Bookings.Commands.CreateBooking;
+using Ediplan.Application.Features.Bookings.Commands.DeleteBooking;
 using Ediplan.Application.Features.Bookings.Commands.PatchBooking;
-using Microsoft.AspNetCore.JsonPatch;
-using Ediplan.Domain.Entities;
+using Ediplan.Application.Features.Bookings.Commands.UpdateBooking;
+using Ediplan.Application.Features.Bookings.Queries.GetBookingDetail;
+using Ediplan.Application.Features.Bookings.Queries.GetBookingsExport;
+using Ediplan.Application.Features.Bookings.Queries.GetBookingsList;
 using Ediplan.Application.Helpers;
-using System.Text.Json;
 using Ediplan.Application.Services;
+using Ediplan.Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Ediplan.Application.Exceptions;
-using Ediplan.Application.Models;
-using Ediplan.Api.Services;
 
 namespace Ediplan.Api.Controllers;
 
 [ApiController]
 [Route("api/bookings")]
-public class BookingController : ControllerBase
+public partial class BookingController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IPropertyMappingService _propertyMappingService;
     private readonly IPropertyCheckerService _propertyCheckerService;
     private readonly ProblemDetailsFactory _problemDetailsFactory;
+    private readonly IPaginationMetadataService _paginationMetadataService;
 
-    public BookingController(IMediator mediator, IPropertyMappingService propertyMappingService, IPropertyCheckerService propertyCheckerService, ProblemDetailsFactory problemDetailsFactory)
+    public BookingController(IMediator mediator, IPropertyMappingService propertyMappingService, IPropertyCheckerService propertyCheckerService, ProblemDetailsFactory problemDetailsFactory, IPaginationMetadataService paginationMetadataService)
     {
         _mediator = mediator ??
             throw new ArgumentNullException(nameof(mediator));
@@ -39,26 +36,36 @@ public class BookingController : ControllerBase
             throw new ArgumentNullException(nameof(propertyCheckerService));
         _problemDetailsFactory = problemDetailsFactory ??
             throw new ArgumentNullException(nameof(problemDetailsFactory));
+        _paginationMetadataService = paginationMetadataService ??
+            throw new ArgumentNullException(nameof(paginationMetadataService));
     }
 
 
     /// <summary>
-    /// Returns all bookings
+    /// Get a list of bookings with optional filtering, sorting, shaping and pagination.
     /// </summary>
     /// <param name="bookingResourceParams"></param>
     /// <returns></returns>
     [HttpGet(Name = "GetBookings")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult<BookingListVm>> GetBookings([FromQuery] GetBookingsListQuery bookingResourceParams)
     {
+        // Validate any property mappings
         if (!_propertyMappingService.ValidMappingExistsFor<BookingListVm, Booking>(
             bookingResourceParams.SortBy))
         {
-            return BadRequest();
+            return BadRequest(
+                _problemDetailsFactory.CreateProblemDetails(
+                    HttpContext,
+                    statusCode: 400,
+                    detail: $"Not all requested mapping fields exist on " +
+                        $"the resource: {bookingResourceParams.SortBy}"));
         }
 
+        // Validate fields for data shaping
         if (!_propertyCheckerService.TypeHasProperties<BookingListVm>(
             bookingResourceParams.Fields))
         {
@@ -70,81 +77,28 @@ public class BookingController : ControllerBase
                         $"the resource: {bookingResourceParams.Fields}"));
         }
 
+        // Get the results
         var result = await _mediator.Send(bookingResourceParams);
         if (result == null)
         {
             return NoContent();
         }
 
-        var previousPageLink = result.HasPrevious ? CreateBookingsResourceUri(
-            bookingResourceParams, ResourceUriType.PreviousPage) : null;
-
-        var nextPageLink = result.HasNext ? CreateBookingsResourceUri(
-            bookingResourceParams, ResourceUriType.NextPage) : null;
-
-        var paginationMetadata = new
-        {
-            totalCount = result.TotalCount,
-            pageSize = result.PageSize,
-            currentPage = result.CurrentPage,
-            totalPages = result.TotalPages,
-            previousPageLink = previousPageLink,
-            nextPageLink = nextPageLink
-        };
-
-        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize
-            (paginationMetadata));
+        // Apply pagination and shaping
+        AddPaginationMetadata(bookingResourceParams, result);
 
         return Ok(result.AsEnumerable().ShapeData(bookingResourceParams.Fields));
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bookingsListQuery"></param>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    private string? CreateBookingsResourceUri(GetBookingsListQuery bookingResourceParams, ResourceUriType type)
-    {
-        switch (type)
-        {
-            case ResourceUriType.PreviousPage:
-                return Url.Link("GetBookings", new
-                {
-                    sortBy = bookingResourceParams.SortBy,
-                    page = bookingResourceParams.Page - 1,
-                    pageSize = bookingResourceParams.PageSize,
-                    status = bookingResourceParams.Status,
-                    search = bookingResourceParams.Search
-                });
-            case ResourceUriType.NextPage:
-                return Url.Link("GetBookings", new
-                {
-                    sortBy = bookingResourceParams.SortBy,
-                    page = bookingResourceParams.Page + 1,
-                    pageSize = bookingResourceParams.PageSize,
-                    status = bookingResourceParams.Status,
-                    search = bookingResourceParams.Search
-                });
-            default:
-                return Url.Link("GetBookings", new
-                {
-                    sortBy = bookingResourceParams.SortBy,
-                    page = bookingResourceParams.Page,
-                    pageSize = bookingResourceParams.PageSize,
-                    status = bookingResourceParams.Status,
-                    search = bookingResourceParams.Search
-                });
-        }
-    }
-
-    /// <summary>
-    /// 
+    /// Get a booking by ID with optional data shaping.
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="fields"></param>
     /// <returns></returns>
     [HttpGet("{id}", Name = "GetBookingById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult<BookingDetailVm>> GetBookingById(int id, string? fields)
@@ -171,41 +125,21 @@ public class BookingController : ControllerBase
         return Ok(booking.ShapeData(fields));
     }
 
-    private IEnumerable<LinkDto> CreateLinksForBooking(int id, string? fields)
-    {
-        var links = new List<LinkDto>();
-
-        if (string.IsNullOrWhiteSpace(fields))
-        {
-            links.Add(
-                new(Url.Link("GetBookingById", new { id }),
-                "self",
-                "GET"));
-        }
-        else
-        {
-            links.Add(
-                new(Url.Link("GetBookingById", new { id, fields }),
-                "self",
-                "GET"));
-        }
-
-        return links;
-    }
-
     /// <summary>
-    /// 
+    /// Create a new booking.
     /// </summary>
     /// <param name="createBookingCommand"></param>
     /// <returns></returns>
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     [ProducesDefaultResponseType]
     [HttpPost(Name = "CreateBooking")]
     public async Task<ActionResult<CreateBookingCommandResponse>> Create([FromBody] CreateBookingCommand createBookingCommand)
     {
         var response = await _mediator.Send(createBookingCommand);
 
+        // TODO: Add conditional logic for failed insert:
         var links = CreateLinksForBooking(response.Booking.Id, null);
         response.Links = links;
 
@@ -213,7 +147,7 @@ public class BookingController : ControllerBase
     }
 
     /// <summary>
-    /// 
+    /// Update a booking by ID.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="updateBookingCommand"></param>
@@ -230,7 +164,7 @@ public class BookingController : ControllerBase
     }
 
     /// <summary>
-    /// 
+    /// Partially update a booking by ID using JSON Patch.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="patchDocument"></param>
@@ -251,7 +185,7 @@ public class BookingController : ControllerBase
     }
 
     /// <summary>
-    /// 
+    /// Delete a booking by ID.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -267,7 +201,7 @@ public class BookingController : ControllerBase
     }
 
     /// <summary>
-    /// 
+    /// Export bookings to a CSV file.
     /// </summary>
     /// <returns></returns>
     [HttpGet("export", Name = "ExportBookings")]
@@ -280,8 +214,5 @@ public class BookingController : ControllerBase
         return File(fileDto.Data, fileDto.ContentType, fileDto.BookingExportFileName);
 
     }
-
-    // Add HttpOptions support
-
 
 }

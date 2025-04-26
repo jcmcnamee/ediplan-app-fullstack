@@ -35,11 +35,7 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
 
         if (assetResourceParams.From.HasValue && assetResourceParams.To.HasValue)
         {
-            collection = collection.Where(a => !a.Bookings.Any(b =>
-                (assetResourceParams.To >= b.StartDate && assetResourceParams.To <= b.EndDate) ||
-                (assetResourceParams.From >= b.StartDate && assetResourceParams.From <= b.EndDate) ||
-                (assetResourceParams.From <= b.StartDate && assetResourceParams.To >= b.EndDate)
-                ));
+            collection = ExcludeAssetsWithBookings(assetResourceParams.From.Value, assetResourceParams.To.Value, collection);
         }
 
         // Search
@@ -57,9 +53,28 @@ public class AssetRepository : BaseRepository<Asset>, IAssetRepository
         //return await PagedList<Asset>.CreateAsync(collection, assetResourceParams.Page, assetResourceParams.PageSize);
     }
 
+    private static IQueryable<Asset> ExcludeAssetsWithBookings(DateTime startDate, DateTime endDate, IQueryable<Asset> collection)
+    {
+        collection = collection.Where(a => !a.Bookings.Any(b =>
+                        (endDate >= b.StartDate && endDate <= b.EndDate) ||
+                        (startDate >= b.StartDate && startDate <= b.EndDate) ||
+                        (startDate <= b.StartDate && endDate >= b.EndDate)
+                        ));
+
+        return collection;
+    }
+
     public async Task<List<Asset>> GetAssetsByIdsAsync(IEnumerable<int> assetIds)
     {
         return await _dbContext.Assets.Where(a => assetIds.Contains(a.Id)).ToListAsync();
+    }
+
+    public async Task<List<Asset>> GetAvailableAssetsById(IEnumerable<int> assetIds, DateTime startDate, DateTime date)
+    {
+        var collection = _dbContext.Assets as IQueryable<Asset>;
+        collection = collection.Where(a => assetIds.Contains(a.Id));
+        collection = ExcludeAssetsWithBookings(startDate, date, collection);
+        return await collection.ToListAsync();
     }
 
 }

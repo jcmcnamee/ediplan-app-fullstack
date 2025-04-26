@@ -20,7 +20,8 @@ public static class ObjectExtensions
         {
             // All public properties should be included
             var propertyInfos = typeof(TSource)
-                .GetProperties( BindingFlags.IgnoreCase
+                .GetProperties(
+                BindingFlags.IgnoreCase
                 | BindingFlags.Public
                 | BindingFlags.Instance);
 

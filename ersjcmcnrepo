@@ -1,0 +1,162 @@
+[33mcommit d973d239349cfcd9830f35e7a9478930b0015312[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Thu Sep 12 16:24:33 2024 +0100
+
+    Pre booking controller refactor
+
+[33mcommit 5ae8b758ba6bf9e772383b340b22307cfb33f293[m
+Merge: 6a7d85c aebf701
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue Jul 23 21:22:59 2024 +0100
+
+    Merge branch 'master' of https://github.com/jcmcnamee/ediplan-app-fullstack
+
+[33mcommit 6a7d85c03b8ea6ebb32070ba24d82ab308024f7f[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue Jul 23 21:21:26 2024 +0100
+
+    Create booking form features
+
+[33mcommit aebf7011ca9601bf2ce353fa68df929adb7e669f[m
+Author: James McNamee <121045195+jcmcnamee@users.noreply.github.com>
+Date:   Mon Jul 22 20:02:57 2024 +0100
+
+    Update README.md
+
+[33mcommit f1c2bc199ad0f18ad92f3542815c6fc4800167b2[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Thu Jul 11 18:36:40 2024 +0100
+
+    Asset Picker component core functionality and form integration
+
+[33mcommit be9a9ab0fdef7bf7f4509a9a951ef07c69af898a[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue Jul 9 21:13:23 2024 +0100
+
+    UTC time fix and pre-asset selector table refactor
+
+[33mcommit 12c6f6298017d2c7c051e0e73ee4bd1f9dcada20[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sun Jul 7 21:49:50 2024 +0100
+
+    Create booking asset availability filter implementation
+
+[33mcommit 714c9b875d5c182b66183e6aea02bcaba74e4a4f[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Fri Jul 5 10:43:17 2024 +0100
+
+    Pre-querykey refactor
+
+[33mcommit 729837bcaf7c36cb74b8cc3d344493a84e94aa7f[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue Jul 2 14:35:33 2024 +0100
+
+    Post solution and project rename, React integration
+
+[33mcommit c485cdf9f0c8dc6fbd5a8b69eee8d2f54981d26f[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue Jul 2 12:13:20 2024 +0100
+
+    Pre-project merge and rename backup
+
+[33mcommit e23a776aeefa0484227cd0dc3c3a273e6a4bac05[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Mon Jul 1 21:30:14 2024 +0100
+
+    HATEOAS and paging
+
+[33mcommit 0ced1eedf484d77e2ec62cc55d44322b01c70012[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sun Jun 23 21:02:12 2024 +0100
+
+    Asset list pagination, sort functionality
+
+[33mcommit 121905b8c8c6bdcd3cadd352037d4bb1d1e5bdf5[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sat Jun 15 13:47:55 2024 +0100
+
+    Controller updates and backup
+
+[33mcommit e1e992fd09563d04d1382f1bc6ecae5867f8486f[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue May 21 14:18:27 2024 +0100
+
+    Asset polymorphic dispatch handler
+
+[33mcommit 36f8e2b1e278e31e76a097f137c01d5b3a117813[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Thu May 16 18:11:41 2024 +0100
+
+    Asset Queries
+
+[33mcommit aa4f310e18f37d17cef1e31084af31620f92f21b[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Wed May 15 22:00:54 2024 +0100
+
+    Booking feature CRUD
+
+[33mcommit 2b40e9c86f4f53a48af9650552ad0cd96595c159[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Wed May 15 12:35:01 2024 +0100
+
+    First unit and integration tests
+
+[33mcommit 62e89fdd071fab9a99f8be036efc573c4e71943a[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Mon May 13 21:42:51 2024 +0100
+
+    Custom exceptions added
+
+[33mcommit 8227a605fd24d570f93be7afab77e3327c4c123e[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Wed May 8 22:13:30 2024 +0100
+
+    Basic Asset controller and repo
+
+[33mcommit d0d9caa12f35d7aa6141fc9e95e6ad967db72cf9[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue May 7 21:27:30 2024 +0100
+
+    Csv export support
+
+[33mcommit e12af5e92cce0236e3bc24f6bc2a9c0844f2e8d4[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Wed May 1 21:04:32 2024 +0100
+
+    Created Booking Controller
+
+[33mcommit 00f5ad6715667c37a5ce529079ff7bd7633dc15d[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Tue Apr 30 21:48:18 2024 +0100
+
+    Database migrated to PostgreSQL
+
+[33mcommit 649ee20f4c32f05d39c0083b20e30b2d5b2ffea5[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Wed Apr 24 22:30:53 2024 +0100
+
+    Model relationships and generate diagram
+
+[33mcommit 08819ea54d8aad3522ba3550da2f81e529e4a610[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sun Apr 21 20:29:25 2024 +0100
+
+    Initial Migration
+
+[33mcommit 72df1b7fa9099be539aea59a9cbd83ad01d31a5e[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sat Apr 20 17:38:53 2024 +0100
+
+    Infrastructure added with persistence and mail service
+
+[33mcommit ea98b8058b953378b614db0b3e1aa1e0053d66ae[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sat Apr 20 12:55:01 2024 +0100
+
+    Add project files.
+
+[33mcommit 63061edd3b8952aea85c210e2e2785b2fd18c0da[m
+Author: James McNamee <jcmcnamee@hotmail.com>
+Date:   Sat Apr 20 12:54:59 2024 +0100
+
+    Add .gitattributes, .gitignore, and README.md.

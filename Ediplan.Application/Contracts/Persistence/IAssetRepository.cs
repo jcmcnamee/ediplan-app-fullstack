@@ -14,4 +14,5 @@ public interface IAssetRepository : IAsyncRepository<Asset>
 {
     Task<List<Asset>> GetAssetsByIdsAsync(IEnumerable<int> assetIds);
     Task<PagedList<Asset>> ListAllAsync(GetAssetsListQuery assetResourceParams);
+    Task<List<Asset>> GetAvailableAssetsById(IEnumerable<int> assetIds, DateTime startDate, DateTime date);
 }

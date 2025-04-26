@@ -14,4 +14,6 @@ public class CreateBookingCommandResponse : BaseResponse
     }
 
     public CreateBookingDto Booking { get; set; } = default!;
+
+    public List<int> UnavailableAssets = new List<int>();
 }
