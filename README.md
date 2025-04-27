@@ -36,39 +36,83 @@ Ediplan is built using a clean architecture approach, divided into several layer
 To get started with Ediplan, ensure you have .NET 5 SDK and PostgreSQL installed on your machine. Clone the repository, update the database connection string in appsettings.json, and run the following commands in your terminal:
 
     dotnet restored
-    otnet ef database update
+    dotnet ef database update
     dotnet run
 
-# Architecture continued:
+# **High-Level Overview**
 
-## Ediplan.Domain
+The Ediplan application is a modular .NET 8 solution designed to follow clean architecture principles. It is divided into multiple projects, each with a specific responsibility:
 
-This layer defines the core business entities and logic. It includes entities such as Booking, BookingGroup, Production, Location, Asset, Person, Equipment, Room, and AssetGroup. These entities represent the data model around which the application is built.
+1. **Ediplan.Api**: The entry point of the application, responsible for exposing APIs to clients.
+2. **Ediplan.Application**: Contains the core business logic, including commands, queries, and validation.
+3. **Ediplan.Identity**: Manages user authentication and authorization using ASP.NET Core Identity.
+4. **Ediplan.Infrastructure**: Provides external integrations, such as email services and file handling.
+5. **Ediplan.Persistence**: Handles database interactions using Entity Framework Core.
 
-## Ediplan.Persistence
+Each project is designed to be loosely coupled, promoting maintainability and scalability.
 
-This layer is responsible for data access and storage. It includes the EdiplanDbContext class, which is a DbContext for Entity Framework Core, configured to work with a PostgreSQL database as indicated by the use of UseNpgsql in the PersistenceServiceRegistration.cs file. This layer defines how entities are mapped to the database schema and includes repositories for accessing and manipulating data.
+---
 
-## Ediplan.Application
+## **Project Structure and Responsibilities**
 
-The Application layer contains the business logic and application services. It uses the MediatR library to implement the CQRS (Command Query Responsibility Segregation) pattern, allowing for a clear separation between commands (actions that modify data) and queries (actions that retrieve data). This layer also includes services for property mapping and checking, which likely facilitate dynamic sorting and validation of input data.
+### **1. Ediplan.Api**
+- **Purpose**: Acts as the API layer, exposing endpoints to clients.
+- **Key Features**:
+  - Uses `MediatR` for handling requests and responses.
+  - Configures Swagger for API documentation.
+  - Integrates Serilog for logging.
+- **Key Files**:
+  - `Program.cs`: Configures the application pipeline, dependency injection, and middleware.
+  - `Startup.cs` (if applicable): Configures services and middleware.
+- **Dependencies**:
+  - References `Ediplan.Application`, `Ediplan.Infrastructure`, and `Ediplan.Persistence`.
 
-## Ediplan.Infrastructure
+### **2. Ediplan.Application**
+- **Purpose**: Contains the core business logic and application rules.
+- **Key Features**:
+  - Implements CQRS (Command Query Responsibility Segregation) using `MediatR`.
+  - Uses `FluentValidation` for input validation.
+  - Contains mappings using `AutoMapper`.
+- **Key Folders**:
+  - `Features`: Organized by domain areas (e.g., `Assets`, `Locations`, `Productions`).
+    - **Commands**: Handles write operations (e.g., creating or updating entities).
+    - **Queries**: Handles read operations (e.g., fetching data).
+  - `Contracts`: Defines interfaces and DTOs for communication between layers.
+- **Dependencies**:
+  - Referenced by all other projects.
 
-This layer provides implementations for cross-cutting concerns such as email services (IEmailService) and CSV exporting (ICsvExporter). It is configured to read settings from the application's configuration, such as EmailSettings.
+### **3. Ediplan.Identity**
+- **Purpose**: Manages user authentication and authorization.
+- **Key Features**:
+  - Uses ASP.NET Core Identity with Entity Framework Core.
+  - Supports PostgreSQL as the database provider.
+- **Key Folders**:
+  - `Migrations`: Contains database migration files for Identity.
+- **Dependencies**:
+  - References `Ediplan.Application`.
 
-## Ediplan.Api
+### **4. Ediplan.Infrastructure**
+- **Purpose**: Handles external integrations and infrastructure concerns.
+- **Key Features**:
+  - Provides email functionality using `SendGrid`.
+  - Supports CSV file handling using `CsvHelper`.
+- **Key Files**:
+  - Service implementations for external integrations.
+- **Dependencies**:
+  - References `Ediplan.Application`.
 
-The API layer exposes the application's functionality over HTTP, allowing clients to interact with the application through RESTful endpoints. It includes controllers such as AssetController and BookingController, which handle HTTP requests, validate input, and return responses. These controllers depend on services like IMediator for handling commands and queries, and IPropertyMappingService and IPropertyCheckerService for dynamic property mapping and validation.
+### **5. Ediplan.Persistence**
+- **Purpose**: Manages database interactions.
+- **Key Features**:
+  - Uses Entity Framework Core for database access.
+  - Supports PostgreSQL as the database provider.
+  - Contains database migrations.
+- **Key Folders**:
+  - `Migrations`: Contains migration files for the application's database schema.
+- **Dependencies**:
+  - References `Ediplan.Application`.
 
-## Testing and Middleware
-
-The project includes integration tests (API.IntegrationTests) with a custom web application factory for setting up a test environment with an in-memory database. There's also an exception handling middleware (ExceptionHandlerMiddleware) in the API layer, which catches and processes exceptions, ensuring that the API returns proper error responses.
-
-## Dependency Injection
-
-Throughout the project, dependency injection is heavily utilized to decouple components and facilitate testing. Services are registered in extension methods (AddApplicationServices, AddInfrastructureServices, AddPersistenceServices), making the startup configuration cleaner and more modular.
-The Ediplan project follows modern software architecture principles, making it scalable, maintainable, and testable.
+---
 
 
 
