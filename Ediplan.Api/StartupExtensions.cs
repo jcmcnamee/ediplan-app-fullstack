@@ -1,9 +1,11 @@
 ﻿using Ediplan.Api.Middleware;
 using Ediplan.Api.Services;
+using Ediplan.Api.Utility;
 using Ediplan.Application;
 using Ediplan.Application.Contracts;
 using Ediplan.Infrastructure;
 using Ediplan.Persistence;
+using Marvin.Cache.Headers;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
@@ -20,11 +22,18 @@ public static class StartupExtensions
         //builder.Services.AddIdentityServices(builder.Configuration);
 
         builder.Services.AddScoped<ILoggedInUserService, LoggedInUserService>();
+        builder.Services.AddScoped<IPaginationMetadataService, PaginationMetadataService>();
         builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddControllers(options =>
         {
             options.ReturnHttpNotAcceptable = true;
+            options.CacheProfiles.Add(
+                "120SecondsCacheProfile",
+                new()
+                {
+                    Duration = 120,
+                });
         }).AddNewtonsoftJson(setupAction =>
         {
             setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -33,6 +42,7 @@ public static class StartupExtensions
             setupAction.SerializerSettings.DateParseHandling = Newtonsoft.Json.DateParseHandling.DateTime;
         })
         .AddXmlDataContractSerializerFormatters();
+
 
         builder.Services.AddCors(
             options => options.AddPolicy(
@@ -48,7 +58,25 @@ public static class StartupExtensions
                 .WithExposedHeaders("X-Pagination")
                 ));
 
+
+        builder.Services.AddResponseCaching();
+        // Global:
+        builder.Services.AddHttpCacheHeaders(
+                expirationModelOpts =>
+                {
+
+                    expirationModelOpts.MaxAge = 120;
+                    expirationModelOpts.CacheLocation =
+                        CacheLocation.Public;
+                },
+                validationModelOpts =>
+                {
+                    validationModelOpts.MustRevalidate = false;
+                }
+            );
+
         builder.Services.AddEndpointsApiExplorer();
+
         builder.Services.AddSwaggerGen();
 
         return builder.Build();
@@ -69,6 +97,12 @@ public static class StartupExtensions
         app.UseCustomExceptionHandler();
 
         app.UseHttpsRedirection();
+
+        //app.UseResponseCaching();
+        app.UseHttpCacheHeaders();
+
+        app.UseAuthorization();
+
         app.MapControllers();
 
         return app;

@@ -9,6 +9,7 @@ using Ediplan.Application.Features.Bookings.Queries.GetBookingsList;
 using Ediplan.Application.Helpers;
 using Ediplan.Application.Services;
 using Ediplan.Domain.Entities;
+using Marvin.Cache.Headers;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -101,6 +102,9 @@ public partial class BookingController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
+    //[ResponseCache(CacheProfileName = "120SecondsCacheProfile")]
+    [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+    [HttpCacheValidation(MustRevalidate = true)]
     public async Task<ActionResult<BookingDetailVm>> GetBookingById(int id, string? fields)
     {
         // Field checks

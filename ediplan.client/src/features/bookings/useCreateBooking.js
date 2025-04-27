@@ -12,7 +12,10 @@ export function useCreateBooking() {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
     },
     onError: err => {
-      toast.error(err.message);
+      const { [""]: messages } = err.response.data.errors;
+      for (var message of messages) {
+        toast.error(message);
+      }
     }
   });
 

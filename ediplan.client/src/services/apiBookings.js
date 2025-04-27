@@ -28,5 +28,6 @@ export async function createBooking(data) {
     return res.data;
   } catch (err) {
     console.error(`Error creating booking: ${err}`);
+    throw err;
   }
 }
