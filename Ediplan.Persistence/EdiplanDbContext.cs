@@ -151,6 +151,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -1,
+            Name = "Teen Mom remote edit",
             StartDate = DateTime.UtcNow.AddDays(2),
             EndDate = DateTime.UtcNow.AddDays(23),
             ProductionId = prog1,
@@ -161,6 +162,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -2,
+            Name = "The Great British Bake Off - Dubbing",
             StartDate = DateTime.UtcNow.AddMonths(1),
             EndDate = DateTime.UtcNow.AddMonths(1).AddDays(7),
             ProductionId = prog2,
@@ -170,6 +172,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -3,
+            Name = "Final Edit",
             StartDate = DateTime.UtcNow.AddDays(-15),
             EndDate = DateTime.UtcNow.AddDays(-10),
             ProductionId = prog2,
@@ -180,6 +183,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -4,
+            Name = "Location Scouting",
             StartDate = DateTime.UtcNow.AddMonths(-2),
             EndDate = DateTime.UtcNow.AddDays(-5),
             ProductionId = prog3,
@@ -190,6 +194,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -5,
+            Name = "Principal Photography",
             StartDate = DateTime.UtcNow.AddMonths(-3),
             EndDate = DateTime.UtcNow.AddMonths(-2).AddDays(-10),
             ProductionId = prog4,
@@ -200,6 +205,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -6,
+            Name = "Pre-production meetings",
             StartDate = DateTime.UtcNow.AddMonths(2),
             EndDate = DateTime.UtcNow.AddMonths(2).AddDays(5),
             ProductionId = prog3,
@@ -210,6 +216,7 @@ public class EdiplanDbContext : DbContext
         modelBuilder.Entity<Booking>().HasData(new Booking
         {
             Id = -7,
+            Name = "Color Correction",
             StartDate = DateTime.UtcNow.AddDays(-8),
             EndDate = DateTime.UtcNow.AddDays(-5),
             ProductionId = prog1,

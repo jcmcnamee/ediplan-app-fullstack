@@ -58,12 +58,14 @@ public partial class BookingController : ControllerBase
         if (!_propertyMappingService.ValidMappingExistsFor<BookingListVm, Booking>(
             bookingResourceParams.SortBy))
         {
-            return BadRequest(
-                _problemDetailsFactory.CreateProblemDetails(
+            return BadRequest(_problemDetailsFactory
+                .CreateProblemDetails(
                     HttpContext,
                     statusCode: 400,
                     detail: $"Not all requested mapping fields exist on " +
-                        $"the resource: {bookingResourceParams.SortBy}"));
+                        $"the resource: {bookingResourceParams.SortBy}"
+                        )
+                );
         }
 
         // Validate fields for data shaping
@@ -87,6 +89,8 @@ public partial class BookingController : ControllerBase
 
         // Apply pagination and shaping
         AddPaginationMetadata(bookingResourceParams, result);
+
+        // TODO: Add HATEOS links? Will have to return a response object instead...
 
         return Ok(result.AsEnumerable().ShapeData(bookingResourceParams.Fields));
     }

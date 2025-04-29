@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Ediplan.Application.Services;
-internal interface IBookingUriService
+public interface IBookingUriService
 {
-    string? CreateBookingsResourceUri(GetBookingGroupListQuery bookingResourceParams, ResourceUriType type);
+    string? CreateBookingsResourceUri(string routeName, GetBookingGroupListQuery bookingResourceParams, ResourceUriType type);
 }

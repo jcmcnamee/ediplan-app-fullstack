@@ -47,7 +47,7 @@ public class MappingProfile : Profile
         CreateMap<Booking, UpdateBookingDto>().ReverseMap(); // PATCH PAYLOAD, CHECK IF NECESSARY TO USE DTO INSTEAD OF COMMAND
         // Get List
         CreateMap<Booking, BookingListVm>()
-            .ForMember(dest => dest.ProductionName, opt => opt.MapFrom(src => src.Production.Name));
+            .ForMember(dest => dest.ProductionName, opt => opt.MapFrom(src => src.Production.Name)); //Unsortable
         // Get Detail
         CreateMap<Booking, BookingDetailVm>().ReverseMap();
 

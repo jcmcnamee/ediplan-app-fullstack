@@ -63,8 +63,8 @@ function Toggle() {
 }
 
 function List({ children }) {
-  const { isOpen, position, close } = useContext(FilterMenuContext);
-  const ref = useOutsideClick(close);
+  const { isOpen, position, setIsOpen } = useContext(FilterMenuContext);
+  const ref = useOutsideClick(() => setIsOpen(false));
 
   if (!isOpen) return null;
 

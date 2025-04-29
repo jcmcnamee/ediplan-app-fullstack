@@ -70,12 +70,13 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
         if (!string.IsNullOrWhiteSpace(queryParams.Search))
         {
             var searchQuery = queryParams.Search.Trim();
-
-            collection = collection.Where(b => b.Name == searchQuery
-                || b.Production.Name == searchQuery
-                || b.Status == searchQuery
-                || b.Notes == searchQuery
-                || b.Location.Name == searchQuery);
+            collection = collection.Where(
+                b => b.Name.Contains(searchQuery) ||
+                b.Production != null && b.Production.Name.Contains(searchQuery) ||
+                b.Status.Contains(searchQuery) ||
+                b.Notes != null && b.Notes.Contains(searchQuery) ||
+                b.Location != null && b.Location.Name.Contains(searchQuery)
+                );
         }
 
         // Sort

@@ -3,9 +3,12 @@ using Ediplan.Api.Services;
 using Ediplan.Api.Utility;
 using Ediplan.Application;
 using Ediplan.Application.Contracts;
+using Ediplan.Application.Services;
 using Ediplan.Infrastructure;
 using Ediplan.Persistence;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
@@ -23,6 +26,10 @@ public static class StartupExtensions
 
         builder.Services.AddScoped<ILoggedInUserService, LoggedInUserService>();
         builder.Services.AddScoped<IPaginationMetadataService, PaginationMetadataService>();
+
+        builder.Services.AddScoped<UrlHelperProvider>();
+        //builder.Services.AddScoped<IBookingUriService, BookingUriService>();
+
         builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddControllers(options =>

@@ -5,12 +5,16 @@ import FilterMenu from '../ui/Table/FilterMenu';
 import Toolbar from '../ui/Toolbar';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import Input from '../ui/Form/Input';
+import { useState } from 'react';
 
 function Bookings() {
   const pathSegments = useLocation()
     .pathname.split('/')
     .filter(str => str !== '' && str !== undefined);
   const isChildRoute = pathSegments.pop() !== 'bookings';
+
+  const [filterPosition, setFilterPosition] = useState({ x: 0, y: 0 });
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   return (
     <>
@@ -23,7 +27,12 @@ function Bookings() {
         <>
           <Toolbar>
             <Toolbar.Panel side="right">
-              <FilterMenu>
+              <FilterMenu
+                position={filterPosition}
+                setPosition={setFilterPosition}
+                isOpen={isFilterOpen}
+                setIsOpen={setIsFilterOpen}
+              >
                 <FilterMenu.Menu>
                   <FilterMenu.Toggle />
                   <FilterMenu.List>
@@ -32,7 +41,7 @@ function Bookings() {
                       options={[
                         { value: 'all', label: 'All' },
                         { value: 'confirmed', label: 'Confirmed' },
-                        { value: 'provisional', label: 'Provisional' },
+                        { value: 'provisional', label: 'Provisional' }
                       ]}
                     />
                   </FilterMenu.List>
